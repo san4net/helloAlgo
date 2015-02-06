@@ -1,0 +1,59 @@
+Deadlock Detection:
+
+No deadlocks found.
+
+Thread 11: (state = BLOCKED)
+ - java.lang.Object.wait(long) @bci=0 (Interpreted frame)
+ - java.lang.Object.wait() @bci=2, line=485 (Interpreted frame)
+ - com.thread.BaiterTheConsumer.consume() @bci=33, line=27 (Interpreted frame)
+ - com.thread.BaiterTheConsumer.call() @bci=4, line=15 (Interpreted frame)
+ - java.util.concurrent.FutureTask$Sync.innerRun() @bci=30, line=303 (Interpreted frame)
+ - java.util.concurrent.FutureTask.run() @bci=4, line=138 (Interpreted frame)
+ - java.util.concurrent.ThreadPoolExecutor$Worker.runTask(java.lang.Runnable) @bci=59, line=886 (Interpreted frame)
+ - java.util.concurrent.ThreadPoolExecutor$Worker.run() @bci=28, line=908 (Interpreted frame)
+ - java.lang.Thread.run() @bci=11, line=662 (Interpreted frame)
+
+
+Thread 10: (state = BLOCKED)
+ - java.lang.Object.wait(long) @bci=0 (Interpreted frame)
+ - java.lang.Object.wait() @bci=2, line=485 (Interpreted frame)
+ - com.thread.CookTheProducer.produce() @bci=31, line=29 (Interpreted frame)
+ - com.thread.CookTheProducer.call() @bci=4, line=11 (Interpreted frame)
+ - java.util.concurrent.FutureTask$Sync.innerRun() @bci=30, line=303 (Interpreted frame)
+ - java.util.concurrent.FutureTask.run() @bci=4, line=138 (Interpreted frame)
+ - java.util.concurrent.ThreadPoolExecutor$Worker.runTask(java.lang.Runnable) @bci=59, line=886 (Interpreted frame)
+ - java.util.concurrent.ThreadPoolExecutor$Worker.run() @bci=28, line=908 (Interpreted frame)
+ - java.lang.Thread.run() @bci=11, line=662 (Interpreted frame)
+
+
+Thread 6: (state = BLOCKED)
+
+
+Thread 5: (state = BLOCKED)
+
+
+Thread 4: (state = BLOCKED)
+ - java.lang.Object.wait(long) @bci=0 (Interpreted frame)
+ - java.lang.ref.ReferenceQueue.remove(long) @bci=44, line=118 (Interpreted frame)
+ - java.lang.ref.ReferenceQueue.remove() @bci=2, line=134 (Interpreted frame)
+ - java.lang.ref.Finalizer$FinalizerThread.run() @bci=3, line=159 (Interpreted frame)
+
+
+Thread 3: (state = BLOCKED)
+ - java.lang.Object.wait(long) @bci=0 (Interpreted frame)
+ - java.lang.Object.wait() @bci=2, line=485 (Interpreted frame)
+ - java.lang.ref.Reference$ReferenceHandler.run() @bci=46, line=116 (Interpreted frame)
+
+
+Thread 1: (state = BLOCKED)
+ - sun.misc.Unsafe.park(boolean, long) @bci=0 (Interpreted frame)
+ - java.util.concurrent.locks.LockSupport.park(java.lang.Object) @bci=14, line=156 (Interpreted frame)
+ - java.util.concurrent.locks.AbstractQueuedSynchronizer.parkAndCheckInterrupt() @bci=1, line=811 (Interpreted frame)
+ - java.util.concurrent.locks.AbstractQueuedSynchronizer.doAcquireSharedInterruptibly(int) @bci=55, line=969 (Interpreted frame)
+ - java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireSharedInterruptibly(int) @bci=24, line=1281 (Interpreted frame)
+ - java.util.concurrent.FutureTask$Sync.innerGet() @bci=2, line=218 (Interpreted frame)
+ - java.util.concurrent.FutureTask.get() @bci=4, line=83 (Interpreted frame)
+ - com.thread.PCManager.kickStartPC() @bci=59, line=30 (Interpreted frame)
+ - com.thread.PCManager.main(java.lang.String[]) @bci=7, line=43 (Interpreted frame)
+
+
