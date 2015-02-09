@@ -2,12 +2,7 @@ package com.ds.qs;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
 public class DLLOperations<T> {
-	private static final Logger logger = Logger.getLogger(DLLOperations.class
-			.getName());
 
 	private Node<T> head;
 
@@ -66,7 +61,7 @@ public class DLLOperations<T> {
 
 	public void display() {
 		if (head == null) {
-			logger.debug("No Element");
+			System.out.println("No Element");
 		} else {
 			Node<T> tmp = head;
 			String data = "";
@@ -75,24 +70,22 @@ public class DLLOperations<T> {
 				tmp = tmp.getNext();
 			}
 
-			logger.debug("linked list" + data);
 			System.out.println("linked list" + data);
 		}
 	}
 
 	public static void main(String[] args) throws Exception {
-		PropertyConfigurator
-				.configure("C:/non_os/projects/BrushUp/src/com/rise/pool/log4j.properties");
+
 		DLLOperations<Integer> instance = new DLLOperations<Integer>();
 		for (int i = 5; i < 10; i++) {
 			instance.addNode(i, true);
 		}
 		instance.display();
 
-		logger.debug("deleting position" + 5);
+		System.out.println("deleting position" + 5);
 		instance.head = instance.delete(5);
 		instance.display();
-		logger.debug("deleting position" + 3);
+		System.out.println("deleting position" + 3);
 		instance.head = instance.delete(3);
 		instance.display();
 	}

@@ -2,14 +2,10 @@ package com.rise.pool;
 
 import java.util.concurrent.ThreadFactory;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
-
 import com.core.Queue;
-import com.me.ds.template.QueueImpl;
+import com.ds.template.impls.QueueImpl;
 
 public class ThreadPool<T> implements Pool {
-	final static Logger logger = Logger.getLogger(ThreadPool.class);
 	private final int workerMax = 2;
 
 	private Queue<Runnable> workerQueue = new QueueImpl<Runnable>(2,
@@ -39,7 +35,6 @@ public class ThreadPool<T> implements Pool {
 	}
 
 	public void submit(Runnable task) {
-		logger.info("submitting task " + System.currentTimeMillis());
 		if (underPoolSize()) {
 			Thread t = addThread(task);
 			t.start();

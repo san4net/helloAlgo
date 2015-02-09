@@ -3,12 +3,13 @@ package com.ds.qs;
 import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.me.ds.template.Node;
-import com.me.ds.template.SingleNodeImpl;
+import com.ds.template.Node;
+import com.ds.template.SingleNode;
+import com.ds.template.impls.SingleNodeImpl;
 
 public class LinkedList<T> {
 	private AtomicInteger size = new AtomicInteger(0);
-	private Node<T> head = null;
+	private SingleNode<T> head = null;
 
 	// public static LinkedList instance = new LinkedList();
 
@@ -20,10 +21,10 @@ public class LinkedList<T> {
 	 */
 
 	public void display() {
-		Node<T> tmp = head;
+	    SingleNode<T> tmp = head;
 		while (tmp != null) {
 			System.out.print("->" + tmp.getData());
-			tmp = tmp.getNext();
+			tmp = (SingleNode<T>) tmp.getNext();
 		}
 		System.out.println();
 	}
@@ -45,9 +46,9 @@ public class LinkedList<T> {
 		if (atBegining) {
 			head = new SingleNodeImpl(data, head);
 		} else {
-			Node t = head;
+			SingleNode<T> t = head;
 			while (t.getNext() != null) {
-				t = t.getNext();
+				t = (SingleNode<T>) t.getNext();
 			}
 			t.setNext(new SingleNodeImpl(data, null));
 		}
@@ -55,14 +56,14 @@ public class LinkedList<T> {
 	}
 
 
-	private static void reverse(LinkedList ll) {
+	private  void reverse(LinkedList<T> ll) {
 		ll.display();
 		// 1->2->3(null)
-		Node t1 = null, t2 = null;
+		SingleNode<T> t1 = null, t2 = null;
 
 		while (ll.head != null) {
 			t1 = ll.head;
-			ll.head = ll.head.getNext();
+			ll.head = (SingleNode<T>) ll.head.getNext();
 			t1.setNext(t2);
 			t2 = t1;
 		}
@@ -70,12 +71,12 @@ public class LinkedList<T> {
 		ll.display();
 	}
 
-	 public  void reverseRecursive(Node node){
+	 public  void reverseRecursive(SingleNode<T> node){
 		 if(node.getNext() == null){
 			 head = node;
 		 } else{
-			 reverseRecursive(node.getNext());
-			 node.getNext().setNext(node);
+			 reverseRecursive((SingleNode<T>) node.getNext());
+			 ((SingleNode<T>) node.getNext()).setNext(node);
 			 node.setNext(null);
 		 }
 	 }
@@ -92,7 +93,7 @@ public class LinkedList<T> {
 		l.add(4);
 		l.display();
 		l.reverse(2);
-		l.reverseRecursive(l.getHead());
+		l.reverseRecursive((SingleNode<Integer>) l.getHead());
 		l.display();
 
 	}
@@ -103,20 +104,20 @@ public class LinkedList<T> {
 		}
 		// get to the n+1 element in the node
 		int i = 0;
-		Node nplusPointer = head;
+		SingleNode<T> nplusPointer = head;
 
 		while (i < n) {
-			nplusPointer = nplusPointer.getNext();
+			nplusPointer = (SingleNode<T>) nplusPointer.getNext();
 			i++;
 		}
 		
 		// reverse the first n node
-		Node prev = null, curNode = null;
+		SingleNode<T> prev = null, curNode = null;
 
 		i = 0;
 		while (i < n) {
 			curNode = head;
-			head = head.getNext();
+			head = (SingleNode<T>) head.getNext();
 			curNode.setNext(prev);
 			prev = curNode;
 			i++;
@@ -125,17 +126,17 @@ public class LinkedList<T> {
 		head = prev;
 
 		while (prev.getNext() != null) {
-			prev = prev.getNext();
+			prev = (SingleNode<T>) prev.getNext();
 		}
 		prev.setNext(nplusPointer);
 	}
 
 	public void myReverse() {
-		Node t1 = null, t2 = null;
+	    SingleNode<T> t1 = null, t2 = null;
 
 		while (head != null) {
 			t1 = head;
-			head = head.getNext();
+			head = (SingleNode<T>) head.getNext();
 			t1.setNext(t2);
 			t2 = t1;
 		}
@@ -151,7 +152,7 @@ public class LinkedList<T> {
 	}
 
 	private void removeDups() {
-		Node temp1 = head;
+	    SingleNode<T> temp1 = head;
 		HashSet<Integer> bucket = new HashSet<Integer>();
 		Node prev = null;
 		while (temp1 != null) {
@@ -161,22 +162,22 @@ public class LinkedList<T> {
 				prev = temp1;
 			} else {
 				if (prev != null) {
-					prev.setNext(temp1.getNext());
+					((SingleNode<T>) prev).setNext(temp1.getNext());
 				}
 			}
-			temp1 = temp1.getNext();
+			temp1 = (SingleNode<T>) temp1.getNext();
 		}
 
 		// prev.setNext(null);
 
 	}
 
-	public void printRev(Node head) {
+	public void printRev(SingleNode<T> head) {
 
 		if (head.getNext() == null) {
 			System.out.println(head.getData());
 		} else {
-			printRev(head.getNext());
+			printRev((SingleNode<T>) head.getNext());
 			System.out.println(head.getData());
 		}
 	}

@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import mockit.NonStrict;
-
-import org.apache.log4j.Logger;
 
 import com.sun.istack.internal.NotNull;
 
 public class ArrayQuestions {
-	private static final Logger log = Logger.getLogger(ArrayQuestions.class);
+	
 	/**1.
 	 * The problem is similar to our old post Segregate 0s and 1s in an array, and both of these problems are variation of famous Dutch national flag problem.
 	 * 
@@ -222,7 +219,6 @@ public String toString() {
 				array[j] = 0;
 		}
 		System.out.println(Arrays.toString(array));
-		log.info("done");
 	}
  
   @NotNull private String names;

@@ -1,6 +1,9 @@
-package com.me.ds.template;
+package com.ds.template.impls;
 
-public class TreeNodeImpl< T> implements TreeNode<T> {
+import com.ds.template.Node;
+import com.ds.template.TreeNode;
+
+public class TreeNodeImpl<T> implements TreeNode<T> {
 	private T data;
 	private Node<T> left;
 	private Node<T> right;
@@ -39,9 +42,6 @@ public class TreeNodeImpl< T> implements TreeNode<T> {
 	@Override
 	public String toString() {
 		return super.toString() + data;
-	}
-
-	public static void main(String[] args) {
 	}
 
 }

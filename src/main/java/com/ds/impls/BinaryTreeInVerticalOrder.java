@@ -1,16 +1,15 @@
 package com.ds.impls;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.me.ds.template.begining.BSTTree;
 import com.me.ds.template.begining.TreeNode;
 
 public class BinaryTreeInVerticalOrder {
-   Map<Integer, List<Number>> map = Maps.newHashMap();
+   Map<Integer, List<Number>> map = new HashMap<Integer, List<Number>>();
    
 	private void buildTree(){
 		List<Number> nodeData = new ArrayList<>();
@@ -26,7 +25,7 @@ public class BinaryTreeInVerticalOrder {
 			inorderTraversal(node.getLeft(), verticalDistance - 1);
 			inorderTraversal(node.getRight(), verticalDistance + 1);
 			
-			List<Number> nodeList = (List<Number>) (map.get(verticalDistance) == null ? Lists.newArrayList():map.get(verticalDistance));
+			List<Number> nodeList = (List<Number>) (map.get(verticalDistance) == null ? new ArrayList<>():map.get(verticalDistance));
 			nodeList.add((Number) node.getData());
 			map.put(verticalDistance, nodeList);
 		}

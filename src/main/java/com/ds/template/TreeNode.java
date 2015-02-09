@@ -1,4 +1,4 @@
-package com.me.ds.template;
+package com.ds.template;
 
 public interface TreeNode<T> extends Node<T> {
 	Node<T> getLeft();

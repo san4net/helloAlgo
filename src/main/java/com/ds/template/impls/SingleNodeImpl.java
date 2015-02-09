@@ -1,4 +1,7 @@
-package com.me.ds.template;
+package com.ds.template.impls;
+
+import com.ds.template.Node;
+import com.ds.template.SingleNode;
 
 public class SingleNodeImpl<T> implements SingleNode<T> {
    private T data;

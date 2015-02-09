@@ -1,4 +1,4 @@
-package com.me.ds.template;
+package com.ds.template;
 
 public interface SingleNode<T> extends Node<T> {
 	Node<T> getNext();

@@ -1,4 +1,4 @@
-package com.me.ds.template;
+package com.ds.template.impls;
 
 import com.core.Stack;
 import com.ds.impls.StackImpl;

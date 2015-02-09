@@ -1,4 +1,7 @@
-package com.me.ds.template;
+package com.ds.template.impls;
+
+import com.ds.template.Node;
+import com.ds.template.TreeNode;
 
 /**
  * Given a Binary Tree (BT), convert it to a Doubly Linked List(DLL). The left and right pointers in nodes are to be used as previous and next pointers respectively in converted DLL. The order of nodes in DLL must be same as Inorder of the given Binary Tree. The first node of Inorder traversal (left most node in BT) must be head node of the DLL.
@@ -13,28 +16,28 @@ In this post, another simple and efficient solution is discussed. The solution d
 2) Fix Right Pointers: The above is intuitive and simple. How to change right pointers to point to next node in DLL? The idea is to use left pointers fixed in step 1. We start from the rightmost node in Binary Tree (BT). The rightmost node is the last node in DLL. Since left pointers are changed to point to previous node in DLL, we can linearly traverse the complete DLL using these pointers. The traversal would be from last to first node. While traversing the DLL, we keep track of the previously visited node and change the right pointer to the previous node. See fixNextPtr() in below implementatio
  */
 public class ConverBTToDLL {
-	public static Node prev;
+	public static TreeNode prev;
 	
-	private void makeDLL(Node node) {
+	private void makeDLL(TreeNode node) {
 		setPrevNode(node);
 		Node head = setNextNode(node);
 		System.out.println(head);
 	}
 
-	private void setPrevNode(Node node) {
+	private void setPrevNode(TreeNode node) {
 		if (node != null) {
-			setPrevNode(node.getLeft());
+			setPrevNode((TreeNode) node.getLeft());
 			node.setLeft(prev);
 			prev = node;
-			setPrevNode(node.getRight());
+			setPrevNode((TreeNode) node.getRight());
 		}
 	}
 
-	private Node setNextNode(Node node) {
+	private Node setNextNode(TreeNode node) {
 		// Traverse till right child
-		Node prev = null;
+	    TreeNode prev = null;
 		while (node.getRight() != null) {
-			node = node.getRight();
+			node = (TreeNode) node.getRight();
 		}
 
 		while (node != null) {
@@ -46,7 +49,7 @@ public class ConverBTToDLL {
 			if(node.getLeft()== null){
 				return node;
 			}else{
-				node = node.getLeft();
+				node = (TreeNode) node.getLeft();
 			}
 		}
 

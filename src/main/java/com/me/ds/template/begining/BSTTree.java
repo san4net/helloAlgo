@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.core.Queue;
-import com.me.ds.template.QueueImpl;
+import com.ds.template.TreeNode;
+import com.ds.template.impls.QueueImpl;
+import com.ds.template.impls.TreeNodeImpl;
 
 public class BSTTree<T> {
 	private TreeNode<T> head;
@@ -19,20 +21,21 @@ public class BSTTree<T> {
 
 	public void add(TreeNode<T> node, T data){
 		if(node == null){
-			head = new TreeNode<T>(data, null, null);
+			head =  new TreeNodeImpl<>(data, null, null);
 		}
 		else{
-			Integer tempData = (Integer)node.getData();
-			if(tempData > (Integer)data){
+//			Integer tempData = (Integer)node.getData();
+		    T tempData = node.getData();
+			if((Integer)tempData > (Integer)data){
 				if(node.getLeft()== null)
-					node.setLeft(new TreeNode<T>(data, null, null));
+					node.setLeft(new TreeNodeImpl<T>(data, null, null));
 				else
-				 add(node.getLeft(), data);
+				 add((TreeNode<T>) node.getLeft(), data);
 			}else {
 				if(node.getRight()== null)
-					node.setRight(new TreeNode<T>(data, null, null));
+					node.setRight(new TreeNodeImpl<T>(data, null, null));
 				else
-				 add(node.getRight(), data);
+				 add((TreeNode<T>)node.getRight(), data);
 			}
 		}
 	}
@@ -56,10 +59,10 @@ public class BSTTree<T> {
 		if (node == null)
 			return;
 		else {
-			inorderTraversal(node.getLeft(), elements);
+			inorderTraversal((TreeNode<T>) node.getLeft(), elements);
 			System.out.println(node.getData() + " ");
 			elements.add(node.getData());
-			inorderTraversal(node.getRight(), elements);
+			inorderTraversal((TreeNode<T>) node.getRight(), elements);
 		}
 	}
 	
@@ -67,9 +70,9 @@ public class BSTTree<T> {
 		if (node == null)
 			return;
 		else {
-			inorderTraversal(node.getLeft());
+			inorderTraversal((TreeNode<T>) node.getLeft());
 			System.out.println(node.getData() + " ");
-			inorderTraversal(node.getRight());
+			inorderTraversal((TreeNode<T>) node.getRight());
 		}
 	}
 	
@@ -82,8 +85,8 @@ public class BSTTree<T> {
 	public void postorderTraversal(TreeNode<T> node, List<T> elements){
 		if(node == null ) return;
 		else {
-			postorderTraversal(node.getLeft(), elements);
-			postorderTraversal(node.getRight(), elements);
+			postorderTraversal((TreeNode<T>) node.getLeft(), elements);
+			postorderTraversal((TreeNode<T>) node.getRight(), elements);
 			elements.add(node.getData());
 			System.out.println(node.getData());
 		}
@@ -96,7 +99,7 @@ public class BSTTree<T> {
 	public void printLevelTraversal() throws InterruptedException {
 		Queue<TreeNode<T>> queue = new QueueImpl<>();
 		queue.enqueue(getHead());
-		TreeNode<T> endOfLevel = new TreeNode<T>(null, null, null);
+		TreeNode<T> endOfLevel = new TreeNodeImpl<T>(null, null, null);
 		int i = 1;
 
 		while (queue.size() != 0) {
@@ -107,9 +110,9 @@ public class BSTTree<T> {
 			while (!data.equals(endOfLevel)) {
 				System.out.print(data.getData() + ",");
 				if (data.getLeft() != null)
-					queue.enqueue(data.getLeft());
+					queue.enqueue((TreeNode<T>) data.getLeft());
 				if (data.getRight() != null) {
-					queue.enqueue(data.getRight());
+					queue.enqueue((TreeNode<T>) data.getRight());
 				}
 				data = queue.dequeue();
 			}

@@ -1,4 +1,4 @@
-package com.me.ds.template;
+package com.ds.template.impls;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,8 +7,8 @@ import java.util.List;
 public class SameBST<T> {
 
 	/**<p>
-	 * Getting all the children of the BST, like the 0 index will be have all children of 0 index 
-	 * element like wise for each element in the array.
+	 * Getting all the children of the BST, like the 0 index will be 
+	 * have all children of 0 index element like wise for each element in the array.
 	 * 
 	 * </p>
 	 * @param inputArray
@@ -17,8 +17,6 @@ public class SameBST<T> {
 	
 	public List<List<Integer>> getChildrenOfArray(Integer[] inputArray ){
      List<List<Integer>> childList = new ArrayList<List<Integer>>();
-     
-     
      // we traverse the array  and find all possible children of each index
      
      for(int i =0; i<inputArray.length;i++){
@@ -62,7 +60,6 @@ public class SameBST<T> {
 	
     private boolean isChild(Integer[] originalArray, int possibleFather, int possibleChild, int fatherIndex) {
 		
-		
 		for(int startIndex=0;startIndex<fatherIndex;startIndex++){
 			
 			if(originalArray[startIndex]>possibleChild && originalArray[startIndex]>possibleFather){
@@ -86,7 +83,7 @@ public class SameBST<T> {
 	  List<List<Integer>> firstChildList =  instance.getChildrenOfArray(a);
 	  List<List<Integer>> secondChildList =  instance.getChildrenOfArray(b);
 	  
-	  System.out.println(firstChildList+"\n"+ secondChildList);
+	  System.out.println("first child list: " +firstChildList+"\n second child list"+ secondChildList);
 	  
 	  // Now compare children of one array element
 	  for(int i =0 ;i <a.length;i++){

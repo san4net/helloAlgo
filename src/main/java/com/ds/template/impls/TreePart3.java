@@ -1,10 +1,11 @@
-package com.me.ds.template;
+package com.ds.template.impls;
 
 import com.core.Queue;
+import com.ds.template.Node;
 
 public class TreePart3<T> {
 
-	private  Node/*<T>*/ head;
+	private  TreeNode<T> head;
 	private static Node temp;
 	private boolean firstAddittion=true;
 	

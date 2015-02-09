@@ -1,4 +1,6 @@
-package com.me.ds.template;
+package com.ds.template.impls;
+
+import com.ds.template.TreeNode;
 
 public class TestTree<T> {
 	TreeNodeImpl<T> root ;
