@@ -1,16 +1,17 @@
-package com.me.ds.template.begining;
+package com.ds.template.impls;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.core.Queue;
+import com.ds.template.Node;
+import com.ds.template.Tree;
 import com.ds.template.TreeNode;
-import com.ds.template.impls.QueueImpl;
-import com.ds.template.impls.TreeNodeImpl;
 
-public class BSTTree<T> {
+public class BSTTree<T>  implements Tree<T>{
 	private TreeNode<T> head;
 	
+	@Override
 	public TreeNode<T> getHead() {
 		return head;
 	}
@@ -45,8 +46,11 @@ public class BSTTree<T> {
 		 node.add(1);
 		 node.add(2);
 		 node.add(3);
-		 buildTree(node);
-		 
+		 Tree tree = buildTree(node);
+		 System.out.println("inorder");
+		 tree.traversal(Traversal.IN_ORDER);
+		 System.out.println("POST");
+         tree.traversal(Traversal.POST_ORDER);
 	}
 	
 	public List<T> getInorderTraversal(){
@@ -82,6 +86,7 @@ public class BSTTree<T> {
 	    return elements;
 		
 	}
+	
 	public void postorderTraversal(TreeNode<T> node, List<T> elements){
 		if(node == null ) return;
 		else {
@@ -90,6 +95,25 @@ public class BSTTree<T> {
 			elements.add(node.getData());
 			System.out.println(node.getData());
 		}
+	}
+	
+	public void postOrder(TreeNode<T> node){
+	    if(node == null) return;
+	    else {
+	        postOrder((TreeNode<T>) node.getLeft());
+	        postOrder((TreeNode<T>) node.getRight());
+	        System.out.println(node.getData());
+	    }
+	}
+	public void preOrder(TreeNode<T> node){
+	    if(node == null){
+	        return ;
+	    }
+	    else {
+	        System.out.println(node.getData());
+	        preOrder((TreeNode<T>) node.getLeft());
+	        preOrder((TreeNode<T>) node.getRight());
+	    }
 	}
 	/**
      * 
@@ -119,12 +143,53 @@ public class BSTTree<T> {
 		}
 	}
 	
-	public static BSTTree< ? extends Number> buildTree(List<? extends Number> nodeData){
-	 System.out.println("nodes data" + nodeData);	
-	 BSTTree<Number> tree = new BSTTree<>();
-	 for(Number node: nodeData){
-		 tree.add(tree.getHead(), node);
-	 }
-	 return tree;
-	}
+    public static BSTTree<? extends Number> buildTree(List<? extends Number> nodeData) {
+        System.out.println("nodes data" + nodeData);
+        BSTTree<Number> tree = new BSTTree<>();
+        for (Number node : nodeData) {
+            tree.add(tree.getHead(), node);
+        }
+        return tree;
+    }
+
+    @Override
+    public void add(T data) {
+        if(head == null){
+            head =  new TreeNodeImpl<>(data, null, null);
+        }
+        else{
+            TreeNode<T> node = head;
+            if((Integer)node.getData() > (Integer)data){
+                if(node.getLeft()== null)
+                    node.setLeft(new TreeNodeImpl<T>(data, null, null));
+                else
+                 add((TreeNode<T>) node.getLeft(), data);
+            }else {
+                if(node.getRight()== null)
+                    node.setRight(new TreeNodeImpl<T>(data, null, null));
+                else
+                 add((TreeNode<T>)node.getRight(), data);
+            }
+        }
+    
+        
+    }
+
+    @Override
+    public void traversal(Traversal traversal) {
+        switch ( traversal) {
+        case IN_ORDER:
+             inorderTraversal(head);
+            break;
+        case POST_ORDER:
+            postOrder(head);
+            break;
+        case PRE_ORDER:
+            preOrder(head); 
+            break;
+        default:
+            break;
+        }
+        
+    }
 }

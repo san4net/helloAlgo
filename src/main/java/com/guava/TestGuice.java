@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Splitter;
@@ -19,7 +18,6 @@ public class TestGuice {
 	
 private void test(){
 	Collections.unmodifiableList(Lists.newArrayList());
-	Optional<Integer> possible = Optional.of(null);
 
 	Splitter split = Splitter.on(",").omitEmptyStrings();
 }

@@ -3,16 +3,15 @@ package com.ds.template.impls;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.me.ds.template.begining.BSTTree;
-import com.me.ds.template.begining.TreeNode;
-
+import com.ds.template.TreeNode;
 
 public class TreeeQuestions<T> {
 	/**
 	 * given 11 01 11 00 00 
 	 */
 	
-	private Node<T> head;
+	private TreeNode<T> head;
+
 //	private static Integer index=0;
 	private T data;
 	
@@ -26,17 +25,17 @@ public class TreeeQuestions<T> {
 		this.data = data;
 	}
 
-	private Node<T> constructTree(Integer[] input , Node<T> node, Integer index){
+	private TreeNode<T> constructTree(Integer[] input , TreeNode<T> node, Integer index){
 		
 		if (index < input.length) {
 			
 			setData((T) index);
 			
 			if (index == 0) {
-				head = new TreeNode<T>(data, null, null);
+				head = new TreeNodeImpl<T>(data, null, null);
 				node = head;
 			} else {
-				node = new TreeNode<T>(data, null, null);
+				node = new TreeNodeImpl<T>(data, null, null);
 			}
 
 			if (input[index].equals(1)) {
@@ -71,11 +70,11 @@ public class TreeeQuestions<T> {
 		a = new Integer(10);
 	}
 	
-	public void printInorder(Node<T> node){
+	public void printInorder(TreeNode<T> node){
 		if(node != null){
 			System.out.println(node.getData());
-			printInorder(node.getLeft());
-			printInorder(node.getRight());
+			printInorder((TreeNode<T>) node.getLeft());
+			printInorder((TreeNode<T>) node.getRight());
 		}
 	}
 	
@@ -102,7 +101,7 @@ public class TreeeQuestions<T> {
 		List<Integer> inoorderTraversal = tree.getInorderTraversal();
 		List<Integer> postorderTraversal = tree.getPostorderTraversal();
 		
-		com.me.ds.template.begining.TreeNode<Integer> head = new com.me.ds.template.begining.TreeNode<Integer>(null, null, null);
+		com.ds.template.TreeNode<Integer> head = new TreeNodeImpl<Integer>(null, null, null);
 		buildTreeUtils(inoorderTraversal, postorderTraversal, head);
 		
 		BSTTree<Integer> tree1 = new BSTTree<>();
@@ -111,10 +110,11 @@ public class TreeeQuestions<T> {
 		
 	}
 	
-	public static void buildTreeUtils(List<Integer> inorder, List<Integer> postorder, com.me.ds.template.begining.TreeNode<Integer> root){
+	public static void buildTreeUtils(List<Integer> inorder, List<Integer> postorder, com.ds.template.TreeNode<Integer> root){
 		if(root.getData() == null && inorder != null && postorder !=null){
-			com.me.ds.template.begining.TreeNode<Integer> left= new com.me.ds.template.begining.TreeNode<Integer>(null, null, null), right=new com.me.ds.template.begining.TreeNode<Integer>(null, null, null);
-			root = new com.me.ds.template.begining.TreeNode<Integer>(postorder.get(postorder.size()-1), left, right);
+		    TreeNode<Integer> left= new TreeNodeImpl<Integer>(null, null, null);
+		    TreeNode<Integer> right=new TreeNodeImpl<Integer>(null, null, null);
+			root = new TreeNodeImpl<Integer>(postorder.get(postorder.size()-1), left, right);
 			
 			// left subtree
 			Integer rootElement = postorder.get(postorder.size()-1);
