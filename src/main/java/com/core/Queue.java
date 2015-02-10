@@ -7,4 +7,8 @@ public interface Queue<T> {
 	T dequeue() throws InterruptedException;
 	
 	int size();
+	
+	boolean isEmpty();
+	
+	boolean isFull();
 }

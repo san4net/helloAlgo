@@ -25,9 +25,11 @@ public class QueueImpl<T> implements com.core.Queue<T> {
 	private void incrementSize(int i) {
 		size.getAndAdd(i);
 	}
+	
     public boolean isEmpty(){
     	return (size.intValue()==0);
     }
+    
 	@Override
 	public synchronized boolean enqueue(T data) {
       if( data == null ) return false;
@@ -76,7 +78,7 @@ public class QueueImpl<T> implements com.core.Queue<T> {
 	@Override
 	public int size() {
 		return size.intValue();
-	}
+	}  
 
 	private class Node<T> {
 		T data;
@@ -93,5 +95,10 @@ public class QueueImpl<T> implements com.core.Queue<T> {
 			return "[data:" + data + "]" + next == null ? "" : next.toString();
 		}
 	}
+
+    @Override
+    public boolean isFull() {
+        return false;
+    }
 
 }
