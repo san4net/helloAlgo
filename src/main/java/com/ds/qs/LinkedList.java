@@ -81,6 +81,31 @@ public class LinkedList<T> {
 		 }
 	 }
 	 
+	 /**
+	  * 
+	  * @param head
+	  * @param prevHead
+	  */
+	 private void reverseInPair(SingleNode<T> head, SingleNode<T> prevHead){
+		 
+		 if( head.getNext() == null || ((SingleNode)head.getNext()).getNext() == null){
+			 return;	  // base case
+		 }
+		 
+		 // reverse the first pair
+		 SingleNode<T> secondNode = (SingleNode<T>) head.getNext();
+		 head.setNext(secondNode.getNext());
+		 secondNode.setNext(head);
+		 
+		 if(prevHead == null){
+			 this.head = secondNode;
+		 }else {
+			 prevHead.setNext(secondNode);
+		 }
+		 
+		 reverseInPair((SingleNode<T>) head.getNext(), (SingleNode<T>)head);
+	 }
+	 
 	/**
 	 * @param args
 	 */
@@ -91,10 +116,13 @@ public class LinkedList<T> {
 		l.add(2);
 		l.add(3);
 		l.add(4);
+		l.add(5);
 		l.display();
-		l.reverse(2);
+		l.reverseInPair((SingleNode<Integer>) l.getHead(), null);
+		l.display();
+		/*l.reverse(2);
 		l.reverseRecursive((SingleNode<Integer>) l.getHead());
-		l.display();
+		l.display();*/
 
 	}
 
