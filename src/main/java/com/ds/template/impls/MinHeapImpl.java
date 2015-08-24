@@ -2,14 +2,20 @@ package com.ds.template.impls;
 
 import java.util.Arrays;
 
-public class MinHeapImpl implements IHeap {
-	private Integer[] elements;
+public class MinHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> {
+	private T[] elements;
 	private int size;
 	private int capacity;
-
+	
+	/* Leaf elements satisfy heap property so we need to start form the first non-leaf node and travere till root. 
+	 * 
+	 * (non-Javadoc)
+	 * @see com.ds.template.impls.IHeap#buildHeap(java.lang.Integer[])
+	 */
+   
 	@Override
-	public void buildHeap(Integer[] data) {
-		this.elements = data;
+	public void buildHeap(Comparable[] data ) {
+		this.elements = (T[]) data;
 		this.size = data.length;
 		this.capacity = data.length;
 		
@@ -20,35 +26,28 @@ public class MinHeapImpl implements IHeap {
 		}
 
 	}
-
-	public int getLeft(int i) {
-		return i * 2 + 1;
-	}
-
-	public int getRight(int i) {
-		return i * 2 + 2;
-	}
-
+	
+	
 	public void minHeapify(int index) {
 		if (index < size) {
-			int left = getLeft(index);
-			int right = getRight(index);
+			int left = getLeftChildIndex(index);
+			int right = getRightChildIndex(index);
 
 			int minIndex = -1;
 
-			if (left < size && elements[left] < elements[index]) {
+			if (left < size && elements[left].compareTo(elements[index]) < 0 ) {
 				minIndex = left;
 			} else {
 				minIndex = index;
 			}
 
-			if (right < size && elements[right] < elements[minIndex]) {
+			if (right < size && elements[right].compareTo(elements[minIndex]) < 0) {
 				minIndex = right;
 			}
 
 			if (minIndex != index) {
 				// exchange index with min index
-				int temp = elements[index];
+				T temp = elements[index];
 				elements[index] = elements[minIndex];
 				elements[minIndex] = temp;
 				minHeapify(minIndex);
@@ -60,25 +59,31 @@ public class MinHeapImpl implements IHeap {
 		capacity *= 2;
 		elements = Arrays.copyOf(elements, capacity * 2);
 	}
+	
 	public void display(){
 		System.out.println(""+Arrays.asList(elements));
 	}
-	public void insert(Integer number) {
+	/**
+	 * Time complexity is O(logn)
+	 * @param number
+	 */
+	public void insert(T data) {
 		if (size == capacity) {
 			resizeHeap();
 		}
+		
 		size++;
 		// index of
 		int i = size - 1;
 		// minHeapify((i-1)/2);
 		// put it their an call min heapy of its parent or do it here
        // this is percolate up
-		while (i >= 0 && number < elements[(i - 1) / 2]) {
+		while (i >= 0 && data.compareTo(elements[(i - 1) / 2]) < 0) {
 			elements[i] = elements[(i - 1) / 2];
 			if(i==0) break;
 			i = (i-1)/2;
 		}
-		elements[i]=number;
+		elements[i]=data;
 	}
 	
   public int getKthMininum(int k){
@@ -87,14 +92,15 @@ public class MinHeapImpl implements IHeap {
   }
 	
 	public static void main(String[] args) {
-		Integer[] ele = {5,3,4,1,2,10,20};
-		
-		MinHeapImpl minHeap = new MinHeapImpl();
-		minHeap.buildHeap(ele);
-		System.out.println(Arrays.asList(ele));
+		 
+		Integer[] element = {5,3,4,1,2,10,20};
+		System.out.println("element befor" +Arrays.asList(element));
+		MinHeapImpl<Integer> minHeap = new MinHeapImpl();
+		minHeap.buildHeap(element);
+		System.out.println(Arrays.asList(element));
 		minHeap.insert(-1);
-		System.out.println(Arrays.asList(ele));
-	   minHeap.display();
+		System.out.println(Arrays.asList(element));
+		minHeap.display();
 	}
 
 }
