@@ -1,5 +1,7 @@
 package com.ds.template.impls;
 
+import java.util.Arrays;
+
 public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> {
 	private T[] elements;
 	private int size;
@@ -19,6 +21,12 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		elements = (T[]) data;
 		size = data.length;
 		capacity = data.length;
+		
+		int i = size-1; // we can sacrifice index 0 and start from 1 
+		
+		for(int j = getParentIndex(i); j>-1 ; j--){
+			heapify(j);
+		}
 		
 	}
 
@@ -47,4 +55,10 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		/**
 		 * 
 		 */
+	public static void main(String[] args) {
+		Integer a[] = {1,2,3,4,5};
+		MaxHeapImpl<Integer> instance = new MaxHeapImpl<>();
+		instance.buildHeap(a);
+		System.out.println(Arrays.asList(a));
+	}
 }
