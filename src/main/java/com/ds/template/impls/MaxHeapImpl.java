@@ -34,6 +34,7 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		int leftChild = getLeftChildIndex(index);
 		int rightChild = getRightChildIndex(index);
 		int maxIndex = -1;
+	
 		if(leftChild < size && (elements[leftChild].compareTo(elements[index]) > 0))
 			maxIndex = leftChild;
 		else {
@@ -52,6 +53,7 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		  heapify(maxIndex);
 		}
 	}
+	
 		/**
 		 * 
 		 */
@@ -60,5 +62,38 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		MaxHeapImpl<Integer> instance = new MaxHeapImpl<>();
 		instance.buildHeap(a);
 		System.out.println(Arrays.asList(a));
+		System.out.println((0-1)/2);
+		instance.insert(6);
+		
 	}
+	
+	private void display (){
+		
+	}
+	private void resizeHeap() {
+		capacity *= 2;
+		elements = Arrays.copyOf(elements, capacity * 2);
+	}
+
+	@Override
+	public void insert(Comparable data) {
+	// check the size
+			if(size == capacity){
+				resizeHeap();
+			}
+			// now size will increase
+			size++;
+			//index of new data
+			int index = size -1;
+			
+			// now travers to fine the correct index
+			while(index >=0 && elements[getParentIndex(index)].compareTo(data) < 0){
+				// if child is greater we need to copy parent to child and update the index with parent index
+				elements[index] = elements[getParentIndex(index)];
+				index = getParentIndex(index);		
+			}
+			
+			elements[index] = (T) data;
+		}
+	
 }
