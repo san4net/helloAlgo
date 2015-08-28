@@ -1,4 +1,4 @@
-package com.ds.template.impls;
+package com.ds.template.heap;
 
 import java.util.Arrays;
 
@@ -7,7 +7,7 @@ public class Heap {
 	int size;  // no of elements in the heap
 	int capacity ; // capacity of heap
 
-	public Heap(int[] elements, int capacity) {
+	public Heap(Integer[] elements, int capacity) {
 		super();
 		this.elements = new Integer[capacity];
 		Arrays.copyOf(elements,capacity );
@@ -30,7 +30,6 @@ public class Heap {
 	public static int getRightChildIndex(int i) {
 		int childIndex = i * 2 + 2;
 		// if(childIndex>=capacity) return -1;
-
 		return childIndex;
 	}
 
@@ -116,7 +115,8 @@ public class Heap {
 	}
 
 	public static void main(String[] args) {
-		int[] array = { 5, 7, 8, 11, 56 };
+		Integer[] array = { 5, 7, 8, 11, 56 };
+		System.out.println("original " + Arrays.asList(array));
 		Heap h = new Heap(array, array.length);
 //		List<Integer> list = Arrays.asList(array);
 		int[] a = {1,2,3,4,5};
@@ -126,7 +126,6 @@ public class Heap {
 			maxHeapify(array, i);
 		}*/
 
-		System.out.println("heapify " + Arrays.asList(array));
 //		h.insert(45);
 	}
 
@@ -137,7 +136,7 @@ public class Heap {
 
 	}
 
-	public void buildHeap(int[] input) {
+	public void buildHeap(Integer[] input) {
 		if (input.length > size) {
 			resizeHeap();
 		}
@@ -166,17 +165,16 @@ public class Heap {
 		
 		// Increasing size to hold this new item
 		size++;
-
 		int i = size - 1;
 
 		// percolate up
 		while (i >= 0 && data > elements[getParentIndex(i)]) {
-			//	elements[i] = elements[(i - 1) / 2];
+				elements[i] = elements[getParentIndex(i)];
 			// exchange
-			exchange(elements, i, getParentIndex(i));
+			//exchange(elements, i, getParentIndex(i));
 			if (i == 0)
 				break;
-			i = getParentIndex(i);
+			 i = getParentIndex(i);
 		}
 
 		elements[i] = data;

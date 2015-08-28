@@ -1,11 +1,13 @@
-package com.ds.template.impls;
+package com.ds.template.impls.heap;
 
 import java.util.Arrays;
 
+import com.ds.template.impls.AbstractHeap;
+
 public class MinHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> {
-	private T[] elements;
+	/*private T[] elements;
 	private int size;
-	private int capacity;
+	private int capacity;*/
 	
 	/* Leaf elements satisfy heap property so we need to start form the first non-leaf node and travere till root. 
 	 * 
@@ -22,13 +24,14 @@ public class MinHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		int j = size-1;
 		
 		for (int i = (j-1)/2 ; i>=0; i--) {
-			minHeapify(i);
+			heapify(i);
 		}
 
 	}
 	
 	
-	public void minHeapify(int index) {
+	@Override
+	public void heapify(int index) {
 		if (index < size) {
 			int left = getLeftChildIndex(index);
 			int right = getRightChildIndex(index);
@@ -47,10 +50,10 @@ public class MinHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 
 			if (minIndex != index) {
 				// exchange index with min index
-				T temp = elements[index];
+				T temp = (T) elements[index];
 				elements[index] = elements[minIndex];
 				elements[minIndex] = temp;
-				minHeapify(minIndex);
+				heapify(minIndex);
 			}
 		}
 	}
@@ -63,17 +66,18 @@ public class MinHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 	public void display(){
 		System.out.println(""+Arrays.asList(elements));
 	}
+	
 	/**
 	 * Time complexity is O(logn)
 	 * @param number
 	 */
-	public void insert(T data) {
+	public void insert(Comparable data) {
 		if (size == capacity) {
 			resizeHeap();
 		}
 		
 		size++;
-		// index of
+		// index of new element to be inserted
 		int i = size - 1;
 		// minHeapify((i-1)/2);
 		// put it their an call min heapy of its parent or do it here
@@ -83,7 +87,7 @@ public class MinHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 			if(i==0) break;
 			i = (i-1)/2;
 		}
-		elements[i]=data;
+		elements[i] = (T) data;
 	}
 	
   public int getKthMininum(int k){
@@ -102,5 +106,6 @@ public class MinHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		System.out.println(Arrays.asList(element));
 		minHeap.display();
 	}
+
 
 }

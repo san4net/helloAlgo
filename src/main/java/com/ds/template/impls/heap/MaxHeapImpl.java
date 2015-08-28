@@ -1,6 +1,8 @@
-package com.ds.template.impls;
+package com.ds.template.impls.heap;
 
 import java.util.Arrays;
+
+import com.ds.template.impls.AbstractHeap;
 
 public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> {
 	private T[] elements;
@@ -12,6 +14,14 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		
 	}
 	
+	private void init(Comparable[] data){
+		int i =0;
+		for(; i<data.length && data[i] != null ; i++){
+		}
+		size = i;
+		capacity = data.length;
+	}
+	
 	/** to build we need to start from non leaf node till 0th index
 	 * 
 	 */
@@ -19,8 +29,7 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 	public void buildHeap(Comparable[] data) {
 		// TODO Auto-generated method stub
 		elements = (T[]) data;
-		size = data.length;
-		capacity = data.length;
+		init(data);
 		
 		int i = size-1; // we can sacrifice index 0 and start from 1 
 		
@@ -30,7 +39,7 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		
 	}
 
-	private void heapify(int index){
+	public void heapify(int index){
 		int leftChild = getLeftChildIndex(index);
 		int rightChild = getRightChildIndex(index);
 		int maxIndex = -1;
@@ -54,6 +63,10 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		}
 	}
 	
+	public void display(){
+		System.out.println("******display******");
+		System.out.println(Arrays.asList(elements));
+	}
 		/**
 		 * 
 		 */
@@ -61,15 +74,13 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		Integer a[] = {1,2,3,4,5};
 		MaxHeapImpl<Integer> instance = new MaxHeapImpl<>();
 		instance.buildHeap(a);
-		System.out.println(Arrays.asList(a));
-		System.out.println((0-1)/2);
+		instance.display();
 		instance.insert(6);
-		
+		instance.display();
+		instance.heapSort();
+		instance.display();
 	}
 	
-	private void display (){
-		
-	}
 	private void resizeHeap() {
 		capacity *= 2;
 		elements = Arrays.copyOf(elements, capacity * 2);
@@ -86,8 +97,8 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 			//index of new data
 			int index = size -1;
 			
-			// now travers to fine the correct index
-			while(index >=0 && elements[getParentIndex(index)].compareTo(data) < 0){
+			// now traverse to find the correct index
+			while(index > 0 && elements[getParentIndex(index)].compareTo(data) < 0){
 				// if child is greater we need to copy parent to child and update the index with parent index
 				elements[index] = elements[getParentIndex(index)];
 				index = getParentIndex(index);		
@@ -95,5 +106,44 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 			
 			elements[index] = (T) data;
 		}
+
+	/**
+	 * To make things simple we can start with 1 leaving index 0 
+	 */
+	
+	/**
+	 * to sort we can use heap property
+	 * 1. build a heap .. here maxheap .  now we know the element at the top is max. 
+	 * 2. swap this element with last index .. so max is at last(this we will keep repeating for sorting)
+	 * 3. decrease the size of heap  by 1 . 
+	 * 4. heapify the element at top index. and repeat 2 to 4
+	 * 
+	 */
+	public void heapSort() {
+		// we have have
+		buildHeap(elements);
+
+		for (int i = size - 1; i > 0; i--) {
+			// swap 1 to size here it will be i
+			swap(0, i);
+			// we need to decrease size
+			size--;
+			heapify(0);
+		}
+	}
+	
+	private void swap(int index1, int index2){
+		T temp = elements[index1];
+		elements[index1] = elements[index2];
+		elements[index2] = temp;
+	}
+
+	@Override
+	public Comparable root() {
+		// TODO Auto-generated method stub
+		return elements[0];
+	}
+   
 	
 }
+
