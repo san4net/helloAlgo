@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import com.ds.template.impls.AbstractHeap;
 
-public class MinHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> {
+public class MinHeapImpl<T extends Number> extends AbstractHeap<Number> {
 	/*private T[] elements;
 	private int size;
 	private int capacity;*/
@@ -16,7 +16,7 @@ public class MinHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 	 */
    
 	@Override
-	public void buildHeap(Comparable[] data ) {
+	public void buildHeap(Number[] data ) {
 		this.elements = (T[]) data;
 		this.size = data.length;
 		this.capacity = data.length;
@@ -38,13 +38,13 @@ public class MinHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 
 			int minIndex = -1;
 
-			if (left < size && elements[left].compareTo(elements[index]) < 0 ) {
+			if (left < size && elements[left].intValue() < elements[index].intValue() ) {
 				minIndex = left;
 			} else {
 				minIndex = index;
 			}
 
-			if (right < size && elements[right].compareTo(elements[minIndex]) < 0) {
+			if (right < size && elements[right].intValue() < elements[minIndex].intValue()) {
 				minIndex = right;
 			}
 
@@ -71,7 +71,7 @@ public class MinHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 	 * Time complexity is O(logn)
 	 * @param number
 	 */
-	public void insert(Comparable data) {
+	public void insert(Number data) {
 		if (size == capacity) {
 			resizeHeap();
 		}
@@ -82,7 +82,7 @@ public class MinHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		// minHeapify((i-1)/2);
 		// put it their an call min heapy of its parent or do it here
        // this is percolate up
-		while (i >= 0 && data.compareTo(elements[(i - 1) / 2]) < 0) {
+		while (i >= 0 && data.intValue() < (elements[getParentIndex(i)].intValue()) ) {
 			elements[i] = elements[(i - 1) / 2];
 			if(i==0) break;
 			i = (i-1)/2;

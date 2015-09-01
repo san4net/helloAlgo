@@ -1,6 +1,6 @@
 package com.ds.template.heap;
 
-public interface IHeap<T extends Comparable > {
+public interface IHeap<T extends Number > {
 	public int getLeftChildIndex(int index);
 	
 	public int getRightChildIndex(int index);
@@ -11,9 +11,11 @@ public interface IHeap<T extends Comparable > {
 	
 	public void insert(T data);
 	
-	public Comparable root();
+	public Number root();
 	
-	public Comparable remove(int index);
+	public Number remove(int index);
 	
 	public void heapify(int index);
+	
+	public void display();
 }

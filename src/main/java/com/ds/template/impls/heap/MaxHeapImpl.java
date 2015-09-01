@@ -1,20 +1,16 @@
-package com.ds.template.impls.heap;
 
+package com.ds.template.impls.heap;
 import java.util.Arrays;
 
 import com.ds.template.impls.AbstractHeap;
 
-public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> {
-	private T[] elements;
-	private int size;
-	private int capacity;
+public class MaxHeapImpl<T extends Number> extends AbstractHeap<Number> {
 	
 	public MaxHeapImpl() {
-		// TODO Auto-generated constructor stub
 		
 	}
 	
-	private void init(Comparable[] data){
+	private void init(Number[] data){
 		int i =0;
 		for(; i<data.length && data[i] != null ; i++){
 		}
@@ -26,7 +22,7 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 	 * 
 	 */
 	@Override
-	public void buildHeap(Comparable[] data) {
+	public void buildHeap(Number[] data) {
 		// TODO Auto-generated method stub
 		elements = (T[]) data;
 		init(data);
@@ -44,29 +40,25 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		int rightChild = getRightChildIndex(index);
 		int maxIndex = -1;
 	
-		if(leftChild < size && (elements[leftChild].compareTo(elements[index]) > 0))
+		if(leftChild < size && elements[leftChild].intValue() > (elements[index].intValue()))
 			maxIndex = leftChild;
 		else {
 			maxIndex = index;
 		}
 		
-		if(rightChild < size && (elements[rightChild].compareTo(elements[maxIndex]))>0){
+		if(rightChild < size && elements[rightChild].intValue() > elements[maxIndex].intValue()){
 			maxIndex = rightChild;
 		}
 		
 		if(maxIndex != index){
 			//swap the element at index with element at min indes
-		  T data = elements[index];
+		  T data = (T) elements[index];
 		  elements[index] = elements[maxIndex];
 		  elements[maxIndex] = data;
 		  heapify(maxIndex);
 		}
 	}
 	
-	public void display(){
-		System.out.println("******display******");
-		System.out.println(Arrays.asList(elements));
-	}
 		/**
 		 * 
 		 */
@@ -79,6 +71,11 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 		instance.display();
 		instance.heapSort();
 		instance.display();
+		System.out.println("removing root element");
+		instance.buildHeap(a);
+		instance.display();
+		instance.remove(0);
+		instance.display();
 	}
 	
 	private void resizeHeap() {
@@ -87,7 +84,7 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 	}
 
 	@Override
-	public void insert(Comparable data) {
+	public void insert(Number data) {
 	// check the size
 			if(size == capacity){
 				resizeHeap();
@@ -98,7 +95,7 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 			int index = size -1;
 			
 			// now traverse to find the correct index
-			while(index > 0 && elements[getParentIndex(index)].compareTo(data) < 0){
+			while(index > 0 && elements[getParentIndex(index)].intValue() < data.intValue()){
 				// if child is greater we need to copy parent to child and update the index with parent index
 				elements[index] = elements[getParentIndex(index)];
 				index = getParentIndex(index);		
@@ -133,17 +130,16 @@ public class MaxHeapImpl<T extends Comparable> extends AbstractHeap<Comparable> 
 	}
 	
 	private void swap(int index1, int index2){
-		T temp = elements[index1];
+		T temp = (T) elements[index1];
 		elements[index1] = elements[index2];
 		elements[index2] = temp;
 	}
 
 	@Override
-	public Comparable root() {
+	public Number root() {
 		// TODO Auto-generated method stub
 		return elements[0];
 	}
-   
 	
 }
 
