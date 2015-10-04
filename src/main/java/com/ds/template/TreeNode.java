@@ -1,11 +1,11 @@
 package com.ds.template;
 
 public interface TreeNode<T> extends Node<T> {
-	Node<T> getLeft();
+	TreeNode<T> getLeft();
 	
-	void setLeft(Node<T> left);
+	void setLeft(TreeNode<T> left);
 	
-	Node<T> getRight();
+	TreeNode<T> getRight();
 	
-	void setRight(Node<T> right);
+	void setRight(TreeNode<T> right);
 }

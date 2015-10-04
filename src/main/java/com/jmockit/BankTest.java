@@ -23,7 +23,6 @@ public class BankTest {
 		Bank b = new Bank();
 		
 		new Expectations() {
-	
 			{
 			  db.retrieveAccountHolderName("san");
 			  returns("san");

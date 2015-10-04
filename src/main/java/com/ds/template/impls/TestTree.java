@@ -1,26 +1,27 @@
 package com.ds.template.impls;
 
+import com.ds.template.Node;
 import com.ds.template.TreeNode;
 
 public class TestTree<T> {
 	TreeNodeImpl<T> root ;
 	
-	public void add(T data, TreeNode<T> node){
+	public void add(T data, Node<T> node){
 		if(root == null){
 			root = new  TreeNodeImpl<T>(data, null, null);
 		}
 		else{
 			if((Integer)node.getData()>(Integer)data){
-				if(node.getLeft() == null){
-					node.setLeft(new TreeNodeImpl<T>(data, null, null));
+				if(((TreeNode)node).getLeft() == null){
+					((TreeNode)node).setLeft(new TreeNodeImpl<T>(data, null, null));
 				}else{
-					add(data, node.getLeft());
+					add(data, ((TreeNode)node).getLeft());
 				}
 			}else{
-				if(node.getRight() == null){
-					node.setRight(new TreeNodeImpl<T>(data, null, null));
+				if(((TreeNode)node).getRight() == null){
+					((TreeNode)node).setRight(new TreeNodeImpl<T>(data, null, null));
 				}else{
-					add(data, node.getRight());
+					add(data, ((TreeNode)node).getRight());
 				}
 				
 			}
@@ -32,8 +33,8 @@ private int findDepth(Node<T> node){
 	if(node == null)
 		return 0;
 	else{
-		int left = findDepth(node.getLeft());
-		int right = findDepth(node.getRight());
+		int left = findDepth(((TreeNode)node).getLeft());
+		int right = findDepth(((TreeNode)node).getRight());
 		
 		if(left>right){
 			return left +1;
@@ -68,13 +69,14 @@ public static void main(String[] args) {
 	mytree.inOrderTraversal(mytree.root);
 }
 
-private void printAtGivenLevel(Node<T> node, int level){
-	if(node == null) return;
-	
-	if(level ==1){
-		
+	private void printAtGivenLevel(Node<T> node, int level) {
+		if (node == null)
+			return;
+
+		if (level == 1) {
+
+		}
+
 	}
-	
-}
 
 }

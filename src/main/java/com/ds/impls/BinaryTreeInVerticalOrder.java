@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ds.template.impls.BSTTree;
-import com.me.ds.template.begining.TreeNode;
+import com.ds.template.TreeNode;
 
 public class BinaryTreeInVerticalOrder {
    Map<Integer, List<Number>> map = new HashMap<Integer, List<Number>>();

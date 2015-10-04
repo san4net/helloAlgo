@@ -57,11 +57,11 @@ public class ConverBTToDLL {
 	}
 	public static void main(String[] args) {
 		GenericTree<Long> tr = new GenericTree<Long>();
-		tr.add(4l, tr.head);
-		tr.add(2l, tr.head);
-		tr.add(3l, tr.head);
-		tr.add(1l, tr.head);
-		tr.add(5l, tr.head);
+		tr.add(4l, tr.getHead());
+		tr.add(2l, tr.getHead());
+		tr.add(3l, tr.getHead());
+		tr.add(1l, tr.getHead());
+		tr.add(5l, tr.getHead());
 		
 	}
 }

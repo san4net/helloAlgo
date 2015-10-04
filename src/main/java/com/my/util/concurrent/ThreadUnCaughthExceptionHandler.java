@@ -6,7 +6,6 @@ import java.util.List;
 public class ThreadUnCaughthExceptionHandler {
 
 	public ThreadUnCaughthExceptionHandler() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	private static class InnerTask implements Runnable, UncaughtExceptionHandler{

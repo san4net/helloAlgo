@@ -1,10 +1,8 @@
 package com.ds.template.impls;
 
-import java.util.Arrays;
-
 import com.ds.template.heap.IHeap;
 
-public abstract class AbstractHeap<T extends Number> implements IHeap< Number> {
+public abstract class AbstractHeap<T extends Number> implements IHeap<Number> {
 	protected T[] elements;
 	protected int size;
 	protected int capacity;

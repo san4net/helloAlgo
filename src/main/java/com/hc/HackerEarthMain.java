@@ -36,6 +36,7 @@ public class HackerEarthMain<V, O> {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String noOfTestCase = br.readLine();
 		int noOfTC = Integer.parseInt(noOfTestCase);
+		
 		System.out.println("looping " + noOfTC);
 
 		for (int i = 0; i < noOfTC; i++) {

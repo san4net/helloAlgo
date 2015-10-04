@@ -2,13 +2,14 @@ package com.my.util.concurrent;
 
 import java.util.concurrent.locks.Lock;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.my.util.concurrent.Driver.Count;
 import com.my.util.concurrent.Driver.MyObject;
 
 public class ThreadImpl implements Runnable {
-	private static final Logger logger = Logger.getLogger(ThreadImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(ThreadImpl.class);
 	private Driver.Count id;
 	private volatile MyObject myObject;
 	private Lock lock;

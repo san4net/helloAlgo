@@ -1,14 +1,13 @@
 package com.ds.template.impls;
 
-import com.ds.template.Node;
-import com.ds.template.TreeNode;
+import com.ds.template.TreeNode	;
 
 public class TreeNodeImpl<T> implements TreeNode<T> {
 	private T data;
-	private Node<T> left;
-	private Node<T> right;
+	private TreeNode<T> left;
+	private TreeNode<T> right;
 
-	public TreeNodeImpl(T data, Node<T> left, Node<T> right) {
+	public TreeNodeImpl(T data, TreeNode<T> left, TreeNode<T> right) {
 		super();
 		this.data = data;
 		this.left = left;
@@ -20,22 +19,22 @@ public class TreeNodeImpl<T> implements TreeNode<T> {
 	}
 
 	@Override
-	public Node<T> getLeft() {
+	public TreeNode<T> getLeft() {
 		return left;
 	}
 
 	@Override
-	public void setLeft(Node<T> left) {
+	public void setLeft(TreeNode<T> left) {
 		this.left = left;
 	}
 
 	@Override
-	public Node<T> getRight() {
+	public TreeNode<T> getRight() {
 		return right;
 	}
 
 	@Override
-	public void setRight(Node<T> right) {
+	public void setRight(TreeNode<T> right) {
 		this.right = right;
 	}
 

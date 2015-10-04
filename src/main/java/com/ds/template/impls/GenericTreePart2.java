@@ -6,7 +6,12 @@ import java.util.Set;
 import com.core.Queue;
 import com.ds.template.Node;
 import com.ds.template.TreeNode;
-
+/**
+ * Binary Search Tree
+ * @author santosh kumar
+ *
+ * @param <T>
+ */
 public class GenericTreePart2<T> {
     private TreeNode<T> head;
 

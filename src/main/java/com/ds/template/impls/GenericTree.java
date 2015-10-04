@@ -7,11 +7,24 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.ds.template.Node;
 import com.ds.template.TreeNode;
-
+/**
+ * Binary Tree
+ * @author santosh kumar
+ *
+ * @param <T>
+ */
+/**
+ * @author admin-pc
+ *
+ * @param <T>
+ */
 public class GenericTree<T> implements Serializable{
 	private static final long serialVersionUID = 8568082440037774768L;
-	
-	TreeNode<T> head = null;
+	private TreeNode<T> head = null;
+ 
+	public TreeNode<T> getHead() {
+		return head;
+	}
 
 	/**
 	 * This is BST
@@ -25,8 +38,8 @@ public class GenericTree<T> implements Serializable{
 		} else {
 			if ((Long) temp.getData() > (Long) data) {
 				if (temp.getLeft() == null) {
-					Node<T> l = new TreeNodeImpl<T>(data, null, null);
-					temp.setLeft(l);
+					TreeNode<T> localNode = new TreeNodeImpl<T>(data, null, null);
+					temp.setLeft(localNode);
 				} else {
 					add(data, (TreeNode<T>)temp.getLeft());
 				}
@@ -62,7 +75,6 @@ public class GenericTree<T> implements Serializable{
 				push(stack, (TreeNode<T>) current.getRight(), order);
 			}
 		}
-
 	}
 
 	public void preorderIterative(TreeNode<T> node) {
@@ -159,7 +171,7 @@ public class GenericTree<T> implements Serializable{
 		}
 	}
 
-	static Node prev;
+	static TreeNode prev;
 
 	private void setPrevNode(TreeNode<T> node) {
 		if (node != null) {

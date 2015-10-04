@@ -10,6 +10,6 @@ public interface Stack<T> {
 	boolean isEmpty();
 
 	String toString();
-	
+
 	void clear();
 }
