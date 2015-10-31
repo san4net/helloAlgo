@@ -18,4 +18,8 @@ public interface IHeap<T extends Number > {
 	public void heapify(int index);
 	
 	public void display();
+	
+	public void resize();
+	
+	public boolean isResizingRequired();
 }

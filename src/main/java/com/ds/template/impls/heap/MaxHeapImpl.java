@@ -10,48 +10,27 @@ public class MaxHeapImpl<T extends Number> extends AbstractHeap<Number> {
 		
 	}
 	
-	private void init(Number[] data){
-		int i =0;
-		for(; i<data.length && data[i] != null ; i++){
-		}
-		size = i;
-		capacity = data.length;
-	}
-	
 	/** to build we need to start from non leaf node till 0th index
 	 * 
 	 */
-	@Override
-	public void buildHeap(Number[] data) {
-		// TODO Auto-generated method stub
-		elements = (T[]) data;
-		init(data);
-		
-		int i = size-1; // we can sacrifice index 0 and start from 1 
-		
-		for(int j = getParentIndex(i); j>-1 ; j--){
-			heapify(j);
-		}
-		
-	}
-
+	
 	public void heapify(int index){
 		int leftChild = getLeftChildIndex(index);
 		int rightChild = getRightChildIndex(index);
 		int maxIndex = -1;
 	
-		if(leftChild < size && elements[leftChild].intValue() > (elements[index].intValue()))
+		if(leftChild < getSize() && elements[leftChild].intValue() > (elements[index].intValue()))
 			maxIndex = leftChild;
 		else {
 			maxIndex = index;
 		}
 		
-		if(rightChild < size && elements[rightChild].intValue() > elements[maxIndex].intValue()){
+		if(rightChild < getSize() && elements[rightChild].intValue() > elements[maxIndex].intValue()){
 			maxIndex = rightChild;
 		}
 		
 		if(maxIndex != index){
-			//swap the element at index with element at min indes
+		//swap the element at index with element at max index
 		  T data = (T) elements[index];
 		  elements[index] = elements[maxIndex];
 		  elements[maxIndex] = data;
@@ -63,7 +42,7 @@ public class MaxHeapImpl<T extends Number> extends AbstractHeap<Number> {
 		 * 
 		 */
 	public static void main(String[] args) {
-		Integer a[] = {1,2,3,4,5};
+		Integer a[] = {1,2,3};
 		MaxHeapImpl<Integer> instance = new MaxHeapImpl<>();
 		instance.buildHeap(a);
 		instance.display();
@@ -78,29 +57,22 @@ public class MaxHeapImpl<T extends Number> extends AbstractHeap<Number> {
 		instance.display();
 	}
 	
-	private void resizeHeap() {
-		capacity *= 2;
-		elements = Arrays.copyOf(elements, capacity * 2);
-	}
-
 	@Override
 	public void insert(Number data) {
-	// check the size
-			if(size == capacity){
-				resizeHeap();
+		// check the size
+			if(isResizingRequired()){
+				resize();
 			}
 			// now size will increase
-			size++;
+			incrementSize();
 			//index of new data
-			int index = size -1;
-			
-			// now traverse to find the correct index
+			int index = getSize() -1;
+			// Now traverse to find the correct index
 			while(index > 0 && elements[getParentIndex(index)].intValue() < data.intValue()){
 				// if child is greater we need to copy parent to child and update the index with parent index
 				elements[index] = elements[getParentIndex(index)];
 				index = getParentIndex(index);		
 			}
-			
 			elements[index] = (T) data;
 		}
 
@@ -119,13 +91,12 @@ public class MaxHeapImpl<T extends Number> extends AbstractHeap<Number> {
 	public void heapSort() {
 		// we have have
 		buildHeap(elements);
-
-		for (int i = size - 1; i > 0; i--) {
-			// swap 1 to size here it will be i
-			swap(0, i);
-			// we need to decrease size
-			size--;
-			heapify(0);
+ 		for (int i = getSize() - 1; i > 0; i--) {
+		// swap 1 to size here it will be i
+		swap(0, i);
+		// we need to decrease size
+		decrementSize();;
+		heapify(0);
 		}
 	}
 	
