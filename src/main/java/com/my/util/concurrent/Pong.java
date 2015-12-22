@@ -3,47 +3,34 @@ package com.my.util.concurrent;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.my.util.concurrent.SetupPingPong.Poison;
+import com.my.util.concurrent.SetupPingPong.Status;
+
 public class Pong<V> implements Callable<V> {
 
-//	private  Boolean controller ;
 	private AtomicBoolean controller;
-	
-	/*public Pong(Boolean controller) {
+	private volatile Poison poison;
+
+	public Pong(AtomicBoolean controller, Poison poison) {
 		super();
 		this.controller = controller;
-	}*/
-	
-	public Pong(AtomicBoolean controller) {
-		super();
-		this.controller = controller;
+		this.poison = poison;
 	}
 
 	@Override
 	public V call() throws Exception {
-		while(true){
-		synchronized (controller) {
-		while(true){
-				while(controller.get()==true){
-					controller.notify();
+		while (poison.getState() == Status.RUN) {
+			synchronized (controller) {
+				while (controller.get() == true) {
 					controller.wait();
 				}
 				System.out.println("pong");
 				controller.set(true);
-//				controller.notify();
+				controller.notify();
 			}
-		
-			
-
-					/*while(controller == true){
-						controller.notify();
-						controller.wait();
-					}
-					System.out.println("pong");
-					controller = true;
-					controller.notify(); */
-				}
-			
 		}
+		System.out.println("exiting"+getClass().getSimpleName());
+		return null;
 	}
 
 }

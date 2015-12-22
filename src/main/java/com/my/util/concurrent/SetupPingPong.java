@@ -1,46 +1,58 @@
 package com.my.util.concurrent;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SetupPingPong {
-//	ThreadPoolExecutor tp = (ThreadPoolExecutor) Executors
-//			.newFixedThreadPool(2);
-	
 
-	SetupPingPong() {
+	private  Poison poison =  new Poison(Status.RUN);
 
-	}
-
-
-
-	public static void main(String[] args) {
-
-		SetupPingPong pingpong = new SetupPingPong();
-		AtomicBoolean controller =  new AtomicBoolean(true);
-//		Boolean controller = new Boolean(true);
-//		Object contrlString = new String("ping");
-		Pong<String> pong = new Pong<String>(controller);
-		Ping<String> ping = new Ping<String>(controller);
-		ThreadPoolExecutor tp = (ThreadPoolExecutor) Executors
-				.newFixedThreadPool(2);
+	public void triggerRun() {
+		AtomicBoolean controller = new AtomicBoolean(true);
+		Ping<String> ping = new Ping<String>(controller, poison);
+		Pong<String> pong = new Pong<String>(controller, poison);
+		ThreadPoolExecutor tp = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
 		try {
 			tp.submit(ping);
-		} /*catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			tp.submit(pong);
+			 Thread.sleep(100);
+			poison.setState(Status.STOP);
+			System.err.println("********" + poison.getState());
+			System.err.println("********");
+			tp.shutdown();
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		finally{
-			
+		} finally {
+
 		}
-		tp.submit(pong);
-		
-		// Callable pingcall = new SetupPingPong.Ping<"Ping">(controller);
 
 	}
+
+	public static void main(String[] args) {
+		new SetupPingPong().triggerRun();
+	}
+
+	public static class Poison {
+		private volatile Status state;
+
+		public Poison(Status state) {
+			super();
+			this.state = state;
+		}
+
+		public Status getState() {
+			return state;
+		}
+
+		public void setState(Status state) {
+			this.state = state;
+		}
+
+	}
+
+	public enum Status {
+		RUN, STOP
+	}
+
 }
