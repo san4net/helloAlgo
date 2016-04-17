@@ -16,6 +16,7 @@ public class ToggleCommand implements Command {
 		}else {
 			light.on();
 		}
+		// toggle the state
 		state = state == ToggleState.ON ? ToggleState.OFF : ToggleState.ON;
 	}
 
