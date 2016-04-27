@@ -2,11 +2,13 @@ package com.sync.systems;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Properties;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 public class Utils {
+	public static String TITLE = "SyncServer v1.0";
 	static enum LEVEL {
 		INFO, ERRO;
 	}
@@ -41,5 +43,23 @@ public class Utils {
 	
 	public static void main(String[] args) {
 	load();	
+	}
+	
+	public static SyncServer getServerStub() throws RemoteException, NotBoundException{
+		Registry registry = LocateRegistry.getRegistry();
+		SyncServer stub = (SyncServer) registry.lookup("SyncServer");
+		return stub;
+	}
+	
+	public static Credential getCredentialStub() throws RemoteException, NotBoundException{
+		Registry registry = LocateRegistry.getRegistry();
+		Credential stub = (Credential) registry.lookup("credentialManager");
+		return stub;
+	}
+	
+	
+	public static boolean authenticate(String userName, String password) throws RemoteException, NotBoundException{
+		return true;
+//		return getCredentialStub().isAuthorized(userName, password);
 	}
 }

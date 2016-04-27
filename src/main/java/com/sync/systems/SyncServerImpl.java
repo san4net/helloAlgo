@@ -16,8 +16,24 @@ public class SyncServerImpl implements SyncServer {
 	}
 
 	@Override
-	public void start() throws RemoteException{
-//		ServerSocket servsock = new ServerSocket(config.getPort(),50, config.getServerIp());
+	public void start() throws RemoteException, AlreadyBoundException{
+		SyncServer obj = new SyncServerImpl(Utils.load());
+	
+		 SyncServer stub = (SyncServer) UnicastRemoteObject.exportObject(obj, 1021);
+		 Registry registry = LocateRegistry.getRegistry();
+		 try {
+			registry.unbind("SyncServer");
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 registry.bind("SyncServer", stub);
+		 
+		 Credential credential = new CredentialManager();
+		 Credential credStub = (Credential) UnicastRemoteObject.exportObject(credential, 1022);
+		  registry = LocateRegistry.getRegistry();
+		 registry.bind("credentialManager", credStub);
+		 System.err.println("Server ready");
 	}
 
 	@Override
@@ -35,20 +51,22 @@ public class SyncServerImpl implements SyncServer {
 
 	@Override
 	public boolean logout() throws RemoteException{
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	private static SyncServer getInstance() {
 		return null;
 	}
+	
 	public static void main(String[] args) throws RemoteException, AlreadyBoundException, NotBoundException {
 		 SyncServer obj = new SyncServerImpl(Utils.load());
-		 SyncServer stub = (SyncServer) UnicastRemoteObject.exportObject(obj, 0);
+		 obj.start();
+		 /*SyncServer stub = (SyncServer) UnicastRemoteObject.exportObject(obj, 0);
 		    // Bind the remote object's stub in the registry
-		    Registry registry = LocateRegistry.getRegistry();
-		    registry.unbind("SyncServer");
-		    registry.bind("SyncServer", stub);
-		    System.err.println("Server ready");
+		 Registry registry = LocateRegistry.getRegistry();
+		 registry.unbind("SyncServer");
+		 registry.bind("SyncServer", stub);
+		 System.err.println("Server ready");*/
 	}
+	
 }
