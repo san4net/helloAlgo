@@ -1,4 +1,4 @@
-package com.sync.systems;
+package com.sync.systems.rmi;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.Remote;

@@ -1,4 +1,4 @@
-package com.sync.systems;
+package com.sync.systems.rmi;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
@@ -6,6 +6,12 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+
+import com.sync.systems.Credential;
+import com.sync.systems.CredentialManager;
+import com.sync.systems.ServerProperties;
+import com.sync.systems.Utils;
+
 import static com.sync.systems.Utils.*;
 public class SyncServerImpl implements SyncServer {
 //	INSTANCE(load());
@@ -45,7 +51,7 @@ public class SyncServerImpl implements SyncServer {
 	@Override
 	public boolean login() throws RemoteException{
 		// TODO Auto-generated method stub
-		trace("got login request");
+		log("got login request");
 		return false;
 	}
 
