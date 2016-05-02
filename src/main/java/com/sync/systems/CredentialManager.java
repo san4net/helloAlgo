@@ -11,6 +11,13 @@ import java.util.Map;
  *
  */
 public class CredentialManager implements Credential {
+	private static CredentialManager manager = new CredentialManager();
+	
+	public CredentialManager() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	private static Map<String, String> credential;
 	static {
 		credential = new HashMap<>();
@@ -22,4 +29,7 @@ public class CredentialManager implements Credential {
 		return password.equals(credential.get(username));
 	}
 	
+	public static CredentialManager getInstance(){
+		return manager;
+	}
 }
