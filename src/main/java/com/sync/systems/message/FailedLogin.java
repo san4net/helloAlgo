@@ -4,7 +4,7 @@ public class FailedLogin extends AbstractMessage{
 	private static final long serialVersionUID = 6107325235440609410L;
 	
 	public FailedLogin(Login msg) {
-		super(MsgType.FAILEDLOGIN, "failed");
+		super(MessageType.FAILEDLOGIN, "failed");
 	}
 
 	public static FailedLogin create(Login login){

@@ -91,12 +91,12 @@ public class MaxHeapImpl<T extends Number> extends AbstractHeap<Number> {
 	public void heapSort() {
 		// we have have
 		buildHeap(elements);
- 		for (int i = getSize() - 1; i > 0; i--) {
-		// swap 1 to size here it will be i
-		swap(0, i);
-		// we need to decrease size
-		decrementSize();;
-		heapify(0);
+		for (int i = getSize() - 1; i > 0; i--) {
+			// swap 1 to size here it will be i
+			swap(0, i);
+			// we need to decrease size
+			decrementSize();
+			heapify(0);
 		}
 	}
 	

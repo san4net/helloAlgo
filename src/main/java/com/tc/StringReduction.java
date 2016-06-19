@@ -1,8 +1,5 @@
 package com.tc;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-
 /**
  * Given a string consisting of a,b and c’s, we can perform the following operation: Take any two adjacent 
  * distinct characters and replace it with the third character. For example, if ‘a’ and ‘c’ are adjacent, 

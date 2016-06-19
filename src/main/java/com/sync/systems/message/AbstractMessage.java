@@ -1,17 +1,16 @@
 package com.sync.systems.message;
 
 public abstract class AbstractMessage implements Message {
-	protected MsgType msgType;
+	protected MessageType msgType;
 	protected String message;
-	
-	public AbstractMessage(MsgType msgType, String message) {
+	public AbstractMessage(MessageType msgType, String message) {
 		super();
 		this.msgType = msgType;
 		this.message = message;
 	}
-
+	
 	@Override
-	public MsgType getType() {
+	public MessageType getType() {
 		return msgType;
 	}
 
@@ -19,6 +18,5 @@ public abstract class AbstractMessage implements Message {
 	public String getMsgBody() {
 		return message;
 	}
-
 	
 }

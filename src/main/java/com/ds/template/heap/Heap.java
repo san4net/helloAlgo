@@ -144,12 +144,11 @@ public class Heap {
 		for (int i = 0; i < input.length; i++) {
 			elements[i] = input[i];
 		}
-
-		int n = size-1;
+		int n = size - 1;
 
 		for (int i = getParentIndex(n); i >= 0; i--) {
 			// percolate down
-			maxHeapify( i);
+			maxHeapify(i);
 		}
 	}
 
@@ -182,7 +181,6 @@ public class Heap {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return Arrays.toString(elements);
 	}
 }

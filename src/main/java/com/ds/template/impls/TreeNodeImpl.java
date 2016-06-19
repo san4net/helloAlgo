@@ -1,7 +1,16 @@
 package com.ds.template.impls;
 
-import com.ds.template.TreeNode	;
+import org.hamcrest.core.IsInstanceOf;
 
+import com.ds.template.node.Node;
+import com.ds.template.node.TreeNode;
+/**
+ * This class represent binary tree node
+ * 
+ * @author santosh kumar
+ *
+ * @param <T>
+ */
 public class TreeNodeImpl<T> implements TreeNode<T> {
 	private T data;
 	private TreeNode<T> left;
@@ -14,12 +23,12 @@ public class TreeNodeImpl<T> implements TreeNode<T> {
 		this.right = right;
 	}
 
-	public T getData() {
+	public T data() {
 		return data;
 	}
 
 	@Override
-	public TreeNode<T> getLeft() {
+	public TreeNode<T> left() {
 		return left;
 	}
 
@@ -29,7 +38,7 @@ public class TreeNodeImpl<T> implements TreeNode<T> {
 	}
 
 	@Override
-	public TreeNode<T> getRight() {
+	public TreeNode<T> right() {
 		return right;
 	}
 
@@ -40,7 +49,18 @@ public class TreeNodeImpl<T> implements TreeNode<T> {
 
 	@Override
 	public String toString() {
-		return super.toString() + data;
+		return "[TreeNodeImpl data=" + data + "]";
+	}
+
+
+	@Override
+	public int compareTo(Node<T> o) {
+		T other = o.data();
+		if(this.data instanceof Integer){
+			return Integer.compare((int)data, (int)other);
+		}
+		
+		throw new UnsupportedOperationException("Not Supported");
 	}
 
 }

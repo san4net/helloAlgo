@@ -53,7 +53,8 @@ import java.util.Iterator;
  */
 
 public class TrieImpl<T> {
-	class Node<T> {
+	
+	static class Node<T> {
 		T data;
 		Node<T> next;
 
@@ -68,11 +69,15 @@ public class TrieImpl<T> {
 		}
 
 	}
-
-	class LinkedList<T> implements Iterable<T> {
+  // simple linked list for fast operation
+	static class LinkedList<T> implements Iterable<T> {
 		Node<T> head;
 		Node<T> last;
-
+		/**
+		 * We are using head and last for quick response
+		 * 
+		 * @param data
+		 */
 		public void append(T data) {
 			if (head == null) {
 				head = new Node<T>(data, null);
@@ -105,7 +110,7 @@ public class TrieImpl<T> {
 
 	}
 
-	class TrieNode {
+	static class TrieNode {
 		char data;
 		boolean isEnd;
 		LinkedList<TrieNode> childs;
@@ -119,7 +124,7 @@ public class TrieImpl<T> {
 			this.parent = parent;
 		}
 
-		private TrieNode subSet(char data) {
+		public TrieNode subSet(char data) {
 
 			for (TrieNode child : childs) {
 				if (child.data == data)
@@ -128,7 +133,7 @@ public class TrieImpl<T> {
 			return null;
 		}
 
-		private TrieNode addChild(char data, boolean isEnd) {
+		TrieNode addChild(char data, boolean isEnd) {
 			TrieNode node = new TrieNode(data, isEnd, this);
 			childs.append(node);
 			return node;
@@ -137,13 +142,23 @@ public class TrieImpl<T> {
 		private void incrementChildCount() {
 			childCount++;
 		}
-
-		private void addBack() {
+		/**
+		 * 
+		 */
+		public boolean addBack() {
 			TrieNode temp = this;
 			while (temp != null) {
-				temp.incrementChildCount();
+				if(temp.isEnd){
+					temp.incrementChildCount();
+					if(temp.childCount>1){
+						System.out.println("bad set");
+						return false;
+					}
+				}
 				temp = temp.parent;
 			}
+			
+			return true;
 		}
 	}
 
@@ -169,6 +184,7 @@ public class TrieImpl<T> {
 		return false;
 	}
 
+
 	private TrieNode add(String data, int index, TrieNode parent) {
 		parent = parent.addChild(data.charAt(index), index + 1 == data.length());
 		return parent;
@@ -193,7 +209,7 @@ public class TrieImpl<T> {
 		// Read file
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new FileReader(new File("E:/input1.txt")));
+			reader = new BufferedReader(new FileReader(new File("E:/input.txt")));
 			String nooftest = reader.readLine();
 			Integer limit = new Integer(nooftest);
 			TrieImpl<Character> dictionary = new TrieImpl();
@@ -201,14 +217,16 @@ public class TrieImpl<T> {
 			for (int i = 0; i < limit; i++) {
 				String operation = reader.readLine();
 				if (operation.startsWith("add")) {
-					String data = operation.substring(operation.indexOf(' ') + 1, operation.length());
-					dictionary.add(data);
+					String[] data = operation.split(" ");
+//					String data = operation.substring(operation.indexOf(' ') + 1, operation.length());
+					dictionary.add(data[1]);
 				} else if (operation.startsWith("find")) {
-					String data = operation.substring(operation.indexOf(' ') + 1, operation.length());
-					System.out.println(dictionary.find(data));
+					String[] data = operation.split(" ");
+//					String data = operation.substring(operation.indexOf(' ') + 1, operation.length());
+					System.out.println(dictionary.find(data[1]));
 				}
 			}
-			System.out.println("tt: " + (System.currentTimeMillis() - st) / 1000 + "sec");
+			System.out.println("tt: " + (System.currentTimeMillis() - st)  + "sec");
 		} finally {
 			reader.close();
 		}

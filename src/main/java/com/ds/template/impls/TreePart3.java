@@ -1,7 +1,7 @@
 package com.ds.template.impls;
 
-import com.core.Queue;
-import com.ds.template.TreeNode;
+import com.ds.template.Queue;
+import com.ds.template.node.TreeNode;
 
 public class TreePart3<T> {
 
@@ -19,22 +19,22 @@ public class TreePart3<T> {
 			}
 
 			if (binary) {
-				if ((Long) temp.getData() > (Long) nodeNumber) {
-					if (temp.getLeft() == null) {
+				if ((Long) temp.data() > (Long) nodeNumber) {
+					if (temp.left() == null) {
 						TreeNode<? extends T> n = new TreeNodeImpl<T>(nodeNumber, null, null);
 						temp.setLeft(n);
 						temp = head;
 					} else {
-						temp = temp.getLeft();
+						temp = temp.left();
 						addNode(nodeNumber, true);
 					}
 				} else {
-					if (temp.getRight() == null) {
+					if (temp.right() == null) {
 						TreeNode<? extends T> n = new TreeNodeImpl<T>(nodeNumber, null, null);
 						temp.setRight(n);
 						temp = head;
 					} else {
-						temp = temp.getRight();
+						temp = temp.right();
 						addNode(nodeNumber, true);
 					}
 				}
@@ -50,9 +50,9 @@ public class TreePart3<T> {
 
 	private void inorder(TreeNode temp) {
 		if (temp != null) {
-			inorder(temp.getLeft());
-			System.out.println(temp.getData());
-			inorder(temp.getRight());
+			inorder(temp.left());
+			System.out.println(temp.data());
+			inorder(temp.right());
 		}
 	}
 
@@ -92,9 +92,9 @@ public class TreePart3<T> {
 			}
 
 			for (TreeNode<T> n : nodeArray) {
-				System.out.print(n.getData());
-				queue.enqueue(n.getLeft());
-				queue.enqueue(n.getRight());
+				System.out.print(n.data());
+				queue.enqueue(n.left());
+				queue.enqueue(n.right());
 			}
 			System.out.println("\n");
 		}
@@ -117,14 +117,14 @@ public class TreePart3<T> {
 			}
 
 			if (nodeArray.length != 0) {
-				System.out.println(nodeArray[0].getData());
+				System.out.println(nodeArray[0].data());
 			}
 
 			for (int j = 0; j < nodeArray.length; j++) {
-				if (nodeArray[j].getLeft() != null)
-					queue.enqueue(nodeArray[j].getLeft());
-				if (nodeArray[j].getRight() != null)
-					queue.enqueue(nodeArray[j].getRight());
+				if (nodeArray[j].left() != null)
+					queue.enqueue(nodeArray[j].left());
+				if (nodeArray[j].right() != null)
+					queue.enqueue(nodeArray[j].right());
 			}
 
 		}

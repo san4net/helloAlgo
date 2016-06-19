@@ -6,8 +6,8 @@ import java.util.List;
 import com.ds.impls.StackImpl;
 
 public class Graph {
- public static void main(String[] args) {
-	 Graph graph = new Graph(4);
+	public static void main(String[] args) {
+		Graph graph = new Graph(4);
 		graph.addVertex(0);
 		graph.addVertex(1);
 		graph.addVertex(2);
@@ -18,8 +18,8 @@ public class Graph {
 		graph.addEdge(2, 0);
 		graph.addEdge(2, 3);
 		graph.dfs();
+	}
 
-}
 	class Vertex {
 		int label;
 		boolean visited = false;
@@ -32,9 +32,9 @@ public class Graph {
 	}
 
 	private int size;
-	List<Vertex> vertexList = new ArrayList<>();
+	private List<Vertex> vertexList = new ArrayList<>();
 	int adjMatrix[][];
-	com.core.Stack<Vertex> stack = new StackImpl<Vertex>(10);
+	com.ds.template.Stack<Vertex> stack = new StackImpl<Vertex>(10);
 
 	public Graph(int size) {
 		super();
@@ -85,6 +85,5 @@ public class Graph {
 		}
 
 	}
-	
 
 }

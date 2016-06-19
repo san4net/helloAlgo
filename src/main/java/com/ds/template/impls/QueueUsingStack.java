@@ -1,7 +1,7 @@
 package com.ds.template.impls;
 
-import com.core.Stack;
 import com.ds.impls.StackImpl;
+import com.ds.template.Stack;
 
 public class QueueUsingStack<T> {
 

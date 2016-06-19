@@ -1,139 +1,224 @@
 package com.ds.template.impls;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
-import java.util.Stack;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.ds.template.Node;
-import com.ds.template.TreeNode;
+import com.ds.impls.StackImpl;
+import com.ds.template.Stack;
+import com.ds.template.node.Node;
+import com.ds.template.node.TreeNode;
+
 /**
- * Binary Tree
+ * Generic Binary Tree
+ * 
  * @author santosh kumar
  *
  * @param <T>
  */
-/**
- * @author admin-pc
- *
- * @param <T>
- */
-public class GenericTree<T> implements Serializable{
+public class GenericTree<T> implements Serializable {
 	private static final long serialVersionUID = 8568082440037774768L;
 	private TreeNode<T> head = null;
- 
+
 	public TreeNode<T> getHead() {
 		return head;
+	}
+
+	public void add(T data) {
+		add(new TreeNodeImpl<T>(data, null, null), head);
 	}
 
 	/**
 	 * This is BST
 	 * 
 	 * @param data
-	 * @param temp
+	 * @param head
 	 */
-	public void add(T data, TreeNode<T> temp) {
+	private void add(TreeNode<T> newNode, TreeNode<T> head) {
 		if (head == null) {
-			head = new TreeNodeImpl<T>(data, null, null);
+			this.head = newNode;
 		} else {
-			if ((Long) temp.getData() > (Long) data) {
-				if (temp.getLeft() == null) {
-					TreeNode<T> localNode = new TreeNodeImpl<T>(data, null, null);
-					temp.setLeft(localNode);
+			if (head.compareTo(newNode) > 0) {
+				if (head.left() == null) {
+					head.setLeft(newNode);
 				} else {
-					add(data, (TreeNode<T>)temp.getLeft());
+					add(newNode, head.left());
 				}
 			} else {
-				if (temp.getRight() == null) {
-					Node<T> l = new TreeNodeImpl<T>(data, null, null);
-					temp.setRight((TreeNode<T>)l);
+				if (head.right() == null) {
+					head.setRight(newNode);
 				} else {
-					add(data, (TreeNode<T>) temp.getRight());
+					add(newNode, head.right());
 				}
 			}
 
 		}
 	}
 
+	@Question(description = "inorder traversal")
 	public static void inorderWalk(TreeNode<?> n) {
 		if (n != null) {
-			inorderWalk((TreeNode<?>) n.getLeft());
-			System.out.print(n.getData() + " ");
-			inorderWalk((TreeNode<?>)n.getRight());
+			inorderWalk((TreeNode<?>) n.left());
+			System.out.print(n.data() + " ");
+			inorderWalk((TreeNode<?>) n.right());
 		}
 	}
 
-	public void traversal(TreeNode<T> node, Traversal order) {
-		Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
-		TreeNode<T> current = node;
-		push(stack, current, order);
-
-		while (!stack.isEmpty()) {
-			current = stack.pop();
-			System.out.print(current.getData());
-			if (current.getRight() != null) {
-				push(stack, (TreeNode<T>) current.getRight(), order);
-			}
-		}
-	}
-
-	public void preorderIterative(TreeNode<T> node) {
-		Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
-		TreeNode<T> current = node;
-		stack.push(node);
-
-		while (!stack.isEmpty()) {
-			TreeNode<T> element = stack.pop();
-			System.out.print(element.getData());
-			push(stack, element, Traversal.PRE_ORDER);
-		}
-	}
-
-	public void push(Stack<TreeNode<T>> stack, TreeNode<T> node,
-			Traversal traversalOrder) {
+	
+	/**
+	 * Pseudo code(L-N-R) 
+	 * 1. Take stack  
+	 * 2. while root is not NULL push root to stack & travese root->left 
+	 * 3. while stack in not empty pop  node print it, if node->right is present push to stack and repeat Step2 to Step3 
+	 * 
+	 */
+	
+	public static <T> List<T> inorderIterative(TreeNode<T> root) {
+		System.out.println("inorder iterative");
+		List<T> dataInOrder = new ArrayList<>();
+		Stack<TreeNode<T>> stack = new StackImpl();
 		
-		if (Traversal.IN_ORDER.name().equals(traversalOrder.name())) {
-			while (node != null) {
-				stack.push(node);
-				node = (TreeNode<T>) node.getLeft();
-			}
-		} else if (Traversal.PRE_ORDER.name().equals(
-				traversalOrder.name())) {
-			if (node.getRight() != null) {
-				stack.push((TreeNode<T>) node.getRight());
-			}
-			if (node.getLeft() != null) {
-				stack.push((TreeNode<T>) node.getLeft());
+		while (root != null) {
+			stack.push(root);
+			root = root.left();
+		}
+		
+		while (!stack.isEmpty()) {
+			TreeNode<T> node = stack.pop();
+			dataInOrder.add(node.data());
+			if (node.right() != null) {
+				node = node.right();
+				while (node != null) {
+					stack.push(node);
+					node = node.left();
+				}
 			}
 		}
+		return dataInOrder;
+	}
+	
+	
+	
+	/**
+	 * psuedo code
+	 * 1. initialize stack with root
+	 * 2. while stack is not empty pop node print it
+	 * 3. push node right and then left
+	 * 
+	 * 
+	 */
+	public static <T> void preorderIterative(TreeNode<T> root) {
+		System.out.println("preorder iterative");
+		if(root == null) return;
+		Stack<TreeNode<T>> stack = new StackImpl<TreeNode<T>>();
+		stack.push(root);
+
+		while (!stack.isEmpty()) {
+			TreeNode<T> node = stack.pop();
+			System.out.print(node.data());
+			if(node.right()!=null){
+				stack.push(node.right());
+			}
+			
+			if(node.left() != null){
+				stack.push(node.left());
+			}
+		}
+	}
+
+	/**
+	 * psuedo code (two stack LR N)
+	 * 1. initialize first with root
+	 * 2. while first stack is not empty pop and push it to second And 
+	 *    push left & right to first
+	 * 3. print sencond     
+	 *  
+	 * 
+	 * 2. while stack is not empty pop node print it
+	 * 3. push node right and then left
+	 * 
+	 * 
+	 */
+	public static <T> List<T> postorderIterative(TreeNode<T> root) {
+		System.out.println("postorder iterative");
+		List<T> dataPost = new ArrayList<>();
+		if(root == null) return dataPost;
+		Stack<TreeNode<T>> first = new StackImpl<TreeNode<T>>();
+		Stack<TreeNode<T>> second = new StackImpl<TreeNode<T>>();
+		first.push(root);
+
+		while (!first.isEmpty()) {
+			TreeNode<T> node = first.pop();
+			second.push(node);
+			
+			if(node.left()!=null){
+				first.push(node.left());
+			}
+			
+			if(node.right() != null){
+				first.push(node.right());
+			}
+		}
+		// print second
+		while(!second.isEmpty()){
+			dataPost.add(second.pop().data());
+		}
+		return dataPost;
+	}
+	
+	public static <T> GenericTree<T> buildTree(List<T> data) {
+		GenericTree<T> tree = new GenericTree<>();
+		for (T t : data) {
+			tree.add(t);
+		}
+		return tree;
 	}
 
 	public static void main(String[] args) {
-		GenericTree<Long> tr = new GenericTree<Long>();
-		tr.add(4l, tr.head);
-		tr.add(2l, tr.head);
-		tr.add(3l, tr.head);
-		tr.add(1l, tr.head);
-		tr.add(6l, tr.head);
-		tr.add(5l, tr.head);
-		tr.add(8l, tr.head);
-		
-//		System.out.println("Max Element" + tr.getMaxElement(tr.head));
+		GenericTree<Integer> tr = new GenericTree<>();
+		tr.add(4);
+		tr.add(2);
+		tr.add(3);
+		tr.add(1);
+		tr.add(6);
+		tr.add(5);
+		tr.add(8);
+		inorderWalk(tr.head);
+		inorderIterative(tr.head);
+		preorderIterative(tr.head);
+		postorderIterative(tr.head);
+		// int depth = tr.findDepth(tr.head);
+		// System.out.println("depth" + depth);
+		// System.out.println("Max Element" + tr.getMaxElement(tr.head));
+		/*System.out.println(Traversal.IN_ORDER);
+		tr.traversal(tr.head, Traversal.IN_ORDER);
+		tr.mirror(tr.head);
 		System.out.println(Traversal.IN_ORDER);
-		tr.inorderWalk(tr.head);
+		tr.traversal(tr.head, Traversal.IN_ORDER);*/
+
+		/*
+		 * System.out.println(Traversal.PRE_ORDER);
+		 * tr.preorderIterative(tr.head);
+		 * System.out.println(Traversal.PRE_ORDER); tr.traversal(tr.head,
+		 * Traversal.PRE_ORDER);
+		 */
+
 //		tr.mirror(tr.head);
-		System.out.println(Traversal.IN_ORDER);
-		tr.inorderWalk(tr.head);
-		System.out.println("\n size" + tr.getSize(tr.head));
-		tr.getFullAndHalfNode(tr.head);
-		System.out.println("full"+ fullNode + "half-"+ halfNode);
-		tr.getFullAndHalfNode_WR(tr.head);
-		
-		tr.printAllPath(tr.head, new Long[12], 0);
+		/*
+		 * System.out.println(Traversal.IN_ORDER); tr.inorderWalk(tr.head);
+		 * System.out.println("\n size" + tr.getSize(tr.head));
+		 * tr.getFullAndHalfNode(tr.head); System.out.println("full"+ fullNode +
+		 * "half-"+ halfNode); tr.getFullAndHalfNode_WR(tr.head);
+		 */
+		// System.out.println("all paths");
+		// tr.printAllPath(tr.head, new Long[12], 0);
+
 		/**
 		 * System.out.println(STACK_TRAVERSAL.IN_ORDER);
-		 * tr.inorderWalk(tr.head); tr.makeDLL(tr.head);
-		 * System.out.println("\nUsing stack in order"); tr.traversal(tr.head,
+		 * tr.inorderWalk(tr.head); tr.makeDLL(tr.head); System.out.println(
+		 * "\nUsing stack in order"); tr.traversal(tr.head,
 		 * STACK_TRAVERSAL.IN_ORDER); System.out.println("depth"+
 		 * tr.findDepth(tr.head)); System.out.println("LevelOrder traversal");
 		 * tr.printLevelOrder(tr.head); System.out.println("printing zigzag");
@@ -163,11 +248,11 @@ public class GenericTree<T> implements Serializable{
 
 	public void mirror(TreeNode<T> node) {
 		if (node != null) {
-			mirror((TreeNode<T>) node.getLeft());
-			mirror((TreeNode<T>)node.getRight());
-			TreeNode<T> left = (TreeNode<T>) node.getLeft();
-			node.setLeft(node.getRight());
-			node.setRight(left);
+			mirror((TreeNode<T>) node.left());
+			mirror((TreeNode<T>) node.right());
+			TreeNode<T> temp = node.left();
+			node.setLeft(node.right());
+			node.setRight(temp);
 		}
 	}
 
@@ -175,18 +260,18 @@ public class GenericTree<T> implements Serializable{
 
 	private void setPrevNode(TreeNode<T> node) {
 		if (node != null) {
-			setPrevNode((TreeNode<T>)node.getLeft());
+			setPrevNode((TreeNode<T>) node.left());
 			node.setLeft(prev);
 			prev = node;
-			setPrevNode((TreeNode<T>)node.getRight());
+			setPrevNode((TreeNode<T>) node.right());
 		}
 	}
 
 	private Node setNextNode(TreeNode<T> node) {
 		// Traverse till right child
-	    TreeNode<T> prev = null;
-		while (node.getRight() != null) {
-			node = (TreeNode<T>) node.getRight();
+		TreeNode<T> prev = null;
+		while (node.right() != null) {
+			node = (TreeNode<T>) node.right();
 		}
 
 		while (node != null) {
@@ -195,10 +280,10 @@ public class GenericTree<T> implements Serializable{
 			 */
 			node.setRight(prev);
 			prev = node;
-			if (node.getLeft() == null) {
+			if (node.left() == null) {
 				return node;
 			} else {
-				node = (TreeNode<T>) node.getLeft();
+				node = (TreeNode<T>) node.left();
 			}
 		}
 
@@ -206,69 +291,69 @@ public class GenericTree<T> implements Serializable{
 	}
 
 	public int getSize(TreeNode<T> node) {
-		return node == null ? 0 : getSize((TreeNode<T>)node.getLeft())
-				+ getSize((TreeNode<T>) node.getRight()) + 1;
+		return node == null ? 0 : getSize((TreeNode<T>) node.left()) + getSize((TreeNode<T>) node.right()) + 1;
 	}
-	
+
 	static int fullNode, halfNode;
-	
+
 	public void getFullAndHalfNode(TreeNode<T> node) {
 		if (node == null) {
 			return;
 		} else {
-			if (node.getLeft() != null && node.getRight() != null) {
+			if (node.left() != null && node.right() != null) {
 				fullNode++;
-			} else if ((node.getLeft() == null && node.getRight() != null)
-					|| (node.getLeft() != null && node.getRight() == null)) {
+			} else if ((node.left() == null && node.right() != null) || (node.left() != null && node.right() == null)) {
 				halfNode++;
 			}
-			getFullAndHalfNode((TreeNode<T>)node.getLeft());
-			getFullAndHalfNode((TreeNode<T>)node.getRight());
+			getFullAndHalfNode((TreeNode<T>) node.left());
+			getFullAndHalfNode((TreeNode<T>) node.right());
 		}
 	}
-	
-	public void getFullAndHalfNode_WR(TreeNode<T> node){
-		Stack<TreeNode<T>> s = new Stack<TreeNode<T>>();
-		int fNode = 0, hNode =0;
-		if(node == null) return;
-		
+
+	public void getFullAndHalfNode_WR(TreeNode<T> node) {
+		Stack<TreeNode<T>> s = new StackImpl<TreeNode<T>>();
+		int fNode = 0, hNode = 0;
+		if (node == null)
+			return;
+
 		while (true) {
 			while (node != null) {
-				s.push((TreeNode<T>)node);
-				node =(TreeNode<T>)node.getLeft();
+				s.push((TreeNode<T>) node);
+				node = (TreeNode<T>) node.left();
 			}
-			if(s.isEmpty()){
-			 break;
+			if (s.isEmpty()) {
+				break;
 			}
 			TreeNode<T> topNode = s.pop();
-			
-			if (topNode.getLeft() != null && topNode.getRight() != null) {
+
+			if (topNode.left() != null && topNode.right() != null) {
 				fNode++;
-			} else if ((topNode.getLeft() == null && topNode.getRight() != null)
-					|| (topNode.getLeft() != null && topNode.getRight() == null)) {
+			} else if ((topNode.left() == null && topNode.right() != null)
+					|| (topNode.left() != null && topNode.right() == null)) {
 				hNode++;
 			}
-			node = (TreeNode<T>) topNode.getRight();
+			node = (TreeNode<T>) topNode.right();
 		}
-		System.err.println("fullnode "+ fNode+"half node"+ hNode);
+		System.err.println("fullnode " + fNode + "half node" + hNode);
 	}
-	
-	public void printAllPath(TreeNode<T> node,T[] pathNodes, int index){
-		if(node == null) return;
-		else{
-		  pathNodes[index++] = (T) node.getData();
-		 
-		 if(node.getLeft() == null && node.getRight()==null){
-			 printPath(pathNodes);
-		 }
-		 printAllPath((TreeNode<T>)node.getLeft(), pathNodes, index);
-		 printAllPath((TreeNode<T>)node.getRight(), pathNodes, index);
+
+	public void printAllPath(TreeNode<T> node, T[] pathNodes, int index) {
+		if (node == null)
+			return;
+		else {
+			pathNodes[index++] = (T) node.data();
+			if (node.left() == null && node.right() == null) {
+				printPath(pathNodes);
+			}
+			printAllPath((TreeNode<T>) node.left(), pathNodes, index);
+			printAllPath((TreeNode<T>) node.right(), pathNodes, index);
 		}
 	}
-	
+
 	private void printPath(T[] pathNodes) {
-		for(T n:pathNodes){
-			System.out.print(n+"->");
+		System.out.println(pathNodes);
+		for (T n : pathNodes) {
+			System.out.print(n + "->");
 		}
 		System.out.println("");
 	}
@@ -276,16 +361,15 @@ public class GenericTree<T> implements Serializable{
 	private void printReverseLevel(TreeNode<T> root) {
 		Queue<TreeNode<T>> q = new ConcurrentLinkedQueue<TreeNode<T>>();
 		q.add(root);
-
 		TreeNode<T> r;
 
 		while ((r = q.poll()) != null) {
-			System.out.println(r.getData());
-			if (r.getLeft() != null) {
-				q.add((TreeNode<T>)r.getLeft());
+			System.out.println(r.data());
+			if (r.left() != null) {
+				q.add((TreeNode<T>) r.left());
 			}
-			if (r.getRight() != null) {
-				q.add((TreeNode<T>)r.getRight());
+			if (r.right() != null) {
+				q.add((TreeNode<T>) r.right());
 			}
 		}
 
@@ -315,16 +399,16 @@ public class GenericTree<T> implements Serializable{
 			return;
 
 		if (level == 1) {
-			System.out.print(node.getData());
+			System.out.print(node.data());
 		} else {
 			if (leftFirst == null || leftFirst) {
-				printGivenLevel((TreeNode<T>) node.getLeft(), level - 1, null);
-				printGivenLevel((TreeNode<T>) node.getRight(), level - 1, null);
+				printGivenLevel((TreeNode<T>) node.left(), level - 1, null);
+				printGivenLevel((TreeNode<T>) node.right(), level - 1, null);
 			}
 
 			else if (!leftFirst) {
-				printGivenLevel((TreeNode<T>) node.getRight(), level - 1, null);
-				printGivenLevel((TreeNode<T>)node.getLeft(), level - 1, null);
+				printGivenLevel((TreeNode<T>) node.right(), level - 1, null);
+				printGivenLevel((TreeNode<T>) node.left(), level - 1, null);
 
 			}
 
@@ -335,19 +419,24 @@ public class GenericTree<T> implements Serializable{
 		if (node == null) {
 			return 0;
 		} else {
-			long leftMax = getMaxElement((TreeNode<T>) node.getLeft());
-			long rightMax = getMaxElement((TreeNode<T>) node.getRight());
-			return Math.max((Long) node.getData(), Math.max(leftMax, rightMax));
+			long leftMax = getMaxElement((TreeNode<T>) node.left());
+			long rightMax = getMaxElement((TreeNode<T>) node.right());
+			return Math.max((Long) node.data(), Math.max(leftMax, rightMax));
 		}
 	}
 
+	/**
+	 * 
+	 * @param node
+	 * @return
+	 */
 	public int findDepth(TreeNode<T> node) {
 		if (node == null)
 			return 0;
 		else {
-			int leftD = findDepth((TreeNode<T>) node.getLeft());
-			int rightD = findDepth((TreeNode<T>)node.getRight());
-			
+			int leftD = findDepth((TreeNode<T>) node.left());
+			int rightD = findDepth((TreeNode<T>) node.right());
+
 			if (leftD > rightD) {
 				return leftD + 1;
 			} else {

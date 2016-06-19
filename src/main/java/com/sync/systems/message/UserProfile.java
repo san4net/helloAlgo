@@ -10,7 +10,7 @@ public class UserProfile extends AbstractMessage {
 	private String user;
 	private Set<Location> locations;
 	
-	public UserProfile(MsgType msgType, String message, String user, Set<Location> locations) {
+	public UserProfile(MessageType msgType, String message, String user, Set<Location> locations) {
 		super(msgType, message);
 		this.user = user;
 		this.locations = locations;
@@ -25,7 +25,7 @@ public class UserProfile extends AbstractMessage {
 	}
 
 	public static UserProfile create(Profile profile) {
-		return new UserProfile(MsgType.USER_PROFILE, "profile", profile.getUserName(), profile.getLocations());
+		return new UserProfile(MessageType.USER_PROFILE, "profile", profile.getUserName(), profile.getLocations());
 	}
 
 	@Override

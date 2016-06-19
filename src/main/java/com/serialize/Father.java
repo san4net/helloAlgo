@@ -1,18 +1,16 @@
 package com.serialize;
 
-import java.io.Serializable;
-
 public class Father extends GrandPa  {
 	private String fatherName;
  
-	public Father() throws Exception{
+	public Father() {
 			super();
 }
 	public String getName() {
 		return fatherName;
 	}
 
-	public void setName(String name) {
+	public void setFatherName(String name) {
 		this.fatherName = name;
 	}
 	

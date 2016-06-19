@@ -1,7 +1,7 @@
 package com.ds.template.impls;
 
-import com.ds.template.Node;
-import com.ds.template.TreeNode;
+import com.ds.template.node.Node;
+import com.ds.template.node.TreeNode;
 
 /**
  * Given a Binary Tree (BT), convert it to a Doubly Linked List(DLL). The left and right pointers in nodes are to be used as previous and next pointers respectively in converted DLL. The order of nodes in DLL must be same as Inorder of the given Binary Tree. The first node of Inorder traversal (left most node in BT) must be head node of the DLL.
@@ -26,18 +26,18 @@ public class ConverBTToDLL {
 
 	private void setPrevNode(TreeNode node) {
 		if (node != null) {
-			setPrevNode((TreeNode) node.getLeft());
+			setPrevNode((TreeNode) node.left());
 			node.setLeft(prev);
 			prev = node;
-			setPrevNode((TreeNode) node.getRight());
+			setPrevNode((TreeNode) node.right());
 		}
 	}
 
 	private Node setNextNode(TreeNode node) {
 		// Traverse till right child
 	    TreeNode prev = null;
-		while (node.getRight() != null) {
-			node = (TreeNode) node.getRight();
+		while (node.right() != null) {
+			node = (TreeNode) node.right();
 		}
 
 		while (node != null) {
@@ -46,10 +46,10 @@ public class ConverBTToDLL {
 			node.setRight(prev);*/
 			node.setRight(prev);
 			prev = node;
-			if(node.getLeft()== null){
+			if(node.left()== null){
 				return node;
 			}else{
-				node = (TreeNode) node.getLeft();
+				node = (TreeNode) node.left();
 			}
 		}
 
@@ -57,11 +57,11 @@ public class ConverBTToDLL {
 	}
 	public static void main(String[] args) {
 		GenericTree<Long> tr = new GenericTree<Long>();
-		tr.add(4l, tr.getHead());
-		tr.add(2l, tr.getHead());
+		tr.add(4l);
+		/*tr.add(2l, tr.getHead());
 		tr.add(3l, tr.getHead());
 		tr.add(1l, tr.getHead());
-		tr.add(5l, tr.getHead());
+		tr.add(5l, tr.getHead());*/
 		
 	}
 }

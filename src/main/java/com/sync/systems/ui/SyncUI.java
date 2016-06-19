@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -26,15 +27,20 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-import com.sync.systems.BlockingClient;
 import com.sync.systems.Profile.Location;
+import com.sync.systems.Utils;
+import com.sync.systems.impls.BlockingClient;
+import com.sync.systems.message.Message;
+import com.sync.systems.message.ProfileRequest;
 import com.sync.systems.message.ProfileUpdate;
+import com.sync.systems.message.SyncConfirmReq;
+import com.sync.systems.message.SyncConfirmResponse;
 import com.sync.systems.message.UserProfile;
 
 public class SyncUI extends JFrame implements ProfileListener<String> {
 	// client holder
-	ExecutorService service = Executors.newFixedThreadPool(1);
-	private BlockingClient clientHolder = null;
+	ExecutorService service = Executors.newCachedThreadPool();
+	private volatile BlockingClient clientHolder = null;
 	private LoginDialog loginDialog = new LoginDialog(this);
 	private JFilePicker filePicker;
 
@@ -46,18 +52,26 @@ public class SyncUI extends JFrame implements ProfileListener<String> {
 		setSize(width, height);
 		this.setLocationRelativeTo(null);
 	}
-
+	
 	public void showUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		init();
 		updateSize(300, 100);
 		loginDialog.show(true);
 	}
+	
+	private void createClientHolder(String user, String password){
+	 clientHolder = BlockingClient.create(user,password);
+	}
 
-	public void afterLogin() throws IOException {
+	private void startBackGroundService(){
+		service.submit(new ClientThread());	
+	}
+	public void successFullLogin() throws IOException {
 		dispose();
 		createAndShowFilePicker();
-		update((UserProfile) clientHolder.getProfile());
+		startBackGroundService();
+		clientHolder.send(ProfileRequest.create(clientHolder.getUserName()));
 	}
 
 	public void createAndShowFilePicker() {
@@ -107,14 +121,13 @@ public class SyncUI extends JFrame implements ProfileListener<String> {
 
 			public void actionPerformed(ActionEvent e) {
 				try {
-					clientHolder = BlockingClient.create(tfUsername.getText().trim(),
-							new String(pfPassword.getPassword()));
+					createClientHolder(tfUsername.getText().trim(), new String(pfPassword.getPassword()));
 					if (clientHolder.validateLogin()) {
 						JOptionPane.showMessageDialog(LoginDialog.this,
 								"Hi " + getUsername() + "! You have successfully logged in.", "Login to " + TITLE,
 								JOptionPane.INFORMATION_MESSAGE);
 						succeeded = true;
-						afterLogin();
+						successFullLogin();
 					} else {
 						JOptionPane.showMessageDialog(LoginDialog.this, "Invalid username or password", "Login",
 								JOptionPane.ERROR_MESSAGE);
@@ -190,9 +203,69 @@ public class SyncUI extends JFrame implements ProfileListener<String> {
 			return succeeded;
 		}
 	}
+	
+	private void handleMessage(Message message){
+		handleInternal(message);
+	}
+	
+	private void handleInternal(Message message) {
+		switch (message.getType()) {
+		case USER_PROFILE:
+			update((UserProfile) message);
+			break;
+		case SYNC_CONFIRM_REQ:
+			handleSyncRequest((SyncConfirmReq)message);
+		default:
+			break;
+		}
+	}
+
+	private void handleSyncRequest(SyncConfirmReq message) {
+		if(JOptionPane.OK_OPTION == Utils.showPane(this, message.getMsgBody()+ "["+ message.getSrc()+"]")){
+			// ok selected
+			Message response = SyncConfirmResponse.create("confirmed", message.getSrc(),clientHolder.getUserName());
+			service.execute(new SendWorkerThread(response));
+		}
+	}
 
 	@Override
 	public void onProfileUpdate(List<String> locations) throws IOException {
 		clientHolder.send(ProfileUpdate.create(clientHolder.getUserName(), locations));
+	}
+	
+	class ClientThread implements Callable{
+		int count = 0 ;
+		public ClientThread() {
+			super();
+		}
+
+		@Override
+		public Object call() throws Exception {
+			while(clientHolder.isUp()){
+				handleMessage(clientHolder.take());
+				count++;
+			}
+			return count;
+		}
+		
+	}
+	
+	class SendWorkerThread implements Runnable{
+		Message message;
+		
+		public SendWorkerThread(Message message) {
+			super();
+			this.message = message;
+		}
+
+		@Override
+		public void run() {
+			try {
+				clientHolder.send(message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 }

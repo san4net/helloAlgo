@@ -7,7 +7,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.core.Stack;
+import com.ds.template.Stack;
 
 public class StackImpl<T> implements Stack<T> {
 	private final List<T> elementArray;
@@ -23,20 +23,20 @@ public class StackImpl<T> implements Stack<T> {
 		elementArray = new ArrayList<T>(maxSize);
 	}
 	
+	public StackImpl() {
+		this(50);
+	}
+
 	@Override
 	public void push(T element) {
 		lock.lock();
 		try {
-			while (elementArray.size() == maxSize) {
+			while (isFull()) {
 				try {
 					if(!notFull.await(30, TimeUnit.SECONDS)){
 					System.out.println("stack full");
-					 return;
 					}
 				} catch (InterruptedException e) {
-					notFull.signal();
-					//TODO 
-					// logging 
 				}
 			}
 			insert(element);
@@ -50,14 +50,12 @@ public class StackImpl<T> implements Stack<T> {
 	private void insert(T element) {
 //		System.out.println("inserting " + element);
 		elementArray.add(++tos, element);
-		notEmpty.signalAll();
 	}
 
 	@SuppressWarnings("unused")
 	private T remove() {
 		T tmp = elementArray.remove(tos--);
 //		System.out.println("popping-" + tmp);
-		notFull.signalAll();
 		return tmp;
 	}
 
@@ -65,7 +63,7 @@ public class StackImpl<T> implements Stack<T> {
 		T data = null;
 		try {
 			lock.lockInterruptibly();
-			while (tos == -1) {
+			while (isEmpty()) {
 				try {
 					if (!notEmpty.await(30, TimeUnit.SECONDS)) {
 						System.out.println("stack empty");
@@ -77,6 +75,7 @@ public class StackImpl<T> implements Stack<T> {
 				}
 			}
 			data = remove();
+			notFull.signalAll();
 		} catch (InterruptedException e) {
 
 		} finally {

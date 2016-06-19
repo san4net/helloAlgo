@@ -3,13 +3,11 @@ package com.cache;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ds.template.DoubleNode;
+import com.ds.template.impls.node.DoubleNodeImpl;
+import com.ds.template.node.DoubleNode;
+
 /**
- * 
- * @
- * 
  * @author santosh
- *
  * @param <K>
  * @param <V>
  */
@@ -17,6 +15,7 @@ public class LRU<K, V> {
 	private DoubleNode<K, V> head = null;
 	private DoubleNode<K, V> tail = null;
 	private int capacity;
+
 	private Map<K, DoubleNode<K, V>> map = new HashMap<>();
 
 	public LRU(int capacity) {
@@ -56,19 +55,19 @@ public class LRU<K, V> {
 		}
 	}
 
-	private void removeAndBringToFron(DoubleNode<K, V> node) {
+	private void removeAndBringToFront(DoubleNode<K, V> node) {
 		remove(node);
 		setHead(node);
 	}
 
-	public void set(K key, V value) {
+	public void put(K key, V value) {
 		if (map.containsKey(key)) {
 			DoubleNode<K, V> old = map.get(key);
 			// remove it and bring to head
 			old.setValue(value);
-			remove(old);
+			removeAndBringToFront(old);
 		} else {
-			// create new enty
+			// create new entry
 			DoubleNode<K, V> created = new DoubleNodeImpl<>(key, value, null, null);
 			if (map.size() == capacity) {
 				// remove tail
@@ -87,7 +86,7 @@ public class LRU<K, V> {
 		if (map.containsKey(key)) {
 			DoubleNode<K, V> node = map.get(key);
 			// re
-			remove(node);
+			removeAndBringToFront(node);
 			return node.getValue();
 		}
 		return null;
@@ -97,17 +96,31 @@ public class LRU<K, V> {
 		LRU<Integer, Integer> lru = new LRU<>(5);
 		for (int i = 1; i < 10; i++) {
 			if (lru.get(i) == null) {
-				lru.set(i, i);
+				lru.put(i, i);
 			}
 		}
 		lru.display();
+		lru.get(7);
+		lru.display();
+
+		/*
+		 * CircularLinkedList list = new CircularLinkedList(6);
+		 * list.append('A');list.append('B');list.append('C');list.append('D');
+		 * list.append('E');list.append('F'); list.display('C');
+		 * 
+		 * list.delete('C'); list.delete('E'); list.display('A');
+		 * 
+		 * list.appendAfter('G','B' ); list.display('B');
+		 */
 	}
 
 	public void display() {
 		DoubleNode<K, V> temp = head;
 		while (temp != null) {
-			System.out.println(temp.getValue());
+			System.out.format("%s", temp.getValue());
 			temp = temp.getNext();
 		}
+		System.out.println();
 	}
+
 }

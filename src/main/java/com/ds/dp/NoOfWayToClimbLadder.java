@@ -12,7 +12,7 @@ import java.util.Map;
  * + number of way that get you to n-4
  * 
  * 
- * @author kumar
+ * @author santosh kumar
  *
  */
 public class NoOfWayToClimbLadder {

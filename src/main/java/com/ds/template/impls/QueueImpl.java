@@ -2,7 +2,7 @@ package com.ds.template.impls;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-public class QueueImpl<T> implements com.core.Queue<T> {
+public class QueueImpl<T> implements com.ds.template.Queue<T> {
 
 	private Node<T> head, tail;
 	private String name;

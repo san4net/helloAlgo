@@ -11,6 +11,7 @@ public class Permutation {
 		  for(int i=start;i<=end;i++){
 			  swap(input, start, i);
 			  doPermute(input, start+1, end);
+			  // back track
 			  swap(input, start, i);
 		  }
 	  }

@@ -9,7 +9,7 @@ public class Login extends AbstractMessage {
 	private String password;
 
 	public Login(String user, String password) {
-		super(MsgType.LOGIN, "");
+		super(MessageType.LOGIN, "");
 		this.user = user;
 		this.password = password;
 	}
@@ -26,8 +26,8 @@ public class Login extends AbstractMessage {
 
 
 	@Override
-	public MsgType getType() {
-		return Message.MsgType.LOGIN;
+	public MessageType getType() {
+		return Message.MessageType.LOGIN;
 	}
 
 	@Override

@@ -30,16 +30,15 @@ public class MaxSubArray {
 	}
  
 	public Integer[] getCrossMaxSubArray(Integer[] A, int low, int mid, int high) {
-
 		int leftSum = -9000;
 		int sum = 0;
 		int i = mid;
-		int maxLeft = -1;
+		int maxLeIndex = -1;
 		while (i >= low) {
 			sum = sum + A[i];
 			if (sum > leftSum) {
 				leftSum = sum;
-				maxLeft = i;
+				maxLeIndex = i;
 			}
 			i--;
 		}
@@ -47,19 +46,19 @@ public class MaxSubArray {
 		int rightSum = -9000;
 		sum = 0;
 		i = mid+1;
-		int maxRight = -1;
+		int maxRightIndex = -1;
 		while (i <= high) {
 			sum = sum + A[i];
 			if (sum > rightSum) {
 				rightSum = sum;
-				maxRight = i;
+				maxRightIndex = i;
 			}
 			i++;
 		}
 
 		Integer[] result = new Integer[3];
-		result[0] = maxLeft;
-		result[1] = maxRight;
+		result[0] = maxLeIndex;
+		result[1] = maxRightIndex;
 		result[2] = leftSum + rightSum;
 		return result;
 	}

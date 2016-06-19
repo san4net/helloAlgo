@@ -5,18 +5,15 @@ import java.util.Arrays;
 public class Merge {
 
 	// MergeSort
-	// 
-	
-	public  void MergeSort(Integer[] A, int startIndex, int endIndex){
-		
-		if(startIndex<endIndex){
-			int mid = (startIndex+ endIndex)/2;
+	public void MergeSort(Integer[] A, int startIndex, int endIndex) {
+		if (startIndex < endIndex) {
+			int mid = (startIndex + endIndex) / 2;
 			MergeSort(A, startIndex, mid);
-			MergeSort(A, mid+1, endIndex);
-		    // Merge(A, startIndex, mid, endIndex);
+			MergeSort(A, mid + 1, endIndex);
+			// Merge(A, startIndex, mid, endIndex);
 			Merg(A, startIndex, mid, endIndex);
 		}
-		
+
 	}
 
 	/**
@@ -40,6 +37,7 @@ public class Merge {
 	 *          A[k++]=L[i++]
 	 *          else
 	 *          A[k++] =R[j++]
+	 *          
 	 * @param A
 	 * @param startIndex
 	 * @param mid
@@ -76,7 +74,6 @@ public class Merge {
 			 A[k] = R[j++];
 		  }
 	 }
-	 
  }
 	
 /**
@@ -105,7 +102,7 @@ private void Merge(Integer[] A, int startIndex, int mid, int endIndex) {
 		int i = 0, j = 0;
 		
 		while (startIndex <= endIndex) {
-			if ( Left[i] < Right[j]) {
+			if ( (j==Right.length)||(i< Left.length  && Left[i] < Right[j])) {
 				A[startIndex++] = Left[i];
 				i++;
 				if(i == leftArray){
@@ -133,6 +130,6 @@ private void Merge(Integer[] A, int startIndex, int mid, int endIndex) {
 		Integer elements[] = {55, 44, 21};
 		Merge instance = new Merge();
 		instance.MergeSort(elements, 0, elements.length-1);
-	  System.out.println("Arry"+Arrays.toString(elements));
+	    System.out.println("Arry"+Arrays.toString(elements));
 	}
 }

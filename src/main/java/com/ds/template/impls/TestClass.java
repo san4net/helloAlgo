@@ -21,7 +21,7 @@ class TestClass {
 	
     public static void main(String args[] ) throws Exception {
     	long water =0;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+       /* BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String line = br.readLine();
         int N = Integer.parseInt(line);
 		for (int i = 0; i < N; i++) {
@@ -55,6 +55,8 @@ class TestClass {
         
 
         System.out.println(water);
+*/
+    	
     }
     
     public static int getWater(int s, int e){
@@ -68,6 +70,42 @@ class TestClass {
     		}
     	}
     	return count;
+    }
+    
+  
+    class Student implements Comparable<Student>{
+        private String Id;
+        private String Name;
+        private int Marks;
+        Student(String id, String name, int marks){
+            Id=id;
+            Name=name;
+            Marks=marks;
+        }
+        void print(){
+            System.out.println("Id="+Id+" Name="+Name+" Marks="+Marks);
+        }
+        
+        
+		public String getId() {
+			return Id;
+		}
+
+		public String getName() {
+			return Name;
+		}
+		
+		public int getMarks() {
+			return Marks;
+		}
+		@Override
+		public int compareTo(Student other) {
+			return (this.getMarks() < other.getMarks()) ? -1 : ((this.getMarks() == other.getMarks()) ? 0 : 1);
+		}
+
+        /*
+         * You may enhance this class if needed
+         */
     }
 }
 

@@ -16,11 +16,12 @@ public class SetupPingPong {
 		try {
 			tp.submit(ping);
 			tp.submit(pong);
-			 Thread.sleep(100);
+			Thread.sleep(100);
 			poison.setState(Status.STOP);
 			System.err.println("********" + poison.getState());
 			System.err.println("********");
 			tp.shutdown();
+			Thread.currentThread().interrupt();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

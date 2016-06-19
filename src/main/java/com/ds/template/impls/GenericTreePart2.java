@@ -3,9 +3,9 @@ package com.ds.template.impls;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.core.Queue;
-import com.ds.template.Node;
-import com.ds.template.TreeNode;
+import com.ds.template.Queue;
+import com.ds.template.node.Node;
+import com.ds.template.node.TreeNode;
 /**
  * Binary Search Tree
  * @author santosh kumar
@@ -28,29 +28,29 @@ public class GenericTreePart2<T> {
         while (!((QueueImpl) q).isEmpty()) {
             TreeNode<T> tmp = q.dequeue();
 
-            if (tmp.getLeft() == null) {
+            if (tmp.left() == null) {
                 tmp.setLeft(new TreeNodeImpl<T>(data, null, null));
                 break;
-            } else if (tmp.getRight() == null) {
+            } else if (tmp.right() == null) {
                 tmp.setRight(new TreeNodeImpl<T>(data, null, null));
                 break;
             }
-            q.enqueue((TreeNode<T>) node.getLeft());
-            q.enqueue((TreeNode<T>) node.getRight());
+            q.enqueue((TreeNode<T>) node.left());
+            q.enqueue((TreeNode<T>) node.right());
         }
     }
 
     boolean isBst(TreeNode<T> node) {
         if (node == null)
             return true;
-        if (node.getLeft() != null && (Integer) node.getData() < (Integer) node.getLeft().getData()) {
+        if (node.left() != null && (Integer) node.data() < (Integer) node.left().data()) {
             return false;
         }
-        if (node.getRight() != null && (Integer) node.getData() > (Integer) node.getRight().getData()) {
+        if (node.right() != null && (Integer) node.data() > (Integer) node.right().data()) {
             return false;
         }
 
-        return (isBst((TreeNode<T>) node.getLeft()) && isBst((TreeNode<T>) node.getRight()));
+        return (isBst((TreeNode<T>) node.left()) && isBst((TreeNode<T>) node.right()));
     }
 
     public void add(T data, TreeNode<T> temp) {
@@ -59,24 +59,24 @@ public class GenericTreePart2<T> {
         } else {
             Object nodeData = null;
             if (data instanceof Long) {
-                nodeData = (Long) temp.getData();
+                nodeData = (Long) temp.data();
             } else if (data instanceof Integer) {
-                nodeData = (Integer) temp.getData();
+                nodeData = (Integer) temp.data();
             }
 
             if (((Integer) nodeData) > (Integer) data) {
-                if (temp.getLeft() == null) {
+                if (temp.left() == null) {
                     TreeNode<T> l = new TreeNodeImpl<T>(data, null, null);
                     temp.setLeft(l);
                 } else {
-                    add(data, (TreeNode<T>) temp.getLeft());
+                    add(data, (TreeNode<T>) temp.left());
                 }
             } else {
-                if (temp.getRight() == null) {
+                if (temp.right() == null) {
                     TreeNode<T> l = new TreeNodeImpl<T>(data, null, null);
                     temp.setRight(l);
                 } else {
-                    add(data, (TreeNode<T>) temp.getRight());
+                    add(data, (TreeNode<T>) temp.right());
                 }
             }
         }
@@ -86,12 +86,12 @@ public class GenericTreePart2<T> {
         if (node == null) {
             return null;
         } else {
-            if (node.getData() == data1 || node.getData() == data2) {
+            if (node.data() == data1 || node.data() == data2) {
                 return node;
             }
 
-            TreeNode<T> left = printLCA((TreeNode<T>) node.getLeft(), data1, data2);
-            TreeNode<T> right = printLCA((TreeNode<T>) node.getRight(), data1, data2);
+            TreeNode<T> left = printLCA((TreeNode<T>) node.left(), data1, data2);
+            TreeNode<T> right = printLCA((TreeNode<T>) node.right(), data1, data2);
             if (left != null & right != null) {
                 return node;
             }
@@ -104,12 +104,12 @@ public class GenericTreePart2<T> {
         if (treeNode == null) {
             return false;
         } else {
-            if (treeNode.getData() == data) {
+            if (treeNode.data() == data) {
                 return true;
             } else {
-                if (printAllAncestor((TreeNode<T>) treeNode.getLeft(), data)
-                        || printAllAncestor((TreeNode<T>) treeNode.getRight(), data)) {
-                    System.out.println("ancestorof " + ">" + treeNode.getData());
+                if (printAllAncestor((TreeNode<T>) treeNode.left(), data)
+                        || printAllAncestor((TreeNode<T>) treeNode.right(), data)) {
+                    System.out.println("ancestorof " + ">" + treeNode.data());
                     return true;
                 }
             }
@@ -148,7 +148,7 @@ public class GenericTreePart2<T> {
         System.out.println("ancestor of 1");
         tree.printAllAncestor(tree.head, 1);
         tree.printAncestor(tree.head, 1);
-        System.out.println("lca of 1 and 5 == " + tree.printLCA(tree.head, 1, 5).getData());
+        System.out.println("lca of 1 and 5 == " + tree.printLCA(tree.head, 1, 5).data());
 
     }
 
@@ -156,13 +156,13 @@ public class GenericTreePart2<T> {
         if (node == null)
             return false;
         else {
-            if (node.getData().equals(key)) {
+            if (node.data().equals(key)) {
                 return true;
             }
 
-            if (printAncestor(((TreeNode<T>) node).getLeft(), key)
-                    || printAncestor(((TreeNode<T>) node).getRight(), key)) {
-                System.out.println(node.getData());
+            if (printAncestor(((TreeNode<T>) node).left(), key)
+                    || printAncestor(((TreeNode<T>) node).right(), key)) {
+                System.out.println(node.data());
                 return true;
             }
 
@@ -237,11 +237,11 @@ public class GenericTreePart2<T> {
         if (node == null)
             return;
         else {
-            inorderTraverse(((TreeNode<T>) node).getLeft());
-            if (((TreeNode<T>) node).getLeft() == null && ((TreeNode<T>) node).getRight() == null) {
-                System.out.println(node.getData());
+            inorderTraverse(((TreeNode<T>) node).left());
+            if (((TreeNode<T>) node).left() == null && ((TreeNode<T>) node).right() == null) {
+                System.out.println(node.data());
             }
-            inorderTraverse(((TreeNode<T>) node).getRight());
+            inorderTraverse(((TreeNode<T>) node).right());
         }
     }
 // TODO

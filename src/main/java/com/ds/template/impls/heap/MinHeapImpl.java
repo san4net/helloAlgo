@@ -11,13 +11,15 @@ public class MinHeapImpl<T extends Number> extends AbstractHeap<Number> {
 			int right = getRightChildIndex(index);
 			int minIndex = -1;
 
-			if (left < getSize() && elements[left].intValue() < elements[index].intValue() ) {
+			if (left < getSize() &&
+					elements[left].intValue() < elements[index].intValue() ) {
 				minIndex = left;
 			} else {
 				minIndex = index;
 			}
 
-			if (right < getSize() && elements[right].intValue() < elements[minIndex].intValue()) {
+			if (right < getSize() &&
+					elements[right].intValue() < elements[minIndex].intValue()) {
 				minIndex = right;
 			}
 
@@ -49,7 +51,7 @@ public class MinHeapImpl<T extends Number> extends AbstractHeap<Number> {
 		// put it their an call min heap of its parent or do it here
        // this is percolate up
 		while (i > 0 && data.intValue() < (elements[getParentIndex(i)].intValue()) ) {
-			elements[i] = elements[(i - 1) / 2];
+			elements[i] = elements[getParentIndex(i)];
 			i = getParentIndex(i);
 		}
 		elements[i] = (T) data;

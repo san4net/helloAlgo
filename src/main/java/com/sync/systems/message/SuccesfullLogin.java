@@ -5,10 +5,10 @@ public class SuccesfullLogin extends AbstractMessage {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private MsgType msgType = MsgType.SUCCESFULLOGIN;
+	private MessageType msgType = MessageType.SUCCESFULLOGIN;
 	private String body ;
 	public SuccesfullLogin(Login login) {
-		super(MsgType.SUCCESFULLOGIN, "success");
+		super(MessageType.SUCCESFULLOGIN, "success");
 	}
 		@Override
 	public String toString() {

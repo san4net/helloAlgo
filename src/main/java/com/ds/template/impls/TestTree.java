@@ -1,7 +1,7 @@
 package com.ds.template.impls;
 
-import com.ds.template.Node;
-import com.ds.template.TreeNode;
+import com.ds.template.node.Node;
+import com.ds.template.node.TreeNode;
 
 public class TestTree<T> {
 	TreeNodeImpl<T> root ;
@@ -11,17 +11,17 @@ public class TestTree<T> {
 			root = new  TreeNodeImpl<T>(data, null, null);
 		}
 		else{
-			if((Integer)node.getData()>(Integer)data){
-				if(((TreeNode)node).getLeft() == null){
+			if((Integer)node.data()>(Integer)data){
+				if(((TreeNode)node).left() == null){
 					((TreeNode)node).setLeft(new TreeNodeImpl<T>(data, null, null));
 				}else{
-					add(data, ((TreeNode)node).getLeft());
+					add(data, ((TreeNode)node).left());
 				}
 			}else{
-				if(((TreeNode)node).getRight() == null){
+				if(((TreeNode)node).right() == null){
 					((TreeNode)node).setRight(new TreeNodeImpl<T>(data, null, null));
 				}else{
-					add(data, ((TreeNode)node).getRight());
+					add(data, ((TreeNode)node).right());
 				}
 				
 			}
@@ -33,8 +33,23 @@ private int findDepth(Node<T> node){
 	if(node == null)
 		return 0;
 	else{
-		int left = findDepth(((TreeNode)node).getLeft());
-		int right = findDepth(((TreeNode)node).getRight());
+		int left = findDepth(((TreeNode)node).left());
+		int right = findDepth(((TreeNode)node).right());
+		
+		if(left>right){
+			return left +1;
+		}else{
+			return right +1;
+		}
+	}
+}
+
+private int findHeight(Node<T> node){
+	if(node == null)
+		return 0;
+	else{
+		int left = findDepth(((TreeNode)node).left());
+		int right = findDepth(((TreeNode)node).right());
 		
 		if(left>right){
 			return left +1;
@@ -48,9 +63,9 @@ private void inOrderTraversal(TreeNodeImpl<T> node){
   if(node == null){
 	  return;
   }else{
-	  System.out.println(node.getData());
-	  inOrderTraversal((TreeNodeImpl<T>)node.getLeft());
-	  inOrderTraversal((TreeNodeImpl<T>)node.getRight());
+	  System.out.println(node.data());
+	  inOrderTraversal((TreeNodeImpl<T>)node.left());
+	  inOrderTraversal((TreeNodeImpl<T>)node.right());
   }
 	
 }
@@ -64,7 +79,7 @@ public static void main(String[] args) {
 	mytree.add(7, mytree.root);
 	mytree.add(6, mytree.root);
 	
-	System.out.println(mytree.findDepth(mytree.root));
+	System.out.println("depth" +mytree.findDepth(mytree.root));
 	
 	mytree.inOrderTraversal(mytree.root);
 }

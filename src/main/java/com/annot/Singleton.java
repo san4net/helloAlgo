@@ -1,5 +1,7 @@
 package com.annot;
 
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class Singleton implements Cloneable {
@@ -7,13 +9,13 @@ public class Singleton implements Cloneable {
 	private static Singleton INSTANCE = new Singleton();
 
 	private Singleton() {
-		if (INSTANCE != null) {
+	/*	if (INSTANCE != null) {
 			throw new IllegalStateException(
 					"Inside JavaSingleton(): JavaSingleton "
 							+ "instance already created.");
-		}
-		System.out
-				.println("Inside JavaSingleton(): Singleton instance is being created.");
+		}*/
+		System.out.format("Inside {%s}: Singleton instance is being created.", this.getClass().getSimpleName());
+		System.out.println();
 		i++;
 	}
 
@@ -33,8 +35,10 @@ public class Singleton implements Cloneable {
 		return super.clone();
 	}
 
-	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException {
 		Singleton ins = Singleton.getInstance();
+		Field field = ins.getClass().getDeclaredField("INSTANCE");
+		field.setAccessible(false);
 		Singleton two = Singleton.class.newInstance();
 		
 		System.out.println("reflection");

@@ -1,6 +1,13 @@
 package com.ds.template.impls;
 
-public interface Question {
-	@Property(name = "quest.name", value = "build tree from traversal")
-	public String description();
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Question {
+	
+	public String description() default "";
 }
+							

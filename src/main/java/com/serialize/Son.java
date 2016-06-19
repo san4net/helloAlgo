@@ -1,21 +1,13 @@
 package com.serialize;
 
-import java.io.Externalizable;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Son extends Father implements Serializable {
 
 private String sonName;
 	
-  public Son() throws Exception {
-	  System.out.println("son");
+  public Son()  {
+	  //System.out.println("son");
 }
 	public String getSonName() {
 		return sonName;
@@ -31,34 +23,49 @@ private String sonName;
 				+ "]";
 	}
 	
-	public static void main(String[] args) 
-			 {/*
-		Son s = new Son();
+	public void testOver(Integer a){
+		System.out.println("son");
+	}
+
+	public void testOver(Double d){
+		System.out.println("father");
+	}
+		/*Son s = null;
+		try {
+			s = new Son();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		s.setSonName("beta");
-		s.setName("baap");
+		s.setFatherName("baap");
 		s.setGrandPaName("dada");
 		FileOutputStream f = new FileOutputStream("abc");
 		ObjectOutputStream out = new ObjectOutputStream(f);
 		out.writeObject(s);
-        System.out.println("son="+s);
+		System.out.println("son=" + s);
 		FileInputStream fileIn = new FileInputStream("abc");
 		ObjectInputStream in = new ObjectInputStream(fileIn);
 		Son s1 = (Son) in.readObject();
-		System.out.println("son="+s1);
+		System.out.println("son=" + s1);
 		in.close();
 		fileIn.close();
-
-	*/}
-	/*@Override
+		
+		FileInputStream f1 = new FileInputStream("abc");
+		ObjectInputStream incomong = new ObjectInputStream(f1);
+		Object o = incomong.readObject();
+	*/	 
+	public static void main(String[] args) {
+		String a = "abc";
+	}
+	/**@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
-		// TODO Auto-generated method stub
 		out.writeObject(sonName);
 	}
 	@Override
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
-		// TODO Auto-generated method stub
 		this.sonName = (String) in.readObject();
-	}*/
+	}**/
 	
 }

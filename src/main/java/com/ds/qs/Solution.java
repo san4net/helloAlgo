@@ -80,7 +80,6 @@ public class Solution {
 	 public static void main(String args[] ) throws Exception {
 	        /* Enter your code here. Read input from STDIN. Print output to STDOUT */
 	        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));        
-	        
 	        String s = in.readLine();
 	        while (s != null)
 	        {         
@@ -95,8 +94,5 @@ public class Solution {
 	            
 	        }
 	        
-	        // Do some work
-	        
-	        // Output using System.out.println();
 	    }
 }

@@ -25,6 +25,7 @@ public abstract class AbstractHeap<T extends Number> implements IHeap<Number> {
 	}
 
 	/**
+	 * Parent Index 
 	 * 
 	 */
 	@Override
@@ -68,8 +69,8 @@ public abstract class AbstractHeap<T extends Number> implements IHeap<Number> {
 	public abstract void heapify(int index);
 
 	/**
-	 * For building heap we need to start from last parent index till root and
-	 * heapify all parent indices
+	 * For building heap we need to start from last parent index till root
+	 *  and heapify all parent indices
 	 * 
 	 */
 	@Override

@@ -12,22 +12,22 @@ public class ProfileUpdate extends AbstractMessage {
 	 * 
 	 */
 	private static final long serialVersionUID = -6490887477567442927L;
-	private String userName;
+	private String user;
 	private Set<Location> locations;
 	
-	public ProfileUpdate(String userName,Set<Location> location, MsgType msgType, String message) {
+	public ProfileUpdate(String user,Set<Location> location, MessageType msgType, String message) {
 		super(msgType, message);
-		this.userName = userName;
+		this.user = user;
 		this.locations = location;
 	}
     
 	public static ProfileUpdate create(String userName, List<String> locations) {
-		return new ProfileUpdate(userName, Location.create(locations),MsgType.PROFILE_UPDATE, "update");
+		return new ProfileUpdate(userName, Location.create(locations),MessageType.PROFILE_UPDATE, "update");
 	}
 
 	
-	public String getUserName() {
-		return userName;
+	public String getUser() {
+		return user;
 	}
 	
 	public Set<Location> getLocations(){
@@ -36,7 +36,7 @@ public class ProfileUpdate extends AbstractMessage {
 
 	@Override
 	public String toString() {
-		return "ProfileUpdate [userName=" + userName + "," + locations + "]";
+		return "ProfileUpdate [user=" + user + "," + locations + "]";
 	}
 	
 }

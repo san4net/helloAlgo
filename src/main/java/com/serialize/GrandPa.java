@@ -5,12 +5,9 @@ import java.io.Serializable;
 public class GrandPa implements Serializable {
 	private String grandPaName;
 
-	public GrandPa() throws Exception{
-//		Exception e = new Exception();
-		String e = null;
-		e.charAt(0);
-//		System.out.println("grandpa");
+	public GrandPa(){
 	}
+	
 	public String getGrandPaName() {
 		return grandPaName;
 	}

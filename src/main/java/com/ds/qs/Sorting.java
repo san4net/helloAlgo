@@ -7,18 +7,25 @@ public class Sorting {
 	static int numbers[] = { 4, 3, 2, 1 };
 
 	public static void main(String[] args) {
-		Integer elements[] = { 1, 5, 4, 3, 8, 6 };
+		int elements[] = { 1 ,3 ,9 ,8, 2, 7, 5 };
 		quickSort(elements, 0, elements.length-1);
-		System.out.println("quck sort" +Arrays.asList(elements));
+		System.out.println("quck sort"); 
+		display(elements);
 
 		/**
 		 * 
 		 * bubleSort(elements); testAtomicLong();
 		 */
-		selectionSort(elements);
-		insertionsort(elements);
+//		selectionSort(elements);
+//		insertionsort(elements);
 	}
 	
+	 private static void display(int[] data){
+	       for(int i:data){
+	            System.out.print(i+" ");
+	        }
+	        System.out.println("");
+	    }
 	
 
 	public static void testAtomicLong() {
@@ -32,13 +39,14 @@ public class Sorting {
 	}
 
 
-	private static void exchange(Integer[] data, int i, int j) {
-		int temp = data[i];
-		data[i] = data[j];
-		data[j] = temp;
+	private static void exchange(int[] d, int i, int j) {
+		if(i==j)return;
+		d[i] = d[i]+d[j];
+        d[j] = d[i]-d[j];
+        d[i] = d[i]-d[j];
 	}
 	
-	private static void quickSort(Integer[] A, int p, int r) {
+	private static void quickSort(int[] A, int p, int r) {
 		if (p < r) {
 			int q = partition(A, p, r);
 			// on index q we are putting pivot and it is correct index 
@@ -56,15 +64,18 @@ public class Sorting {
 				exchange A[i] with A[j]
    	exchange A[i+1] with A[r]
    	return i+1;
+   	@param A number to sorted
+   	@param p start index
+   	@param r end index
 	 **/
 	
-	static int partition(Integer[] A, int p, int r) {
+	static int partition(int[] A, int p, int r) {
 		int pivot = A[r];
 		int i = p - 1;
 		for (int j = p; j < r; j++) {
 			if (A[j] <= pivot) {
 				i++;
-				// exhange i with j
+				// exchange i with j
 				exchange(A, i, j);
 			}
 		}
@@ -72,6 +83,23 @@ public class Sorting {
 		exchange(A, i + 1, r);
 		return i + 1;
 	}
+	
+	 private static int p(int[] data, int p, int r){
+	        int X = data[r];
+	        int i = p-1;
+	        
+	        for(int j=p; j<r-1; j++){
+	            if(data[j]<=X){
+	                i++;
+	                // swap data[i] with data[j]
+	                exchange(data, i, j);
+	                          
+	            }
+	        }
+	        // now we need to ex. i+1 with X
+	        exchange(data, i+1, r);
+	        return i+1;
+	    }
 	
 	private static void bubleSort(Integer[] elements) {
 		System.out.println("IP: " + Arrays.toString(elements));
