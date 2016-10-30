@@ -7,18 +7,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.ds.impls.StackImpl;
 import com.ds.template.Queue;
 import com.ds.template.graph.impl.Edge;
 import com.ds.template.impls.QueueImpl;
 
 public class Graph<V> {
-	List<Vertex<V>> vertex;
-	Map<Vertex<V>, Set<Edge<Vertex<V>>>> vToEdges;
-
+	private List<Vertex<V>> vertex;
+	private Map<Vertex<V>, Set<Edge<Vertex<V>>>> vToEdges;
+	private com.ds.template.Stack<Vertex<V>> stack ;
 	public Graph(List<Vertex<V>> vertex) {
 		super();
 		this.vertex = vertex;
 		this.vToEdges = new HashMap<>();
+		this.stack = new StackImpl<>(vertex.size());
 	}
 
 	public void addEdge(Vertex<V> start, Vertex<V> end) {
@@ -30,7 +32,11 @@ public class Graph<V> {
 		edges.add(Edge.create(start, end));
 
 	}
-
+	/**
+	 * 
+	 * @param start
+	 * @throws InterruptedException
+	 */
 	public void bfs(Vertex<V> start) throws InterruptedException {
 		// pseudo
 		// 1. push start to queue
@@ -46,7 +52,7 @@ public class Graph<V> {
 			}
 			display(nodes, true);
 			for (Vertex<V> v : nodes) {
-				for (Vertex<V> n : getUnVisited(v)) {
+				for (Vertex<V> n : getAllUnVisited(v)) {
 					q.enqueue(n);
 				}
 			}
@@ -62,7 +68,7 @@ public class Graph<V> {
 		}
 	}
 
-	private List<Vertex<V>> getUnVisited(Vertex<V> vertex) {
+	private List<Vertex<V>> getAllUnVisited(Vertex<V> vertex) {
 		List<Vertex<V>> unvisited = new ArrayList<>();
 		Set<Edge<Vertex<V>>> edges = vToEdges.get(vertex);
 		if (edges != null) {
@@ -72,10 +78,45 @@ public class Graph<V> {
 		}
 		return unvisited;
 	}
+	
+	private Vertex<V> getNextUnVisited(Vertex<V> vertex) {
+		Set<Edge<Vertex<V>>> edges = vToEdges.get(vertex);
+		if (edges != null) {
+			for (Edge<Vertex<V>> edge : edges) {
+				if (!edge.getEnd().isVisited()) {
+					return edge.getEnd();
+				}
+			}
+		}
+		return null;
+	}
+	
+	public void dfs(Vertex<V> vertex) {
+		stack.push(vertex);
 
+		while (!stack.isEmpty()) {
+			Vertex<V> temp = stack.peek();
+			if (temp.visited == false) {
+				temp.visited = true;
+				System.out.println(temp);
+			}
+
+			Vertex<V> unvisted = getNextUnVisited(temp);
+			if (unvisted == null) {
+				stack.pop();
+			} else {
+				stack.push(unvisted);
+			}
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return "Graph [vertex=" + vertex + ", vToEdges=" + vToEdges + "]";
+	}
+
+	public void reset() {
+		vertex.forEach(Vertex::markUnVisited);
 	}
 
 	public static void main(String[] args) throws InterruptedException {
@@ -98,6 +139,11 @@ public class Graph<V> {
 		g.addEdge(B, C);
 		g.addEdge(C, D);
 		g.addEdge(D, A);
+		System.out.println("bfs");
 		g.bfs(A);
+		g.reset();
+		System.out.println("dfs");
+		g.dfs(A);
 	}
+	
 }
