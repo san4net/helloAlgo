@@ -1,0 +1,147 @@
+// interface
+package com.citi.tds.dna.jmx;
+
+public interface LifeCycleMBean {
+	public void shutdown() throws Exception;
+	public String hello();
+}
+
+-------------------------------------
+package com.citi.tds.dna.jmx;
+
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+
+import com.citi.tds.dna.util.Utils;
+
+public class LifeCycle implements LifeCycleMBean {
+		BlockingQueue<Object> tasks = new ArrayBlockingQueue(3);
+		ExecutorService producerService = Utils.newWorkStealingPool();
+		private volatile STATE state = STATE.RUNNING;
+		
+		
+		public LifeCycle() {
+			super();
+			start();
+		}
+
+		enum STATE{
+			RUNNING,SHUTTING_DOWN;
+		}
+		ExecutorService consumerService = Utils.newFixedThreadPool("lifecycle", 1);
+		
+		@Override
+		public void shutdown() throws Exception {
+			Starter.echo("shutting down");
+			state = STATE.SHUTTING_DOWN;
+			producerService.shutdown();
+			consumerService.shutdown();
+			Starter.echo("shutting complete");
+		}
+
+		@Override
+		public String hello() {
+			return "hello there";
+		}
+		
+		public void start(){
+		consumerService.submit(new Runnable() {
+
+			@Override
+			public void run() {
+				while (state == STATE.RUNNING) {
+					System.out.println("consume");
+					try {
+						Object o = tasks.take();
+					} catch (InterruptedException e) {
+						// we get interrupt
+						System.out.println("consumed");
+						Thread.currentThread().interrupt();
+					}
+					System.out.println("consumed");
+				}
+
+			}
+		});
+		}
+		
+		public static void main(String[] args) {
+		 new LifeCycle().start();	
+		}
+}
+-------------------------------------
+public class Starter {
+	public static String serviceUrl() {
+		InetAddress ip = null;
+		try {
+			ip = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+		}
+		String port = System.getProperty("com.sun.management.jmxremote.port");
+		System.out.println("Current IP address : " + ip.getHostAddress());
+		return "service:jmx:rmi:///jndi/rmi://" + ip.getHostAddress() + ":" + port + "/jmxrmi";
+
+	}
+
+	public static void start() throws MalformedObjectNameException, InstanceAlreadyExistsException,
+			MBeanRegistrationException, NotCompliantMBeanException, InterruptedException {
+		// Get the Platform MBean Server
+		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+		// Construct the ObjectName for the Hello MBean we will register
+		ObjectName mbeanName = new ObjectName("com.example:type=LifeCycle");
+		// Create the Hello World MBean
+		LifeCycle lifeCycle = new LifeCycle();
+		// Register the LifeCycleMBean
+		mbs.registerMBean(lifeCycle, mbeanName);
+		// service ure
+		echo(serviceUrl());
+//		Thread.sleep(Long.MAX_VALUE);
+
+	}
+
+	public static void echo(String msg) {
+		System.out.println(msg);
+	}
+	public static void main(String[] args) {
+		try {
+			start();
+		} catch (MalformedObjectNameException | InstanceAlreadyExistsException | MBeanRegistrationException
+				| NotCompliantMBeanException | InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+}
+--------------------------------------------------------
+CLIENT 
+public class ClientShutDown {
+	
+  public static void trigger() throws Exception{
+	  String urlPath  ="service:jmx:rmi:///jndi/rmi://localhost:9998/jmxrmi";
+	  JMXServiceURL url = new JMXServiceURL(urlPath);
+      //service:jmx:rmi:///jndi/rmi://" + HOST + ":" + PORT + "/jmxrmi
+      JMXConnector jmxc = JMXConnectorFactory.connect(url, null);
+      System.out.println("\nGet an MBeanServerConnection");
+      MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
+      echo("\nDomains:");
+      String domains[] = mbsc.getDomains();
+      Arrays.sort(domains);
+      for (String domain : domains) {
+          echo("\tDomain = " + domain);
+      }
+      // Construct the ObjectName for the Hello MBean
+      ObjectName mbeanName = new ObjectName("com.example:type=LifeCycle");
+
+      //
+      LifeCycleMBean lifeCycleMBean = JMX.newMBeanProxy(mbsc, mbeanName, LifeCycleMBean.class, false);
+      lifeCycleMBean.shutdown();
+  }
+  
+  public static void main(String[] args) throws Exception {
+	trigger();
+}
+  
+  public static void echo(String msg){
+	  System.out.println(msg);
+  }
+}
