@@ -1,7 +1,10 @@
 package com.ds.qs;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.apache.logging.log4j.core.config.Node;
 
 import com.ds.template.impls.node.SingleNodeImpl;
 import com.ds.template.node.SingleNode;
@@ -11,7 +14,7 @@ public class LinkedList<T> implements Iterable<T> {
 	private SingleNode<T> head = null;
 
 	public void display() {
-		SingleNode<T> tmp = head;
+		SingleNode<? extends T> tmp = head;
 		while (tmp != null) {
 			System.out.print("->" + tmp.data());
 			tmp = (SingleNode<T>) tmp.getNext();
@@ -39,7 +42,7 @@ public class LinkedList<T> implements Iterable<T> {
 	 */
 	public void add(T data, boolean atBegining) {
 		if (head == null) {
-			head = new SingleNodeImpl(data, null);
+			head = new SingleNodeImpl<T>(data, null);
 			increment();
 			return;
 		}
@@ -47,7 +50,7 @@ public class LinkedList<T> implements Iterable<T> {
 		if (atBegining) {
 			head = new SingleNodeImpl(data, head);
 		} else {
-			SingleNode<T> t = head;
+			SingleNode<? extends T> t = head;
 			while (t.getNext() != null) {
 				t = (SingleNode<T>) t.getNext();
 			}
@@ -56,24 +59,60 @@ public class LinkedList<T> implements Iterable<T> {
 		increment();
 	}
 
-	/*
-	 * private void reverse(LinkedList<T> ll) { ll.display(); // 1->2->3(null)
-	 * SingleNode<? extends Number> t1 = null, t2 = null;
-	 * 
-	 * while (ll.head != null) { t1 = ll.head;
-	 * 
-	 * ll.head = (SingleNode<T>) ll.head.getNext();
-	 * 
-	 * ll.head = (SingleNode<? extends Number>) ll.head.getNext();
-	 * t1.setNext(t2); t2 = t1; } ll.head = t1; ll.display(); }
-	 */
+	
+	// Iterative reverse
+	public void reverseIterative(LinkedList<T> ll) {
+		ll.display(); // 1->2->3(null)
+		SingleNode<T> t1 = null, t2 = null;
 
-	/*
-	 * public void reverseRecursive(SingleNode<? extends Number> node) { if
-	 * (node.getNext() == null) { head = node; } else {
-	 * reverseRecursive((SingleNode<? extends Number>) node.getNext());
-	 * ((SingleNode<T>) node.getNext()).setNext(node); node.setNext(null); } }
-	 */
+		while (ll.head != null) {
+			t1 = ll.head;
+			ll.head = (SingleNode<T>) ll.head.getNext();
+			t1.setNext(t2);
+			t2 = t1;
+		}
+		ll.head = t1;
+		ll.display();
+	}
+	
+	public void reverseIT(){
+		SingleNode<T> first=null, second=null;
+		while(head != null){
+			first = head;
+			head = head.getNext();
+			first.setNext(second);
+			second = first;
+		}
+		head = first;
+	}
+
+ 
+	public void reverseRecursive(SingleNode<T> node) {
+		if (node.getNext() == null) {
+			head = node;
+		} else {
+			reverseRecursive(node.getNext());
+			((SingleNode<T>) node.getNext()).setNext(node);
+			node.setNext(null);
+		}
+	}
+	
+	public SingleNode<T> reverseRecursiveCorrect(SingleNode<T> head) {
+		if (head == null) {
+			return null;
+		}
+		if (head.getNext() == null) {
+			return head;
+		}
+		//
+		SingleNode<T> second = head.getNext();
+		// break the link
+		head.setNext(null);
+		SingleNode<T> reverse = reverseRecursiveCorrect(second);
+		// here we need to do the lining
+		second.setNext(head);
+		return reverse;
+	}
 
 	/*	*//**
 			 * 
@@ -86,8 +125,8 @@ public class LinkedList<T> implements Iterable<T> {
 			 * if (head.getNext() == null || ((SingleNode)
 			 * head.getNext()).getNext() == null) { return; // base case }
 			 * 
-			 * // reverse the first pair SingleNode<? extends Number> secondNode
-			 * = (SingleNode<? extends Number>) head.getNext();
+			 * // reverse the first pair
+			 *  SingleNode<? extends Number> secondNode = (SingleNode<? extends Number>) head.getNext();
 			 * head.setNext(secondNode.getNext()); secondNode.setNext(head);
 			 * 
 			 * // this is must to restore head and linking reversed node to prev
@@ -102,10 +141,17 @@ public class LinkedList<T> implements Iterable<T> {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// prepareLinkedList();
+		ArrayList<Integer> i = new ArrayList<>();
+		ArrayList<? extends Number> iext = i;
+		
 		LinkedList<Integer> first = new LinkedList();
 		first.add(1);
 		first.add(3);
+		first.add(3);
+		first.display();
+		first.reverseIT();
+		first.display();
+		
 		LinkedList<Integer> second = new LinkedList();
 		second.add(2);
 		second.add(4);
@@ -113,10 +159,9 @@ public class LinkedList<T> implements Iterable<T> {
 		first.display();
 		second.display();
 		
-		for(Integer i : first){
-			System.out.println(i);
-		}
-		// display(mergeSorted(first.getHead(), second.getHead()));
+		second.head = second.reverseRecursiveCorrect(second.head);
+		second.display();
+//		 display(mergeSorted(first.getHead(), second.getHead()));
 		// l.reverseInPair((SingleNode<Integer>) l.getHead(), null);
 		/*
 		 * l.reverse(2); l.reverseRecursive((SingleNode<Integer>) l.getHead());
