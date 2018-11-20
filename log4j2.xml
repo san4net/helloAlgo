@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="logPath">${sys:logDir:-/data/1/tdsemhdp/log/referencedata}
+		</Property>
+		<Property name="main.file.name">referencedata_main</Property>
+		<Property name="driver.file.name">referencedata_driver</Property>
+	</Properties>
+	<Appenders>
+		<RollingFile name="DriverLogFile"
+			fileName="${logPath}/${driver.file.name}.log"
+			filePattern="${logPath}/${driver.file.name}_%d{yyyy-MM-dd-HHmmss}.gz">
+			<PatternLayout>
+				<pattern>%d [%t] %-5p %C - %m%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<!-- <OnStartupTriggeringPolicy /> -->
+				<SizeBasedTriggeringPolicy size="50 MB" /><!-- 
+					For testing 2 MB Actual 50 -->
+			</Policies>
+			<DefaultRolloverStrategy fileIndex="nomax">
+				<Delete basePath="${logPath}" maxDepth="4">
+					<IfFileName glob="${driver.file.name}_*.gz">
+						<IfAny>
+							<IfAccumulatedFileSize exceeds="350 MB" /><!-- 
+								For testing 6 MB Actual 350 -->
+							<IfLastModified age="30d" /> 
+						</IfAny>
+					</IfFileName>
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+		
+		<RollingFile name="RollingFile"
+			fileName="${logPath}/${main.file.name}.log"
+			filePattern="${logPath}/${main.file.name}_%d{yyyy-MM-dd-HHmmss}.gz">
+			<PatternLayout>
+				<pattern>%d [%t] %-5p %C - %m%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<OnStartupTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="50 MB" /><!-- 
+					For testing 2 MB Actual 50 -->
+			</Policies>
+			<DefaultRolloverStrategy fileIndex="nomax">
+				<Delete basePath="${logPath}" maxDepth="4">
+					<IfFileName glob="${main.file.name}_*.gz">
+						<IfAny>
+							<IfAccumulatedFileSize exceeds="150 MB" /><!-- 
+								For testing 6 MB Actual 150 -->
+							<IfLastModified age="30d" /> 
+						</IfAny>
+					</IfFileName>
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+		
+		
+
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d [%t] %-5p %C - %m%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<Root level="INFO">
+			<AppenderRef ref="Console" level="INFO" />
+			<AppenderRef ref="DriverLogFile" level="INFO" />
+			<AppenderRef ref="RollingFile" level="INFO"/>
+		</Root>
+				
+		<Logger name="com.citi.rd" level="INFO" additivity="false">
+			<AppenderRef ref="Console" level="INFO"/>
+			<AppenderRef ref="DriverLogFile" level="INFO"/>
+			<AppenderRef ref="RollingFile" level="INFO"/>
+		</Logger>
+		
+	</Loggers>
+</Configuration>
