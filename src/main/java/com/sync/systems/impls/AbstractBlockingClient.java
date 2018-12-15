@@ -1,16 +1,14 @@
 package com.sync.systems.impls;
 
-import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
-import com.sync.systems.Client;
-import com.sync.systems.Utils;
 import com.sync.systems.Utils.State;
 import com.sync.systems.impls.SocketServerImpl.SocketStreamPair;
 import com.sync.systems.message.Message;
 
-public abstract class AbstractBlockingClient implements Runnable,Client {
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public abstract class AbstractBlockingClient implements Runnable {
 	protected State state = State.RUNNING;
 	protected volatile int ERROR_CODE = -1;
 	protected String userName;
@@ -30,11 +28,7 @@ public abstract class AbstractBlockingClient implements Runnable,Client {
 		connect();
 	}
 	
-	@Override
-	public String userName() {
-		return userName;
-	}
-	
+
 	public final synchronized Socket connect() throws IOException, InterruptedException {
 		Socket socket = null;
 		try {

@@ -1,18 +1,22 @@
 package com.ds.bit;
 
-import java.util.Calendar;
-import java.util.concurrent.CountDownLatch;
+import java.util.ArrayList;
 
 public class BitOperations {
-	public static int findNearestPowerofTwo(int n) {
+
+
+    public static int findNearestPowerofTwo(int n) {
 		// if it is power of two then its AND with number 1 less will be zero
-		if ((n & n - 1) == 0)
-			return n;
-		int a = 1;
-		while (a < n) {
-			a = a << 1;
-		}
-		return a >> 1;
+		if ((n & n - 1) == 0) {
+            return n;
+        }
+        int a = 1;
+        while (a < n) {
+            a = a << 1;
+        }
+
+
+        return a >> 1;
 	}
 
 	public static int maxXor() {

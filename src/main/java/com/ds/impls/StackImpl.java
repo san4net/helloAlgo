@@ -22,7 +22,7 @@ public class StackImpl<T> implements Stack<T> {
 		this.maxSize = maxSize;
 		elementArray = new ArrayList<T>(maxSize);
 	}
-	
+
 	public StackImpl() {
 		this(50);
 	}
@@ -128,7 +128,12 @@ public class StackImpl<T> implements Stack<T> {
 	public void clear() {
 	   removeAllElements();
 	}
-	
+
+	@Override
+	public T peek() {
+		return null;
+	}
+
 	private void removeAllElements(){
 	        while(!isEmpty()){
 	        	remove();

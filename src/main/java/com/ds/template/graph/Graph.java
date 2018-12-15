@@ -16,6 +16,7 @@ public class Graph<V> {
 	private List<Vertex<V>> vertex;
 	private Map<Vertex<V>, Set<Edge<Vertex<V>>>> vToEdges;
 	private com.ds.template.Stack<Vertex<V>> stack ;
+
 	public Graph(List<Vertex<V>> vertex) {
 		super();
 		this.vertex = vertex;

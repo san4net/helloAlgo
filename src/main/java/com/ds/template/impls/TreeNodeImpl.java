@@ -1,7 +1,5 @@
 package com.ds.template.impls;
 
-import org.hamcrest.core.IsInstanceOf;
-
 import com.ds.template.node.Node;
 import com.ds.template.node.TreeNode;
 /**
@@ -21,6 +19,10 @@ public class TreeNodeImpl<T> implements TreeNode<T> {
 		this.data = data;
 		this.left = left;
 		this.right = right;
+	}
+
+	public static TreeNode<Integer> createTreeNode(int i) {
+		return null;
 	}
 
 	public T data() {

@@ -1,10 +1,11 @@
 package com.ds.template.impls;
 
-public class Gcd {
+public class GCD {
 
-	public Gcd() {
+	public GCD() {
 		// TODO Auto-generated constructor stub
 	}
+
 	public static int getGcdRecursive(int a, int b){
 		if(b==0) return a;
 		 return getGcdRecursive(b,  a%b);

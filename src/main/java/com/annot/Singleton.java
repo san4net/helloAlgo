@@ -10,7 +10,7 @@ import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 
-public class Singleton extends SingletonParent implements Cloneable, Serializable {
+public class Singleton  implements Cloneable, Serializable {
 	static int i = 0;
 	private static Singleton INSTANCE = new Singleton();
 	private int id = 2;

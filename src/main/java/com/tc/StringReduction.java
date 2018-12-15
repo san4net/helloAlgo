@@ -1,9 +1,10 @@
 package com.tc;
 
 /**
- * Given a string consisting of a,b and c’s, we can perform the following operation: Take any two adjacent 
- * distinct characters and replace it with the third character. For example, if ‘a’ and ‘c’ are adjacent, 
- * they can replaced with ‘b’. What is the smallest string which can result by applying this operation 
+ * Given a string consisting of a,b and c
+* 	ï¿½s, we can perform the following operation: Take any two adjacent
+ * distinct characters and replace it with the third character. For example, if ï¿½aï¿½ and ï¿½cï¿½ are adjacent, 
+ * they can replaced with ï¿½bï¿½. What is the smallest string which can result by applying this operation 
  * repeatedly?
  * 
  * @author ivy4467

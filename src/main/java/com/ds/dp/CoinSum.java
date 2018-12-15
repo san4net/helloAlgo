@@ -49,7 +49,6 @@ public class CoinSum {
 	    }
 	 
 	 private static int minRemoval(int[] d){
-		 Sorting.quickSort(d);
 		 System.out.println("sorted"+Arrays.asList(d));
 		 int i = getMFromEnd(d);
 		 int j = getMFromEnd(d);

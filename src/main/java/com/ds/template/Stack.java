@@ -12,4 +12,6 @@ public interface Stack<T> {
 	String toString();
 
 	void clear();
+
+	T peek();
 }

@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 
-import com.sun.istack.internal.NotNull;
 
 public class ArrayQuestions {
 	
@@ -192,15 +191,8 @@ public String toString() {
 		
 	}
  
-/**
- * Move all zeroes to end of array
- * 
- * Given an array of random numbers, Push all the zero’s of a given array to the end of the array. 
- * For example, if the given arrays is {1, 9, 8, 4, 0, 0, 2, 7, 0, 6, 0}, it should be changed to {1, 9, 8, 4, 2, 7, 6, 0, 0, 0, 0}. 
- * The order of all other elements should be same. Expected time complexity is O(n) and extra space is O(1).
- * @param array
- */
-	public static void pushAllZero(@NotNull int[] array) {
+
+	public static void pushAllZero( int[] array) {
 		// 1 way traverse the array and keep a track for non zero element,by the
 		// end of traversal we have all the
 		// non zero pushed in the array and the count will point to the first
@@ -221,8 +213,7 @@ public String toString() {
 		System.out.println(Arrays.toString(array));
 	}
  
-  @NotNull private String names;
-  
+
 	public static void main(String[] args) {
 		Integer[] A = { 0, 1, 0, 0, 1 };
 		System.out.println(Arrays.toString(A));
