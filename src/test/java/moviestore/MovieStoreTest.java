@@ -13,7 +13,7 @@ public class MovieStoreTest {
     // option + command + F  i.e initialize window to move
 
     private final Movie sholay = new Movie("Sholay", "Ramesh Sippy");
-    private final Movie sita = new Movie("Sita Aur Gita", "xyz");
+    private final Movie sita = new Movie("Sita Aur Gita", "SRK");
     private final Movie shimba = new Movie("Shimba", "Ramesh Sippy");
     private final MovieStore movieStore = new MovieStore();
 
@@ -26,14 +26,14 @@ public class MovieStoreTest {
 
     @Test
     public void returnsNoResultsWhenNoTitlesPartiallyMatchSearch(){
-        MovieStore movieStore=  new MovieStore();
+        System.out.println(movieStore);
         List<Movie> movies = movieStore.findByPartialMatchTitle("abc");
         assertThat(movies.size(), is(0));
     }
 
     @Test
     public void findResultsWhenTitlesPartiallyMatchSearchCaseInsensitive(){
-
+        System.out.println(movieStore);
         List<Movie> movies = movieStore.findByPartialMatchTitle("Sh");
 
         assertThat(movies.size(), is(2));
@@ -42,11 +42,7 @@ public class MovieStoreTest {
 
     @Test
     public void findMovieWhereDirectorAreExactlyMatched(){
-        MovieStore movieStore = new MovieStore();
-        movieStore.add(new Movie("Sholay", "Ramesh Sippy"));
-        movieStore.add(new Movie("Sita Aur Gita",  "SRK"));
-        movieStore.add(new Movie("Shimba", "Ramesh Sippy"));
-
+        System.out.println(movieStore);
         List<Movie> movies = movieStore.findByDirector("SRK");
 
         assertThat(movies.size(), is(1));
