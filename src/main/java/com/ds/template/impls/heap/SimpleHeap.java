@@ -86,7 +86,7 @@ public class SimpleHeap {
 		return size < capacity;
 	}
 
-	public Object getSize() {
+	public int getSize() {
 		return size;
 	}
 
