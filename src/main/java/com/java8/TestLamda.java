@@ -26,6 +26,7 @@ public class TestLamda {
  */
 	public void lamdaTest1() {
 		File f = new File(".");
+
 		// jdk <8
 		Arrays.asList(f.listFiles()).forEach(new Consumer<File>() {
 			@Override
@@ -54,7 +55,8 @@ public class TestLamda {
 		 * 
 		 * 
 		 * 
-		 * ''way of passing FileFilter 		 */
+		 * ''way of passing FileFilter
+		 * */
 		File[] directoriesWithMethod = f.listFiles(File::isDirectory);
 		
 	}
@@ -79,11 +81,13 @@ public class TestLamda {
 	private Set<String> cache = new HashSet<>();
 	public void streamTest(){
 		Stream<Double> a = Stream.generate(Math::random).limit(10);
-		
 		cache.add("santosh");
+
 		List<String> list = Arrays.asList("santosh","pankaj", "khushboo", "aniket", "khush");
-		ArrayList<String> rr = list.stream().filter((s)->{return s.equals("santosh");}).
-				collect(ArrayList<String>::new, 
+
+		ArrayList<String> rr = list.stream().filter((s)->{
+			return s.equals("santosh");
+		}).collect(ArrayList<String>::new,
 				ArrayList<String>::add,
 			    (c,d)->{});
 		

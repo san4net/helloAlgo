@@ -106,7 +106,7 @@ public class GenericTree<T> implements Serializable {
 	 * 1. initialize stack with root
 	 * 2. while stack is not empty pop node print it
 	 * 3. push node right and then left
-	 * 
+	 *  N L R
 	 * 
 	 */
 	public static <T> void preorderIterative(TreeNode<T> root) {
@@ -133,13 +133,8 @@ public class GenericTree<T> implements Serializable {
 	 * 1. initialize first with root
 	 * 2. while first stack is not empty pop and push it to second And 
 	 *    push left & right to first
-	 * 3. print sencond     
+	 * 3. print second
 	 *  
-	 * 
-	 * 2. while stack is not empty pop node print it
-	 * 3. push node right and then left
-	 * 
-	 * 
 	 */
 	public static <T> List<T> postorderIterative(TreeNode<T> root) {
 		System.out.println("postorder iterative");

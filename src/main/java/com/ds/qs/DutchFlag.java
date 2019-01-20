@@ -8,6 +8,7 @@ public class DutchFlag {
 		int temp = array[index1];
 		array[index1] = array[index2];
 		array[index2] = temp;
+
 	}
 
 	void sort(int[] array){
@@ -44,6 +45,12 @@ public class DutchFlag {
 		df.display(array);
 		df.sort(array);
 		df.display(array);
-		
+
+		int a =0;
+				int c =3;
+		System.out.println("starting"+c);
+		c = a==0?++c:0;
+		System.out.println(c);
+
 	}
 }

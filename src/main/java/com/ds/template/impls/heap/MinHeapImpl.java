@@ -32,6 +32,11 @@ public class MinHeapImpl<T extends Number> extends AbstractHeap<Number> {
 			}
 	}
 
+	@Override
+	public int getLeftChildIndex(int i) {
+		return super.getLeftChildIndex(i);
+	}
+
 	public void display(){
 		System.out.println(""+Arrays.asList(elements));
 	}

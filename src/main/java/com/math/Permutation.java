@@ -1,4 +1,4 @@
-package com.inner;
+package com.math;
 
 import java.util.Arrays;
 
@@ -8,9 +8,10 @@ public class Permutation {
 		  System.out.println(Arrays.toString(input));
 	  }
 	  else{
+
 		  for(int i=start;i<=end;i++){
 			  swap(input, start, i);
-			  doPermute(input, start+1, end);
+			  doPermute(input,start+1, end);
 			  // back track
 			  swap(input, start, i);
 		  }

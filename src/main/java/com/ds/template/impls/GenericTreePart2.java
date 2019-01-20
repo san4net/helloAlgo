@@ -92,7 +92,8 @@ public class GenericTreePart2<T> {
 
             TreeNode<T> left = printLCA((TreeNode<T>) node.left(), data1, data2);
             TreeNode<T> right = printLCA((TreeNode<T>) node.right(), data1, data2);
-            if (left != null & right != null) {
+
+            if (left != null && right != null) {
                 return node;
             }
             return left == null ? right : left;

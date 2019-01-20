@@ -10,10 +10,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 public class Prime{
 
-  static int end = (int) Math.sqrt(10001d);
+    static int end = (int) Math.sqrt(10001d);
 	static int start = 2;
 	static int[] primes;
-	
+
+
 	/** 
 	 * Logic
 	   To generate prime from range x to y.(2 to 10000)

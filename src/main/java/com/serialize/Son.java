@@ -56,9 +56,15 @@ private String sonName;
 		Object o = incomong.readObject();
 	*/	 
 	public static void main(String[] args) {
+		Father f = new Son();
+		//Son s = new Father();
+		Son s1 = (Son) f;
+
+
 		String a = "abc";
 	}
-	/**@Override
+	/**
+	 * @Override
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeObject(sonName);
 	}
