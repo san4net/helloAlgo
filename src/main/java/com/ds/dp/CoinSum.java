@@ -8,7 +8,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.ds.qs.Sorting;
 
 /**
  * Question: 
@@ -20,6 +19,7 @@ import com.ds.qs.Sorting;
  * @author santosh kumar
  *
  */
+
 public class CoinSum {
 	static final Logger logger = LogManager.getLogger(CoinSum.class.getName());
 	/**
