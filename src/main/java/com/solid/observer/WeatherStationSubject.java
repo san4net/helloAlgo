@@ -3,14 +3,14 @@ package com.solid.observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeatherStation implements Subject {
+public class WeatherStationSubject implements Subject {
 	private int temperature;
 	private int humidity;
 	List<Observer> observerList;
 	
 	
 	
-	public WeatherStation() {
+	public WeatherStationSubject() {
 		super();
 		this.observerList = new ArrayList<>();
 	}
