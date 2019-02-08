@@ -16,6 +16,7 @@ public class ServerSupport {
         byteBuffer.flip();
         //after flip
         // pos=0 limit=6, capacity=80
+
         for (int i = 0; i < byteBuffer.limit(); i++) {
             byteBuffer.put( i, (byte) transmogrify( byteBuffer.get( i ) ) );
         }
