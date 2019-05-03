@@ -57,11 +57,11 @@ public class TreeNodeImpl<T> implements TreeNode<T> {
 
 	@Override
 	public int compareTo(Node<T> o) {
-		T other = o.data();
-		if(this.data instanceof Integer){
-			return Integer.compare((int)data, (int)other);
-		}
-		
+//		T other = o.data();
+//		if(this.data instanceof Integer){
+//			return Integer.compare((int)data, (int)other);
+//		}
+//
 		throw new UnsupportedOperationException("Not Supported");
 	}
 

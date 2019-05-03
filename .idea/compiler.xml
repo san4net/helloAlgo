@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="helloAlgo" />
+        <module name="services" />
+      </profile>
+      <profile name="Annotation profile for wiki-step-5" enabled="true">
+        <sourceOutputDir name="src/main/generated" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <option name="outputDirectory" value="$PROJECT_DIR$/../test-vertx/step-5/src/main" />
+        <processor name="io.vertx.codegen.CodeGenProcessor" />
+        <module name="wiki-step-5" />
+      </profile>
+      <profile name="Annotation profile for wiki-step-6" enabled="true">
+        <sourceOutputDir name="src/main/generated" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <option name="outputDirectory" value="$PROJECT_DIR$/../test-vertx/step-6/src/main" />
+        <processor name="io.vertx.codegen.CodeGenProcessor" />
+        <module name="wiki-step-6" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="analytics" target="1.8" />
+      <module name="contest" target="1.8" />
+      <module name="contest-impl" target="1.8" />
+      <module name="persistence" target="1.8" />
+      <module name="voltdb" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="services" options="-parameters" />
+      <module name="wiki-step-5" options="-AoutputDirectory=$PROJECT_DIR$/../test-vertx/step-5/src/main" />
+      <module name="wiki-step-6" options="-AoutputDirectory=$PROJECT_DIR$/../test-vertx/step-6/src/main" />
+    </option>
+  </component>
+</project>
