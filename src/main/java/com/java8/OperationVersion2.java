@@ -5,7 +5,7 @@ import java.util.function.DoubleBinaryOperator;
 public enum OperationVersion2 {
 
     PLUS("+", Double::sum),
-    MINUS("-", Double::min) ,
+    MINUS("-", (double a, double b)->{return  a-b;}) ,
     TIMES("*", (double a, double b)->{return  a*b;}) ;
 
     private final String symbol;
@@ -30,7 +30,7 @@ public enum OperationVersion2 {
         double sumNumber = OperationVersion2.PLUS.apply(2, 3);
         double substractionNum = OperationVersion2.MINUS.apply(2, 3);
         double multiplicationNumber = OperationVersion2.TIMES.apply(2, 3);
-        System.out.println("sum="+sumNumber +" subsraction="+substractionNum);
+        System.out.println("sum="+sumNumber +" subsraction="+substractionNum +" multiply="+multiplicationNumber);
 
     }
 }
