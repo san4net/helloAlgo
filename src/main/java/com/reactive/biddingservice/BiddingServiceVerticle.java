@@ -30,19 +30,35 @@ public class BiddingServiceVerticle extends AbstractVerticle {
 
         router.get("/offer")
                 .handler(routingContext -> {
-                    String clientRequestId = routingContext.request().getHeader("client-request-id");
+                    String clientRequestId = routingContext.request().getHeader(BestOfferServiceVerticle.ClientRequestId);
 
+                    logger.info("bidding service at port {} got offer request and clientRequestid {}", config().getInteger("port"), clientRequestId);
 
                     int myBid = 10 + random.nextInt();
+
                     JsonObject payload = new JsonObject()
                             .put("id", myId)
                             .put("bid", myBid);
+
                     if (clientRequestId != null) {
                         payload.put("clientRequestId", clientRequestId);
                     }
 
+                    if(random.nextInt(1000)%2==0){
+                        routingContext.response().setStatusCode(500).end();
+                        logger.error("{} injects an error (client-id={}",
+                                myId, myBid, clientRequestId);
+                    }else {
+                        routingContext.response().putHeader("Content-Type", "application/json")
+                                .end(payload.encode());
+                        logger.info("{} offers {} (client-id={}", myId, myBid, clientRequestId);
+
+                    }
+
+
+
                     // adding random delay and
-                    vertx.setPeriodic(random.nextInt(1000),
+                    /*vertx.setPeriodic(random.nextInt(1000),
                             id -> {
                                 if (id % 2 == 0) {
                                     routingContext.response().setStatusCode(500).end();
@@ -51,7 +67,7 @@ public class BiddingServiceVerticle extends AbstractVerticle {
                                     routingContext.response().putHeader("Content-Type", "application/json")
                                             .end(payload.encode());
                                 }
-                            });
+                            });*/
 
 
                 });

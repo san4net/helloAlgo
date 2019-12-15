@@ -23,11 +23,13 @@ public class BestOfferServiceVerticle extends AbstractVerticle {
 
     private WebClient webClient;
 
+
     private List<JsonObject> targets;
 
     private final String host="host";
     private final String port="port";
     private final String path="path";
+    public static final String ClientRequestId ="Client-Request-Id";
 
     private  final JsonArray DEFAULT_TARGETS = new JsonArray()
             .add(new JsonObject()
@@ -66,18 +68,19 @@ public class BestOfferServiceVerticle extends AbstractVerticle {
 
     }
 
-    private final AtomicLong requestIds = new AtomicLong();
+    private final AtomicLong requestIds = new AtomicLong(1);
 
     private static final JsonObject EMPTY_RESPONSE = new JsonObject()
             .put("empty", true)
             .put("bid", Integer.MAX_VALUE);
 
     private void findBestOffer(HttpServerRequest request) {
+        logger.info("**request received***");
         long requestId = requestIds.getAndIncrement();
 
         List<Single<JsonObject>> responses = targets.stream().map(t -> {
             return webClient.get(t.getInteger(port), t.getString(host), t.getString(path))
-                    .putHeader("Client-Request-Id",
+                    .putHeader(ClientRequestId,
                             String.valueOf(requestId))
                     .as(BodyCodec.jsonObject())
                     .rxSend()
@@ -87,6 +90,7 @@ public class BestOfferServiceVerticle extends AbstractVerticle {
                     .map(HttpResponse::body)
                     .map(body -> {
                         logger.info("#{} best offer received {}", requestIds, body.encodePrettily());
+
                         return body;
                     })
                     .onErrorReturnItem(EMPTY_RESPONSE);
