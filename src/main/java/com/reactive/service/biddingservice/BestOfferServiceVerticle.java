@@ -1,4 +1,4 @@
-package com.reactive.biddingservice;
+package com.reactive.service.biddingservice;
 
 import io.reactivex.Single;
 import io.vertx.core.Future;
@@ -89,7 +89,7 @@ public class BestOfferServiceVerticle extends AbstractVerticle {
                             RxHelper.scheduler(vertx))
                     .map(HttpResponse::body)
                     .map(body -> {
-                        logger.info("#{} best offer received {}", requestIds, body.encodePrettily());
+                        logger.info("#{} best offer received {}", requestId, body.encodePrettily());
 
                         return body;
                     })

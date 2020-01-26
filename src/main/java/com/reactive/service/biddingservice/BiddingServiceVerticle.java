@@ -1,4 +1,4 @@
-package com.reactive.biddingservice;
+package com.reactive.service.biddingservice;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
