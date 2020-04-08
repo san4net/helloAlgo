@@ -10,7 +10,7 @@ import com.ds.template.node.TreeNode;
  * @param <T>
  */
 public class TreeNodeImpl<T> implements TreeNode<T> {
-	private T data;
+	private T data ;
 	private TreeNode<T> left;
 	private TreeNode<T> right;
 
@@ -54,15 +54,5 @@ public class TreeNodeImpl<T> implements TreeNode<T> {
 		return "[TreeNodeImpl data=" + data + "]";
 	}
 
-
-	@Override
-	public int compareTo(Node<T> o) {
-//		T other = o.data();
-//		if(this.data instanceof Integer){
-//			return Integer.compare((int)data, (int)other);
-//		}
-//
-		throw new UnsupportedOperationException("Not Supported");
-	}
 
 }
