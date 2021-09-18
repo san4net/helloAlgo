@@ -8,9 +8,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.sapient.cab.BookingManager;
-import com.sapient.cab.Cab;
-import com.sapient.cab.Factory;
+import org.sapient.cab.BookingManager;
+import org.sapient.cab.Cab;
+import org.sapient.cab.Factory;
 
 public class BookingManagerTest {
 	static List<Cab> cabs = new ArrayList<>();

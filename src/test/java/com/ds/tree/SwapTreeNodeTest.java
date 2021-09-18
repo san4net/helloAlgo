@@ -1,5 +1,6 @@
 package com.ds.tree;
 
+import org.ds.tree.SwapTreeNode;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

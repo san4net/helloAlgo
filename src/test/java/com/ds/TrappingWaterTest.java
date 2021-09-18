@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.algo.dp.TrappingRainWater;
+import org.algo.dp.TrappingRainWater;
 
 public class TrappingWaterTest {
 

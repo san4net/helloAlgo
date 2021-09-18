@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.ds.template.impls.heap.SimpleHeap;
+import org.ds.template.impls.heap.SimpleHeap;
 
 public class SimpleHeapTest {
 
