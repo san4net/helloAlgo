@@ -35,6 +35,6 @@ public class SerializeTree {
 		int[] a = {4,2,1,3,6,5,7};
 		TreeNode<Integer> root = serializeBSTGivenPreorder(a);
 		
-		GenericTree.inorderWalk(root);
+		GenericBST.inorderWalk(root);
 	}
 }

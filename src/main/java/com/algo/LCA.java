@@ -1,4 +1,7 @@
-  package com.ds;
+  package com.algo;
+
+  import com.ds.TreeNode;
+
   public class LCA{
   
   public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {

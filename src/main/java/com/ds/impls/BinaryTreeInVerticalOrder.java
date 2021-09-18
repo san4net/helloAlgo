@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ds.template.impls.GenericTree;
+import com.ds.template.impls.GenericBST;
 import com.ds.template.node.TreeNode;
 
 public class BinaryTreeInVerticalOrder {
@@ -48,7 +48,7 @@ public class BinaryTreeInVerticalOrder {
 	private void buildTree(){
 		List<Integer> nodeData = new ArrayList<>();
 		nodeData.add(5);nodeData.add(2);nodeData.add(3);nodeData.add(4);nodeData.add(7);
-		GenericTree<Integer> tree = GenericTree.buildTree(nodeData);
+		GenericBST<Integer> tree = GenericBST.buildTree(nodeData);
 		inorderTraversal(tree.getHead(), 0);
 		System.out.println(map);
 	}

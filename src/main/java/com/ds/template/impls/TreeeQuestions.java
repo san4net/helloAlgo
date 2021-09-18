@@ -61,7 +61,7 @@ public class TreeeQuestions<T> {
 	public static void main(String[] args) {
 		buildTreeFromTraversal();
 		TreeNode<Integer> root = createBinaryTree();
-		GenericTree.inorderWalk(root);
+		GenericBST.inorderWalk(root);
 		AtomicInteger count = new AtomicInteger(0);
 		countSingleValuedTree(root, count );
 		System.out.println(count);
@@ -93,25 +93,25 @@ public class TreeeQuestions<T> {
 	/**
 	 * 
 	 */
-	public static <T> GenericTree<T> getTree() {
+	public static <T> GenericBST<T> getTree() {
 		List<Integer> node = new ArrayList<>();
 		node.add(2);
 		node.add(1);
 		node.add(3);
 		node.add(7); 
-		GenericTree tree = GenericTree.buildTree(node);
-		List<Integer> elements = GenericTree.inorderIterative(tree.getHead());
+		GenericBST tree = GenericBST.buildTree(node);
+		List<Integer> elements = GenericBST.inorderIterative(tree.getHead());
 		System.out.println(elements);
-		System.out.println(GenericTree.postorderIterative(tree.getHead()));
+		System.out.println(GenericBST.postorderIterative(tree.getHead()));
 		return tree;
 	}
 	//TODO
 	// to check
 	public static void buildTreeFromTraversal() {
 		// 1. get bst tree
-		GenericTree<Integer> tree = getTree();
-		List<Integer> inoorderTraversal = GenericTree.inorderIterative(tree.getHead());
-		List<Integer> postorderTraversal = GenericTree.postorderIterative(tree.getHead());
+		GenericBST<Integer> tree = getTree();
+		List<Integer> inoorderTraversal = GenericBST.inorderIterative(tree.getHead());
+		List<Integer> postorderTraversal = GenericBST.postorderIterative(tree.getHead());
 
 		com.ds.template.node.TreeNode<Integer> head = new TreeNodeImpl<Integer>(null, null, null);
 		buildTreeUtils(inoorderTraversal, postorderTraversal, head);

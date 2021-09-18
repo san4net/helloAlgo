@@ -3,14 +3,14 @@ package com.ds;
 public class HeightBalancedTree{
    
   
-	public boolean isBalanced(TreeNode root) {
+	public boolean isBalanced(com.ds.TreeNode root) {
       if(root == null) return true;
        
         return (isBalancedHeight(root) != -1);  
         
     }
     
-    private int isBalancedHeight(TreeNode node){
+    private int isBalancedHeight(com.ds.TreeNode node){
         if(node == null) return 0;
         
         int l = isBalancedHeight(node.left);

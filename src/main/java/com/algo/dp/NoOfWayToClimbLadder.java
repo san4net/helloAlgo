@@ -1,4 +1,4 @@
-package com.ds.dp;
+package com.algo.dp;
 
 import java.util.HashMap;
 import java.util.Map;

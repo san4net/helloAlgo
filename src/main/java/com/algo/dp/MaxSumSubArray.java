@@ -1,4 +1,4 @@
-package com.ds.dp;
+package com.algo.dp;
 
 public class MaxSumSubArray {
 
