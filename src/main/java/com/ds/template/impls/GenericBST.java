@@ -18,7 +18,7 @@ import com.ds.template.node.TreeNode;
  *
  * @param <T>
  */
-public class GenericTree<T> implements Serializable {
+public class GenericBST<T> implements Serializable {
 	private static final long serialVersionUID = 8568082440037774768L;
 	private TreeNode<T> head = null;
 
@@ -163,8 +163,8 @@ public class GenericTree<T> implements Serializable {
 		return dataPost;
 	}
 	
-	public static <T> GenericTree<T> buildTree(List<T> data) {
-		GenericTree<T> tree = new GenericTree<>();
+	public static <T> GenericBST<T> buildTree(List<T> data) {
+		GenericBST<T> tree = new GenericBST<>();
 		for (T t : data) {
 			tree.add(t);
 		}
@@ -172,7 +172,7 @@ public class GenericTree<T> implements Serializable {
 	}
 
 	public static void main(String[] args) {
-		GenericTree<Integer> tr = new GenericTree<>();
+		GenericBST<Integer> tr = new GenericBST<>();
 		tr.add(4);
 		tr.add(2);
 		tr.add(3);

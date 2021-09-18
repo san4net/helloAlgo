@@ -1,7 +1,7 @@
 package com.annot;
 
 
-@MyVersion(provideDoc = "3")
+@MyVersion(version = "3")
 public class TestAnnotation {
 	
   int  name;

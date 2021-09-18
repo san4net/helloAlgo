@@ -143,7 +143,7 @@ public class GenericTreePart2<T> {
         tree.addBinaryTree(1, tree.head);
         tree.addBinaryTree(6, tree.head);
         tree.addBinaryTree(5, tree.head);
-        GenericTree.inorderWalk(tree.head);
+        GenericBST.inorderWalk(tree.head);
         System.out.println("printing children");
         tree.inorderTraverse(tree.head);
         System.out.println("ancestor of 1");

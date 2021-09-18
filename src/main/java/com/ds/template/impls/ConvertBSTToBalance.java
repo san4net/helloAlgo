@@ -7,21 +7,6 @@ import com.google.common.collect.Lists;
 
 public class ConvertBSTToBalance {
 
-	public static GenericBST<Integer> createUnbalanceBST(List<Integer> nodes) {
-		GenericBST<Integer> instance = GenericBST.getInstance();
-		return instance.buildBST(nodes);
-	}
-
-	public static void main(String[] args) {
-		GenericBST<Integer> tree = createUnbalanceBST(Lists.newArrayList(3, 2, 1, 4, 5));
-
-		List<Integer> traversal = tree.inorderIterative(tree.head);
-		System.out.println(tree.inorderIterative(tree.head));
-
-		TreeNode<Integer> r = convertToBalanceBST(traversal, 0, traversal.size() - 1);
-		System.out.println(GenericBST.inorderIterative(r));
-
-	}
 
 	public static TreeNode<Integer> convertToBalanceBST(List<Integer> nodes, int start, int end) {
 		if (start > end)
@@ -33,6 +18,10 @@ public class ConvertBSTToBalance {
 			root.setRight(convertToBalanceBST(nodes, mid + 1, end));
 			return root;
 		}
+
+	}
+
+	public static void main(String[] args) {
 
 	}
 
