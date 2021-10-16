@@ -2,8 +2,10 @@ package org.java.java8;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import static java.util.stream.Collectors.*;
 
@@ -24,6 +26,33 @@ public class StreamHelper {
                             v->v.getValue(), Collectors.toList()
                          )
                 ) );
+    }
+
+    public static   Map<Integer, Long> freqencyMap(int[] array){
+        return Arrays.stream(array).mapToObj(Integer::valueOf)
+                .collect(groupingBy(Function.identity(),
+                        Collectors.counting()
+                ) );
+    }
+
+    private static void test(int[] array){
+       int[] ll =
+               Arrays.stream(array).mapToObj(Integer::valueOf)
+                       .collect(groupingBy(Function.identity(),
+                               Collectors.counting()
+                       ) )
+               .entrySet()
+              .stream()
+              .sorted((a,b)->Long.compare(a.getValue(), b.getValue()))
+              .collect((Supplier<List<Integer>>)ArrayList::new,
+                      (List<Integer> aa, Map.Entry<Integer,Long> bb)->{
+                          LongStream.range(0,bb.getValue()).forEach(i->{
+                              aa.add(bb.getValue().intValue());
+                          });
+                      },
+                      (List<Integer> cc, List<Integer> dd)->{}
+        ).stream().mapToInt(Integer::intValue).toArray();
+
     }
 
     public int[] findingUsersActiveMinutes1(int[][] logs, int k) {
@@ -100,6 +129,8 @@ public class StreamHelper {
 
     public static void main(String[] args) {
        int a[][] = {{1,2},{2,4},{3,2},{4,1}};
+       int [] aa = {1,2,3};
+       test(aa);
 
     }
 
