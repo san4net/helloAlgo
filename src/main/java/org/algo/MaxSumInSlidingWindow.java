@@ -32,7 +32,7 @@ public class MaxSumInSlidingWindow {
 
         Deque<Integer> deque = new ArrayDeque<>();
         for(int index=0 ; index< k; index++){
-            while(!deque.isEmpty() && nums[index]>deque.peekLast()){
+            while(!deque.isEmpty() && nums[index]>= nums[deque.peekLast()]){
                 deque.removeLast();
             }
             deque.addLast(index);
@@ -41,7 +41,7 @@ public class MaxSumInSlidingWindow {
         for(int index=k; index< nums.length ;index++){
             r[index-k] = nums[deque.peekFirst()];
             //removing index if it is less then current
-            while(!deque.isEmpty() && nums[index]>deque.peekLast()){
+            while(!deque.isEmpty() && nums[index]>=nums[deque.peekLast()]){
                 deque.removeLast();
             }
 
@@ -59,7 +59,7 @@ public class MaxSumInSlidingWindow {
     }
 
     public static void main(String[] args) {
-        int[] rr = maxSlidingWindow(new int[]{1, 3, -1, -3, 5, 3, 6, 7}, 3);
+        int[] rr = maxSlidingWindow(new int[]{7,2,4}, 2);
         System.out.println(Arrays.stream(rr).boxed().collect(Collectors.toList()));
     }
 }
