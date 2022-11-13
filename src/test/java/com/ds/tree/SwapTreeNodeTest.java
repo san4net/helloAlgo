@@ -8,6 +8,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 /**
+ sample
  * https://www.hackerrank.com/challenges/swap-nodes-algo/problem
  */
 public class SwapTreeNodeTest {
