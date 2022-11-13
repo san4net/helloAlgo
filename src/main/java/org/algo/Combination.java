@@ -1,76 +1,36 @@
 package org.algo;
 
 public class Combination {
-	/**nCr
-	 * Combination of n things taken r at a time
-	 * 
-	 * @param input
-	 * @param index
-	 * @param r
-	 */
-	static void combination(char[] input, int index, int r) {
-		if (index < 0) {
-			if (input.length == r) {
-				System.out.println(new String(input));
-			}
-			return;
-		}
-
-		if (input.length == r) {
-			System.out.println(new String(input));
-			return;
-		}
-
-		// Either we include or exclude
-		// include here
-		combination(input, index - 1,r);
-		// remove index / exclude
-		char[] removeInput = removeAndReturnArray(input, index);
-		if(removeInput != null && removeInput.length>=r)
-		 combination(removeInput, index - 1,r);
-	}
 
 	/**
 	 * Finding all combination of given array i.e ncr where r=1 to n
-	 * 
-	 * @param input
-	 * @param index
+	 *
+	 *
+	 * @param chars
+	 * @param idx
+	 * @param r
+	 * @param l is index of temp <=r
+	 * @param temp is word with r
 	 */
-	static void combination(char[] input, int index) {
-		
-		if (index < 0) {
-			System.out.println(new String(input));
+	private static  void combination(char[] chars, int idx, int r, int l, char[]temp){
+		if(l==r){
+			System.out.println(new String(temp));
 			return;
 		}
-
-		/*if (input.length == 1) {
-			System.out.println(new String(input));
-			System.out.println("here");
+		if(idx>=chars.length){
 			return;
-		}*/
-
-		// Either we include or exclude
-		// include
-		combination(input, index - 1);
-		// remove index / exclude
-		char[] removeInput = removeAndReturnArray(input, index);
-		if(removeInput!=null)
-		combination(removeInput, index - 1);
-	}
-
-	static char[] removeAndReturnArray(char[] in, int index) {
-		if(in.length==1) return null;
-		char[] r = new char[in.length - 1];
-		for (int i = 0, j = 0; i < in.length; i++) {
-			if (i == index)
-				continue;
-			r[j++] = in[i];
 		}
-		return r;
+		//include
+		temp[l]=chars[idx];
+		combination(chars, idx+1, r, l+1, temp);
+		//this is back track since we are using char array can do this by simply using index l
+		//exclude index idx
+		combination(chars, idx+1, r, l, temp);
 	}
+
+
 
 	public static void main(String[] args) {
-//		combination("ABCDE".toCharArray(), 4);
-		combination("ABCDE".toCharArray(), 4,4);
+		combination("ABCDE".toCharArray(), 0,2, 0, new char[2]);
 	}
 }
