@@ -1,5 +1,6 @@
 package org.design;
 
+import java.sql.Time;
 import java.util.*;
 
 import com.google.common.collect.Maps;
@@ -53,7 +54,7 @@ public class Twitter {
 
         List<Integer> tweetList = new ArrayList<>();
 
-        while (tweetsPriority.isEmpty() && tweetList.size() < 10) {
+        while (!tweetsPriority.isEmpty() && tweetList.size() < 10) {
             TweetNode temp = tweetsPriority.poll();
             tweetList.add(temp.getTweetId());
             if (temp.getNext() != null) {
@@ -92,12 +93,15 @@ public class Twitter {
      * obj.follow(followerId,followeeId);
      * obj.unfollow(followerId,followeeId);
      */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		Twitter twitter = new Twitter();
 		twitter.postTweet(1,5);
         System.out.println(twitter.getNewsFeed(1));
 		twitter.follow(1,2);
 		twitter.postTweet(2,6);
+		twitter.postTweet(1,7);
+        Thread.sleep(2000);
+        twitter.postTweet(2,8);
         System.out.println(twitter.getNewsFeed(1));
 
 	}
