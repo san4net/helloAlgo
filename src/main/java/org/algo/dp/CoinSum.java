@@ -28,6 +28,7 @@ public class CoinSum {
 	 * @return
 	 */
 	static int getCount(int[] coins, int S) {
+
 		    int[] minCoins = new int[S+1];
 		    minCoins[0]=0;
 		    for(int k =1 ; k < minCoins.length; k++){

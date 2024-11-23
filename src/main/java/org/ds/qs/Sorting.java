@@ -7,13 +7,13 @@ public class Sorting {
 	static int numbers[] = { 4, 3, 2, 1 };
 
 	public static void main(String[] args) {
-		int elements[] = { 1 ,3 ,9 ,8, 2, 7, 5 };
+		int elements[] = { 5,3,2,1};
 		quickSort(elements, 0, elements.length-1);
-		System.out.println("quck sort"); 
+		System.out.println("quick sort");
 		display(elements);
 
 		/**
-		 * 
+		 *
 		 * bubleSort(elements); testAtomicLong();
 		 */
 //		selectionSort(elements);
@@ -39,23 +39,18 @@ public class Sorting {
 	}
 
 
-	private static void exchange(int[] d, int i, int j) {
-		if(i==j)return;
-		d[i] = d[i]+d[j];
-        d[j] = d[i]-d[j];
-        d[i] = d[i]-d[j];
-	}
+
 	
 	private static void quickSort(int[] A, int p, int r) {
 		if (p < r) {
-			int q = partition(A, p, r);
+			int q = partitionN(A, p, r);
 			// on index q we are putting pivot and it is correct index 
 			quickSort(A, p, q - 1);
 			quickSort(A, q + 1, r);
 		}
 	}
 	
-	/** pseudo algo from coreman 
+	/** pseudo algo from corman
 	 int X = A[r];
 	 i = p-1;
 		for j=p to r-1
@@ -68,10 +63,11 @@ public class Sorting {
    	@param p start index
    	@param r end index
 	 **/
-	
+	//{ 5,3,2,1};
 	static int partition(int[] A, int p, int r) {
 		int pivot = A[r];
 		int i = p - 1;
+
 		for (int j = p; j < r; j++) {
 			if (A[j] <= pivot) {
 				i++;
@@ -79,9 +75,36 @@ public class Sorting {
 				exchange(A, i, j);
 			}
 		}
-		// now we know that 
+		// now we know that i+1 is correct place for pivot that is A[r]
+		System.out.printf("here p is %d and r is %d and pivot index is %d\n", p, r, i+1);
 		exchange(A, i + 1, r);
+		System.out.println("A after swap");
+		display(A);
 		return i + 1;
+	}
+	static int partitionN(int[] A, int s, int e) {
+		System.out.printf("here s is %d and e is %d ", s, e);
+		int pivot = A[e];
+
+		for (int j = s; j < e; j++) {
+			if (A[j] <= pivot) {
+				// exchange i with j
+				exchange(A, s, j);
+				s++;
+			}
+		}
+		// now we know that i+1 is correct place for pivot that is A[r]
+		System.out.printf(" index for pivot is %d\n",s);
+		exchange(A, s, e);
+		System.out.println("A after swap");
+		display(A);
+		return s;
+	}
+	private static void exchange(int[] d, int i, int j) {
+		if(i==j)return;
+		d[i] = d[i]+d[j];
+		d[j] = d[i]-d[j];
+		d[i] = d[i]-d[j];
 	}
 	
 	 private static int p(int[] data, int p, int r){

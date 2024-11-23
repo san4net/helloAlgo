@@ -1,9 +1,8 @@
 package org.algo;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * Refer 25.28  in Elements of Programming interviews
@@ -14,27 +13,28 @@ public class CountInversion {
     public static int countInversion(int[] nums) {
         return countInversion(0, nums.length-1, nums);
     }
-    private static int countInversion(int s, int e, int[]nums){
-        if(s==e) return 0;
-        var mid = s+(e-s)/2;
-        int leftCount = countInversion(s, mid, nums);
-        int rightCount = countInversion(mid+1, e, nums);
 
-        int[] left = Arrays.copyOfRange(nums,s, mid+1 );
-        int[] right = Arrays.copyOfRange(nums,mid+1,e+1);
+    private static int countInversion(int s, int e, int[] nums) {
+        if (s == e) return 0;
+        var mid = s + (e - s) / 2;
+        int leftCount = countInversion(s, mid, nums);
+        int rightCount = countInversion(mid + 1, e, nums);
+
+        int[] left = Arrays.copyOfRange(nums, s, mid + 1);
+        int[] right = Arrays.copyOfRange(nums, mid + 1, e + 1);
         Arrays.sort(left);
         Arrays.sort(right);
-        int temp=0;
+        int temp = 0;
         //for each element in right we find the count inversion
-        for(int i=0; i<right.length; i++){
-            for(int j=0; j<left.length; j++){
-                if(left[j]>right[i]){ //if greater than it is inverted
-                    temp = temp + (left.length-j);
+        for (int i = 0; i < right.length; i++) {
+            for (int j = 0; j < left.length; j++) {
+                if (left[j] > right[i]) { //if greater than it is inverted
+                    temp = temp + (left.length - j);
                     break;
                 }
             }
         }
-        return leftCount+rightCount+temp;
+        return leftCount + rightCount + temp;
     }
 
     public static void main(String[] args) {
@@ -87,5 +87,29 @@ public class CountInversion {
         }
 
         return countInv;
+    }
+
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        Set<List<Integer>> r = new HashSet();
+        Arrays.sort(nums);
+
+        for(int i=0; i<nums.length-2;i++){
+            int s=i+1;
+            int e=nums.length-1;
+            int target = -nums[i];
+            
+            while(s<e){
+                if(nums[s]+nums[e]== target){
+                   r.add(List.of(nums[i],nums[s], nums[e]));
+                } else if (nums[s]+nums[e]>target) {
+                    e--;
+                }else{
+                    s++;
+                }
+            }
+        }
+
+        return r.stream().toList();
     }
 }

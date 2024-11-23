@@ -113,4 +113,7 @@ public class ThreadPool<T> implements Pool {
 		}
 	}
 
+	public static void main(String[] args) {
+	}
+
 }
