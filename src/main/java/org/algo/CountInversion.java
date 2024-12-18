@@ -1,9 +1,7 @@
 package org.algo;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Refer 25.28  in Elements of Programming interviews
@@ -16,7 +14,7 @@ public class CountInversion {
     }
     private static int countInversion(int s, int e, int[]nums){
         if(s==e) return 0;
-        var mid = s+(e-s)/2;
+        int mid = s+(e-s)/2;
         int leftCount = countInversion(s, mid, nums);
         int rightCount = countInversion(mid+1, e, nums);
 
@@ -37,9 +35,47 @@ public class CountInversion {
         return leftCount+rightCount+temp;
     }
 
+    static class IntIdx {
+        int val;
+        int idx;
+        IntIdx(int val, int idx){
+            this.val= val;
+            this.idx =idx;
+        }
+
+
+    }
+    public static int[] maxSubsequence(int[] nums, int k) {
+        PriorityQueue<IntIdx> heap = new PriorityQueue<>((IntIdx a, IntIdx b)-> Integer.compare(a.val, b.val));
+
+        for(int i=0 ; i< nums.length; i++){
+            if(heap.size()<k){
+                heap.add(new IntIdx(nums[i],i));
+            }else{
+                if(nums[i] > heap.peek().val){
+                    heap.remove();
+                    heap.add(new IntIdx(nums[i],i));
+                }
+            }
+
+        }
+        int[] r =  heap.stream().sorted((IntIdx a, IntIdx b)-> Integer.compare(a.idx, b.idx)).mapToInt(c->c.val).toArray();
+        for(int x:r){
+            System.out.println(x);
+        }
+        return r;
+    }
+
     public static void main(String[] args) {
+    	Map<Integer, Map<Integer,Integer>> map = new HashMap();
+    	map.get(1).entrySet();
+    	PriorityQueue<Integer[]> aa = new PriorityQueue<Integer[]>(4, (Integer[] a, Integer[] b)->a[1]-b[1]);
+    	
+    	
+        StringBuilder sb = new StringBuilder("");
+        sb.append('a');
         int inversion  = countInversion(new int[]{3,6,4,2,5,1});
-        System.out.println(inversion);
+       maxSubsequence(new int[]{2,1,3,3}, 2);
     }
 
     /**
