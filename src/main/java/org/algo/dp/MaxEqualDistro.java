@@ -3,10 +3,10 @@ package org.algo.dp;
 import java.util.stream.Stream;
 /**
  Nikita just came up with a new array game. The rules are as follows:
-Initially, there is an array, , containing  integers.
-In each move, Nikita must partition the array into  non-empty contiguous parts such that the sum of the elements in the left partition is equal to the sum of the elements in the right partition. If Nikita can make such a move, she gets  point; otherwise, the game ends.
-After each successful move, Nikita discards either the left partition or the right partition and continues playing by using the remaining partition as array .
-Nikita loves this game and wants your help getting the best score possible. Given , can you find and print the maximum number of points she can score?
+	Initially, there is an array, , containing  integers.
+	In each move, Nikita must partition the array into  non-empty contiguous parts such that the sum of the elements in the left partition is equal to the sum of the elements in the right partition. If Nikita can make such a move, she gets  point; otherwise, the game ends.
+	After each successful move, Nikita discards either the left partition or the right partition and continues playing by using the remaining partition as array .
+	Nikita loves this game and wants your help getting the best score possible. Given , can you find and print the maximum number of points she can score?
  * 
  * @author khus
  *
@@ -63,12 +63,47 @@ public class MaxEqualDistro {
 	}
 	
 	public static void main(String[] args) {
-		int[] num = { 4,1, 0 ,1, 1, 0, 1};
-		int[] num1 = {5,1,3,4,6,2};
-		finalPrice(num1);
-		MaxEqualDistro instance = new MaxEqualDistro();
-		instance.init(num);
-		System.out.println(instance.getMaxEqualDistro(0,num.length-1));
+		System.out.println(addBinary("11", "1"));
+	}
+
+	public static String addBinary(String a, String b) {
+		// decimal to binary
+		char[] aa = a.toCharArray();
+		char[] bb = b.toCharArray();
+		StringBuilder r = new StringBuilder();
+		int c = 0;
+		int i=bb.length-1, j=aa.length-1;
+
+		for(; i>-1 && j>-1; i--,j--){
+			int t = aa[j]-'0' +bb[i]-'0' + c;
+			r = r.append(t%2);
+			c = t/2;
+		}
+
+		if(i == -1 ){
+			while (j>=0){
+				int t = aa[j]-'0' + c;
+				r = r.append(t%2);
+				c = t/2;
+				j--;
+			}
+		}
+
+	    if(j==-1){
+			while (i>=0){
+				int t = bb[i]-'0'+c;
+				r.append(t%2);
+				c = t/2;
+				i--;
+			}
+		}
+
+		if(c==1){
+			r.append(c);
+		}
+
+		return r.reverse().toString();
+
 	}
 	
 	static int[] parseIntArray(String[] arr) {

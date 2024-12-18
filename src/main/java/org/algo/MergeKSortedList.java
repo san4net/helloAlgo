@@ -6,13 +6,13 @@ import java.util.PriorityQueue;
 
 /**
  * You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
- *
+ * <p>
  * Merge all the linked-lists into one sorted linked-list and return it.
- *
+ * <p>
  * Example 1.
  * Input: lists = [[1,4,5],[1,3,4],[2,6]]
  * Output: [1,1,2,3,4,4,5,6]
- *
+ * <p>
  * Example 2.
  * Input: lists = []
  * Output: []
@@ -22,8 +22,7 @@ public class MergeKSortedList {
      * Pseudo
      * - we can traverse and pick smallest from linked list
      * - we will advance list and keep choosing smallest
-     *   till we have exhausted all
-     *
+     * till we have exhausted all
      *
      * @param lists
      * @return
@@ -33,29 +32,29 @@ public class MergeKSortedList {
         ListNode temp = dummy;
         boolean done = false;
 
-        while(!done){
+        while (!done) {
             done = true;
             ListNode smallest = null;
-            int idx=-1;
-            for(int i=0; i< lists.length; i++){
-                if(lists[i]==null){
+            int idx = -1;
+            for (int i = 0; i < lists.length; i++) {
+                if (lists[i] == null) {
                     continue;
                 }
-                done =false;
-                if(smallest == null ){
+                done = false;
+                if (smallest == null) {
                     smallest = lists[i];
-                    idx =i;
-                }else{
-                    if(smallest.val > lists[i].val){
+                    idx = i;
+                } else {
+                    if (smallest.val > lists[i].val) {
                         smallest = lists[i];
                         idx = i;
                     }
                 }
             }
 
-            if(!done){
+            if (!done) {
                 temp.next = new ListNode(smallest.val, null);
-                temp=temp.next;
+                temp = temp.next;
                 lists[idx] = smallest.next;
             }
 
@@ -65,7 +64,6 @@ public class MergeKSortedList {
     }
 
     /**
-     *
      * @param lists
      * @return
      */
@@ -74,8 +72,8 @@ public class MergeKSortedList {
                 new PriorityQueue<>((ListNode a, ListNode b) ->
                         Integer.compare(a.val, b.val));
 
-        for(ListNode listNode : lists){
-            if(listNode!=null){
+        for (ListNode listNode : lists) {
+            if (listNode != null) {
                 heap.add(listNode);
             }
         }
@@ -84,13 +82,13 @@ public class MergeKSortedList {
 
         ListNode temp = dummy;
 
-        while (!heap.isEmpty()){
+        while (!heap.isEmpty()) {
             ListNode min = heap.remove();
             temp.next = new ListNode(min.val, null);
             temp = temp.next;
 
-            min=min.next;
-            if(min!=null){
+            min = min.next;
+            if (min != null) {
                 heap.add(min);
             }
 

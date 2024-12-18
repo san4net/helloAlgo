@@ -1,6 +1,5 @@
 package com.mockserver;
 
-import com.sun.xml.internal.ws.api.message.Headers;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
